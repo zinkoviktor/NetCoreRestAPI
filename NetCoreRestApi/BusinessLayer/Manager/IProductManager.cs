@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace BusinessLayer.Manager
 {
-    interface IProductManager
+    public interface IProductManager
     {
-        public IEnumerable<ProductModel> GetAll();
+        IEnumerable<ProductModel> GetAll();
     }
 }
