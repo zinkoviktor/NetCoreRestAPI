@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-
-namespace BusinessLayer.Models
+﻿
+namespace ServiceLayer.DataTransferObjects
 {
-    public class ProductModel
+    public class ProductDTO
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<CategoryModel> CategoryList { get; set; } = new List<CategoryModel>();
+        public string Categories { get; set; }
         public decimal Price { get; set; }
         public int AvailableCount { get; set; }
     }
