@@ -14,8 +14,8 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSingleton<IProductManager, ProductManager>();
-            services.AddSingleton<IProductConverter, ProductConverter>();
+            services.AddTransient<IProductManager, ProductManager>();
+            services.AddTransient<IProductConverter, ProductConverter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
