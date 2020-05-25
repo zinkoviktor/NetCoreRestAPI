@@ -7,3 +7,4 @@ NetCoreRestApi/BusinessLayer/obj/
 /NetCoreRestApi/WebAPI/bin/
 /NetCoreRestApi/WebAPI/obj/
 /NetCoreRestApi/WebAPI/WebAPI.csproj.user
+/NetCoreRestApi/DataLayer/obj

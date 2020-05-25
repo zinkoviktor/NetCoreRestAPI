@@ -3,8 +3,8 @@ using System.Linq;
 
 namespace BusinessLayer.Manager
 {
-    public interface IProductManager
+    public interface ICategoryManager
     {
-        IQueryable<ProductModel> GetAll();
+        IQueryable<CategoryModel> GetAll();
     }
 }
