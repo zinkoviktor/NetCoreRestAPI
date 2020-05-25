@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace BusinessLayer.Models
+namespace DataLayer.Models
 {
     public class ProductModel
     {
+        public int ID { get; set; } = 1;
         public string Name { get; set; }
         public string Description { get; set; }
         public List<CategoryModel> CategoryList { get; set; } = new List<CategoryModel>();

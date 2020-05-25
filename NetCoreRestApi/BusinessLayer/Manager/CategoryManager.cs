@@ -1,8 +1,6 @@
-﻿using BusinessLayer.Models;
-using System;
+﻿using DataLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BusinessLayer.Manager
 {
@@ -10,10 +8,13 @@ namespace BusinessLayer.Manager
     {
         public IQueryable<CategoryModel> GetAll()
         {
-            var categories = new List<CategoryModel>();
-            categories.Add(new StubCategoryModel("Category1", "Description 1"));
-            categories.Add(new StubCategoryModel("Category2", "Description 2"));
-            categories.Add(new StubCategoryModel("Category3", "Description 3"));
+            var ID = 1;
+            var categories = new List<CategoryModel>
+            {
+                new StubCategoryModel(ID, "Category1", "Description 1"),
+                new StubCategoryModel(++ID, "Category2", "Description 2"),
+                new StubCategoryModel(++ID, "Category3", "Description 3")
+            };
             return categories.AsQueryable();
         }
     }

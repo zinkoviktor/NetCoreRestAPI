@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Models;
+﻿using DataLayer.Models;
 using System.Linq;
 
 namespace BusinessLayer.Manager

@@ -1,12 +1,13 @@
-﻿using BusinessLayer.Models;
+﻿using Common.Converter;
+using DataLayer.Models;
 using ServiceLayer.DataTransferObjects;
 using System.Collections.Generic;
 
 namespace ServiceLayer.Converters
 {
-    public class ProductConverter : IProductConverter
+    public class ProductConverter : IConverter<ProductDTO, ProductModel> 
     {
-        public ProductDTO ConverToDTO(ProductModel productModel)
+        public ProductDTO ConvertTo(ProductModel productModel)
         {
             if (productModel == null)
             {
@@ -14,7 +15,8 @@ namespace ServiceLayer.Converters
             }
             productModel.CategoryList ??= new List<CategoryModel>();
             var productDTO = new ProductDTO
-            {
+            {                
+                ID = productModel.ID,
                 Name = productModel.Name,
                 Description = productModel.Description,
                 Categories = string.Join(", ", productModel.CategoryList.ConvertAll(x => x.Name)),
@@ -24,7 +26,7 @@ namespace ServiceLayer.Converters
             return productDTO;
         }       
 
-        public ProductModel ConverToModel(ProductDTO productDTO)
+        public ProductModel ConvertFrom(ProductDTO productDTO)
         {
             if (productDTO == null)
             { 
@@ -34,6 +36,7 @@ namespace ServiceLayer.Converters
             var categoryList = productDTO.Categories.Split(",");
             ProductModel productModel = new ProductModel
             {
+                ID = productDTO.ID,
                 Name = productDTO.Name,
                 Description = productDTO.Description,
                 Price = productDTO.Price,

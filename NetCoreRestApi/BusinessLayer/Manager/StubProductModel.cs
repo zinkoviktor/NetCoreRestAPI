@@ -1,12 +1,13 @@
-﻿using BusinessLayer.Models;
+﻿using DataLayer.Models;
 using System.Collections.Generic;
 
 namespace BusinessLayer.Manager
 {
     public class StubProductModel : ProductModel
     {
-        internal StubProductModel(string name)
+        internal StubProductModel(int ID, string name)
         {
+            this.ID = ID;
             Name = name;
             Description = "Description for " + name;
             CategoryList = new List<CategoryModel>();
