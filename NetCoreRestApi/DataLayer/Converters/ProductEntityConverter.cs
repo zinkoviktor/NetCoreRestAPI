@@ -12,6 +12,10 @@ namespace DataLayer.Converters
 
         public ProductModel ConvertFrom(ProductEntity productEntity)
         {
+            if (productEntity == null)
+            {
+                return null;
+            }
             var productModel = new ProductModel
             {
                 ID = productEntity.ID,
@@ -27,6 +31,10 @@ namespace DataLayer.Converters
 
         public ProductEntity ConvertTo(ProductModel productModel)
         {
+            if (productModel == null)
+            {
+                return null;
+            }
             var productEntity = new ProductEntity()
             {
                 ID = productModel.ID,

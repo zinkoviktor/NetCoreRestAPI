@@ -5,9 +5,9 @@ namespace BusinessLayer.Manager
 {
     public class StubProductModel : ProductModel
     {
-        internal StubProductModel(int ID, string name)
+        internal StubProductModel(int id, string name)
         {
-            this.ID = ID;
+            ID = id;
             Name = name;
             Description = "Description for " + name;
             CategoryList = new List<CategoryModel>();

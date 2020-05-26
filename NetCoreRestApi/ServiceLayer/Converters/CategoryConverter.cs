@@ -8,6 +8,10 @@ namespace ServiceLayer.Converters
     {
         public CategoryModel ConvertFrom(CategoryDTO categoryDTO)
         {
+            if (categoryDTO == null)
+            {
+                return null;
+            }
             var categoryModel = new CategoryModel
             {
                 ID = categoryDTO.ID,
@@ -19,6 +23,10 @@ namespace ServiceLayer.Converters
 
         public CategoryDTO ConvertTo(CategoryModel categoryModel)
         {
+            if (categoryModel == null)
+            {
+                return null;
+            }
             var categoryDTO = new CategoryDTO()
             {
                 ID = categoryModel.ID,

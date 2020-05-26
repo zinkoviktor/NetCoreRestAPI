@@ -4,9 +4,9 @@ namespace BusinessLayer.Manager
 {
     public class StubCategoryModel : CategoryModel
     {
-        internal StubCategoryModel(int ID, string name, string description)
+        internal StubCategoryModel(int id, string name, string description)
         {
-            this.ID = ID;
+            ID = id;
             Name = name;
             Description = description;
         }

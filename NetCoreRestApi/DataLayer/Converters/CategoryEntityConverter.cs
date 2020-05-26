@@ -8,6 +8,10 @@ namespace DataLayer.Converters
     {
         public CategoryModel ConvertFrom(CategoryEntity categoryEntity)
         {
+            if (categoryEntity == null)
+            {
+                return null;
+            }
             var categoryModel = new CategoryModel()
             {
                 ID = categoryEntity.ID,
@@ -19,6 +23,10 @@ namespace DataLayer.Converters
 
         public CategoryEntity ConvertTo(CategoryModel categoryModel)
         {
+            if (categoryModel == null)
+            {
+                return null;
+            }
             var categoryEntity = new CategoryEntity()
             {
                 ID = categoryModel.ID,
