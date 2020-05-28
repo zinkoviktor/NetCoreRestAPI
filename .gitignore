@@ -2,7 +2,3 @@
 bin/
 obj/
 /NetCoreRestApi/WebAPI/WebAPI.csproj.user
-/NetCoreRestApi/DataLayer/obj
-/NetCoreRestApi/Common/bin/Debug/netcoreapp3.1
-/NetCoreRestApi/Common/obj
-/NetCoreRestApi/DataLayer/bin/Debug/netcoreapp3.1
