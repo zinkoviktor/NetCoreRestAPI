@@ -11,13 +11,13 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private IConverter<CategoryDTO, CategoryModel> _converter;
         private ICategoryManager _categoryManager;
-
-        public CategoriesController(IConverter<CategoryDTO, CategoryModel> converter, ICategoryManager categoryManager)
-        {
-            _converter = converter;
+        private IConverter<CategoryModel, CategoryDTO> _converter;
+        
+        public CategoriesController(ICategoryManager categoryManager, IConverter<CategoryModel, CategoryDTO> converter)
+        {            
             _categoryManager = categoryManager;
+            _converter = converter;
         }
 
         [HttpGet]
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
             {
                 return NoContent();
             }
-            var productsDTO = products.Select(x => _converter.ConvertTo(x));
+            var productsDTO = products.Select(x => _converter.ConvertFrom(x));
             return Ok(productsDTO);
         }
     }

@@ -8,11 +8,11 @@ namespace BusinessLayer.Manager
     {
         public IQueryable<ProductModel> GetAll()
         {
-            var ID = 1;
+            var id = 1;
             var productModels = new List<ProductModel>();
-            productModels.Add(new StubProductModel(ID, "first product"));
-            productModels.Add(new StubProductModel(++ID, "second product"));
-            productModels.Add(new StubProductModel(++ID, "third product"));           
+            productModels.Add(new StubProductModel(id, "first product"));
+            productModels.Add(new StubProductModel(++id, "second product"));
+            productModels.Add(new StubProductModel(++id, "third product"));           
             return productModels.AsQueryable();
         }        
     }

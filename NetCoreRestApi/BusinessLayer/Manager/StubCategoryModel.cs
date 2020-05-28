@@ -6,7 +6,7 @@ namespace BusinessLayer.Manager
     {
         internal StubCategoryModel(int id, string name, string description)
         {
-            ID = id;
+            Id = id;
             Name = name;
             Description = description;
         }

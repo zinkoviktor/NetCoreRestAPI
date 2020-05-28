@@ -11,13 +11,13 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private IConverter<ProductDTO, ProductModel> _converter;
         private IProductManager _productManager;
+        private IConverter<ProductModel, ProductDTO> _converter;        
 
-        public ProductsController(IConverter<ProductDTO, ProductModel>  converter, IProductManager productManager)
+        public ProductsController(IProductManager productManager, IConverter<ProductModel, ProductDTO> converter)
         {
-            _converter = converter;
             _productManager = productManager;
+            _converter = converter;            
         }
 
         [HttpGet]
@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
             {
                 return NoContent();
             }
-            var productsDTO = products.Select(x => _converter.ConvertTo(x));
+            var productsDTO = products.Select(x => _converter.ConvertFrom(x));
             return Ok(productsDTO);
         }
     }

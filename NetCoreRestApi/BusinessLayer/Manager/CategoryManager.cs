@@ -8,12 +8,12 @@ namespace BusinessLayer.Manager
     {
         public IQueryable<CategoryModel> GetAll()
         {
-            var ID = 1;
+            var id = 1;
             var categories = new List<CategoryModel>
             {
-                new StubCategoryModel(ID, "Category1", "Description 1"),
-                new StubCategoryModel(++ID, "Category2", "Description 2"),
-                new StubCategoryModel(++ID, "Category3", "Description 3")
+                new StubCategoryModel(id, "Category1", "Description 1"),
+                new StubCategoryModel(++id, "Category2", "Description 2"),
+                new StubCategoryModel(++id, "Category3", "Description 3")
             };
             return categories.AsQueryable();
         }

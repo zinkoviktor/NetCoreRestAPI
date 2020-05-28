@@ -1,13 +1,13 @@
 ﻿using DataLayer.Entities;
-using System.Collections.Generic;
+using System.Linq;
 
 namespace DataLayer.Repositories
 {
     public interface IRepository<T> where T : BaseEntity
     {
-        ICollection<T> GetAll();
+        IQueryable<T> GetAll();
         T GetById(int id);
-        void Insert(T entity);
+        void Create(T entity);
         void Update(T entity);
         void Delete(int id);
     }

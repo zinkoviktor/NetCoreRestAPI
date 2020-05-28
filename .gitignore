@@ -1,11 +1,6 @@
 .vs/
-NetCoreRestApi/.vs/
-NetCoreRestApi/BusinessLayer/bin/
-NetCoreRestApi/BusinessLayer/obj/
-/NetCoreRestApi/ServiceLayer/bin/
-/NetCoreRestApi/ServiceLayer/obj/
-/NetCoreRestApi/WebAPI/bin/
-/NetCoreRestApi/WebAPI/obj/
+bin/
+obj/
 /NetCoreRestApi/WebAPI/WebAPI.csproj.user
 /NetCoreRestApi/DataLayer/obj
 /NetCoreRestApi/Common/bin/Debug/netcoreapp3.1

@@ -4,9 +4,9 @@ using ServiceLayer.DataTransferObjects;
 
 namespace ServiceLayer.Converters
 {
-    public class CategoryConverter : IConverter<CategoryDTO, CategoryModel>
+    public class CategoryConverter : IConverter<CategoryModel, CategoryDTO>
     {
-        public CategoryModel ConvertFrom(CategoryDTO categoryDTO)
+        public CategoryModel ConvertTo(CategoryDTO categoryDTO)
         {
             if (categoryDTO == null)
             {
@@ -14,14 +14,14 @@ namespace ServiceLayer.Converters
             }
             var categoryModel = new CategoryModel
             {
-                ID = categoryDTO.ID,
+                Id = categoryDTO.Id,
                 Name = categoryDTO.Name,
                 Description = categoryDTO.Description
             };         
             return categoryModel;
         }
 
-        public CategoryDTO ConvertTo(CategoryModel categoryModel)
+        public CategoryDTO ConvertFrom(CategoryModel categoryModel)
         {
             if (categoryModel == null)
             {
@@ -29,7 +29,7 @@ namespace ServiceLayer.Converters
             }
             var categoryDTO = new CategoryDTO()
             {
-                ID = categoryModel.ID,
+                Id = categoryModel.Id,
                 Name = categoryModel.Name,
                 Description = categoryModel.Description
             };

@@ -4,9 +4,9 @@ using DataLayer.Entities;
 
 namespace DataLayer.Converters
 {
-    public class CategoryEntityConverter : IConverter<CategoryEntity, CategoryModel>
+    public class CategoryEntityConverter : IConverter<CategoryModel, CategoryEntity>
     {
-        public CategoryModel ConvertFrom(CategoryEntity categoryEntity)
+        public CategoryModel ConvertTo(CategoryEntity categoryEntity)
         {
             if (categoryEntity == null)
             {
@@ -14,14 +14,14 @@ namespace DataLayer.Converters
             }
             var categoryModel = new CategoryModel()
             {
-                ID = categoryEntity.ID,
+                Id = categoryEntity.Id,
                 Name = categoryEntity.Name,
                 Description = categoryEntity.Description
             };
             return categoryModel;
         }
 
-        public CategoryEntity ConvertTo(CategoryModel categoryModel)
+        public CategoryEntity ConvertFrom(CategoryModel categoryModel)
         {
             if (categoryModel == null)
             {
@@ -29,11 +29,11 @@ namespace DataLayer.Converters
             }
             var categoryEntity = new CategoryEntity()
             {
-                ID = categoryModel.ID,
+                Id = categoryModel.Id,
                 Name = categoryModel.Name,
                 Description = categoryModel.Description
             };
             return categoryEntity;
-        }
+        }       
     }
 }
