@@ -6,22 +6,7 @@ namespace DataLayer.Converters
 {
     public class CategoryEntityConverter : IConverter<CategoryModel, CategoryEntity>
     {
-        public CategoryModel ConvertTo(CategoryEntity categoryEntity)
-        {
-            if (categoryEntity == null)
-            {
-                return null;
-            }
-            var categoryModel = new CategoryModel()
-            {
-                Id = categoryEntity.Id,
-                Name = categoryEntity.Name,
-                Description = categoryEntity.Description
-            };
-            return categoryModel;
-        }
-
-        public CategoryEntity ConvertFrom(CategoryModel categoryModel)
+        public CategoryEntity ConvertTo(CategoryModel categoryModel)
         {
             if (categoryModel == null)
             {
@@ -34,6 +19,21 @@ namespace DataLayer.Converters
                 Description = categoryModel.Description
             };
             return categoryEntity;
-        }       
+        }
+
+        public CategoryModel ConvertFrom(CategoryEntity categoryEntity)
+        {
+            if (categoryEntity == null)
+            {
+                return null;
+            }
+            var categoryModel = new CategoryModel()
+            {
+                Id = categoryEntity.Id,
+                Name = categoryEntity.Name,
+                Description = categoryEntity.Description
+            };
+            return categoryModel;
+        }        
     }
 }

@@ -12,22 +12,18 @@ namespace WebAPI.Controllers
     public class CategoriesController : ControllerBase
     {
         private ICategoryManager _categoryManager;
-        private IConverter<CategoryModel, CategoryDTO> _converter;
+        private IConverter<CategoryDTO, CategoryModel> _converter;
         
-        public CategoriesController(ICategoryManager categoryManager, IConverter<CategoryModel, CategoryDTO> converter)
+        public CategoriesController(ICategoryManager categoryManager, IConverter<CategoryDTO, CategoryModel> converter)
         {            
             _categoryManager = categoryManager;
             _converter = converter;
         }
 
         [HttpGet]
-        public ActionResult<IQueryable<CategoryDTO>> Get()
+        public IActionResult Get()
         {
-            var products = _categoryManager.GetAll();
-            if (products == null)
-            {
-                return NoContent();
-            }
+            var products = _categoryManager.GetAll();           
             var productsDTO = products.Select(x => _converter.ConvertFrom(x));
             return Ok(productsDTO);
         }

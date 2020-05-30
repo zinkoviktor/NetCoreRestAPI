@@ -1,35 +1,20 @@
 ﻿using DataLayer.Models;
 using Common.Converter;
 using DataLayer.Entities;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace DataLayer.Converters
 {
     public class ProductEntityConverter : IConverter<ProductModel, ProductEntity>
     {
-        private readonly CategoryEntityConverter _categoryEntityConverter = new CategoryEntityConverter();
+        private readonly IConverter<CategoryModel, CategoryEntity> _categoryConverter;
 
-        public ProductModel ConvertTo(ProductEntity productEntity)
+        public ProductEntityConverter(IConverter<CategoryModel, CategoryEntity> categoryConverter)
         {
-            if (productEntity == null)
-            {
-                return null;
-            }
-            var productModel = new ProductModel
-            {
-                Id = productEntity.Id,
-                Name = productEntity.Name,
-                Description = productEntity.Description,
-                CategoryList = new List<CategoryModel>(from category in productEntity.Categories
-                                                       select _categoryEntityConverter.ConvertTo(category)),
-                AvailableCount = productEntity.AvailableCount,
-                Price = productEntity.Price
-            };
-            return productModel;
+            _categoryConverter = categoryConverter;
         }
 
-        public ProductEntity ConvertFrom(ProductModel productModel)
+        public ProductEntity ConvertTo(ProductModel productModel)
         {
             if (productModel == null)
             {
@@ -40,11 +25,44 @@ namespace DataLayer.Converters
                 Id = productModel.Id,
                 Name = productModel.Name,
                 Description = productModel.Description,
-                Categories = productModel.CategoryList.ConvertAll(categoryModel => _categoryEntityConverter.ConvertFrom(categoryModel)),
+                Categories = ConvertToCategories(productModel, _categoryConverter),
                 AvailableCount = productModel.AvailableCount,
                 Price = productModel.Price
             };
             return productEntity;
+        }
+
+        public ProductModel ConvertFrom(ProductEntity productEntity)
+        {
+            if (productEntity == null)
+            {
+                return null;
+            }
+            var productModel = new ProductModel
+            {
+                Id = productEntity.Id,
+                Name = productEntity.Name,
+                Description = productEntity.Description,
+                CategoryList = ConvertToCategoryList(productEntity, _categoryConverter),
+                AvailableCount = productEntity.AvailableCount,
+                Price = productEntity.Price
+            };
+            return productModel;
+        }
+
+        private static List<CategoryModel> ConvertToCategoryList(ProductEntity productEntity, IConverter<CategoryModel, CategoryEntity> converter)
+        {
+            var categoryModelList = new List<CategoryModel>();
+            foreach (var categoryEntity in productEntity.Categories)
+            {
+                categoryModelList.Add(converter.ConvertFrom(categoryEntity));
+            }
+            return categoryModelList;           
+        }
+
+        private static ICollection<CategoryEntity> ConvertToCategories(ProductModel productModel, IConverter<CategoryModel, CategoryEntity> converter)
+        {
+            return productModel.CategoryList.ConvertAll(categoryModel => converter.ConvertTo(categoryModel));
         }
     }
 }

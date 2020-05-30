@@ -12,22 +12,18 @@ namespace WebAPI.Controllers
     public class ProductsController : ControllerBase
     {
         private IProductManager _productManager;
-        private IConverter<ProductModel, ProductDTO> _converter;        
+        private IConverter<ProductDTO, ProductModel> _converter;        
 
-        public ProductsController(IProductManager productManager, IConverter<ProductModel, ProductDTO> converter)
+        public ProductsController(IProductManager productManager, IConverter<ProductDTO, ProductModel> converter)
         {
             _productManager = productManager;
             _converter = converter;            
         }
 
         [HttpGet]
-        public ActionResult<IQueryable<ProductDTO>> Get()
+        public IActionResult Get()
         {            
-            var products = _productManager.GetAll();            
-            if (products == null)
-            {
-                return NoContent();
-            }
+            var products = _productManager.GetAll();
             var productsDTO = products.Select(x => _converter.ConvertFrom(x));
             return Ok(productsDTO);
         }
