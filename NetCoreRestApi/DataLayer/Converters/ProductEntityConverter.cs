@@ -50,6 +50,11 @@ namespace DataLayer.Converters
             return productModel;
         }
 
+        private static ICollection<CategoryEntity> ConvertToCategories(ProductModel productModel, IConverter<CategoryModel, CategoryEntity> converter)
+        {
+            return productModel.CategoryList.ConvertAll(categoryModel => converter.ConvertTo(categoryModel));
+        }
+
         private static List<CategoryModel> ConvertToCategoryList(ProductEntity productEntity, IConverter<CategoryModel, CategoryEntity> converter)
         {
             var categoryModelList = new List<CategoryModel>();
@@ -58,11 +63,6 @@ namespace DataLayer.Converters
                 categoryModelList.Add(converter.ConvertFrom(categoryEntity));
             }
             return categoryModelList;           
-        }
-
-        private static ICollection<CategoryEntity> ConvertToCategories(ProductModel productModel, IConverter<CategoryModel, CategoryEntity> converter)
-        {
-            return productModel.CategoryList.ConvertAll(categoryModel => converter.ConvertTo(categoryModel));
         }
     }
 }
