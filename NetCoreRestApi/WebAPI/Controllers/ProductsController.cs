@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using BusinessLayer.Manager;
+using Common.Converter;
+using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
-using ServiceLayer.Converters;
 using ServiceLayer.DataTransferObjects;
 
 namespace WebAPI.Controllers
@@ -11,24 +11,20 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private IProductConverter _productConverter;
         private IProductManager _productManager;
+        private IConverter<ProductDTO, ProductModel> _converter;        
 
-        public ProductsController(IProductConverter productConverter, IProductManager productManager)
+        public ProductsController(IProductManager productManager, IConverter<ProductDTO, ProductModel> converter)
         {
-            _productConverter = productConverter;
             _productManager = productManager;
+            _converter = converter;            
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ProductDTO>> Get()
+        public IActionResult Get()
         {            
-            var products = _productManager.GetAll();            
-            if (products == null)
-            {
-                return NoContent();
-            }
-            var productsDTO = products.ToList().ConvertAll(x => _productConverter.ConverToDTO(x));
+            var products = _productManager.GetAll();
+            var productsDTO = products.Select(x => _converter.ConvertFrom(x));
             return Ok(productsDTO);
         }
     }

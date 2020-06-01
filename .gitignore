@@ -1,9 +1,4 @@
 .vs/
-NetCoreRestApi/.vs/
-NetCoreRestApi/BusinessLayer/bin/
-NetCoreRestApi/BusinessLayer/obj/
-/NetCoreRestApi/ServiceLayer/bin/
-/NetCoreRestApi/ServiceLayer/obj/
-/NetCoreRestApi/WebAPI/bin/
-/NetCoreRestApi/WebAPI/obj/
+bin/
+obj/
 /NetCoreRestApi/WebAPI/WebAPI.csproj.user
