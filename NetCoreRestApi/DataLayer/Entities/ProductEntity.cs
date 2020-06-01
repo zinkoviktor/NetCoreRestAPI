@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 
-namespace BusinessLayer.Models
+namespace DataLayer.Entities
 {
-    public class ProductModel
+    public class ProductEntity
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<CategoryModel> CategoryList { get; set; } = new List<CategoryModel>();
+        public ICollection<CategoryEntity> Categories { get; set; }
         public decimal Price { get; set; }
         public int AvailableCount { get; set; }
     }
