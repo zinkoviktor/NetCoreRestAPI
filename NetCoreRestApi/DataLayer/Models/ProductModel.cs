@@ -4,7 +4,7 @@ namespace DataLayer.Models
 {
     public class ProductModel
     {
-        public int Id { get; set; } = 1;
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public List<CategoryModel> CategoryList { get; set; } = new List<CategoryModel>();

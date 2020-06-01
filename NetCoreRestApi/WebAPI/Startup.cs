@@ -19,8 +19,8 @@ namespace WebAPI
             services.AddControllers();
             services.AddTransient<IProductManager, ProductManager>();
             services.AddTransient<ICategoryManager, CategoryManager>();
-            services.AddTransient<IConverter<ProductDTO, ProductModel>, ProductModelConverter>();           
-            services.AddTransient<IConverter<CategoryDTO, CategoryModel>, CategoryModelConverter>();            
+            services.AddTransient<IConverter<ProductDTO, ProductModel>, ProductServiceConverter>();           
+            services.AddTransient<IConverter<CategoryDTO, CategoryModel>, CategoryServiceConverter>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

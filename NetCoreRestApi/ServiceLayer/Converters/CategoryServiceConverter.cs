@@ -4,7 +4,7 @@ using ServiceLayer.DataTransferObjects;
 
 namespace ServiceLayer.Converters
 {
-    public class CategoryModelConverter : IConverter<CategoryDTO, CategoryModel>
+    public class CategoryServiceConverter : IConverter<CategoryDTO, CategoryModel>
     {
         public CategoryModel ConvertTo(CategoryDTO categoryDTO)
         {

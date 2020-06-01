@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ServiceLayer.Converters
 {
-    public class ProductModelConverter : IConverter<ProductDTO, ProductModel> 
+    public class ProductServiceConverter : IConverter<ProductDTO, ProductModel> 
     {
         public ProductModel ConvertTo(ProductDTO productDTO)
         {
