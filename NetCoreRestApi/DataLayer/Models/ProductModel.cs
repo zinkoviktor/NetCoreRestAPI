@@ -7,7 +7,7 @@ namespace DataLayer.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<CategoryModel> CategoryList { get; set; } = new List<CategoryModel>();
+        public ICollection<CategoryModel> CategoryList { get; set; } = new List<CategoryModel>();
         public decimal Price { get; set; }
         public int AvailableCount { get; set; }
     }

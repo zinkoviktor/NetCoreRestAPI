@@ -62,7 +62,18 @@ namespace ServiceLayer.Converters
         private static string ConvertToCategories(ProductModel productModel)
         {
             productModel.CategoryList ??= new List<CategoryModel>();
-            return string.Join(", ", productModel.CategoryList.ConvertAll(x => x.Name));
+            var categoryList = new List<CategoryModel>(productModel.CategoryList);
+            return string.Join(", ", categoryList.ConvertAll(x => x.Name));
+        }
+
+        public ICollection<ProductModel> ConvertTo(ICollection<ProductDTO> t1)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ICollection<ProductDTO> ConvertFrom(ICollection<ProductModel> t2)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

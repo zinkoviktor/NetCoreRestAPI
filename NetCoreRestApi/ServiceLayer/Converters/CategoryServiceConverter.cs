@@ -1,6 +1,7 @@
 ﻿using DataLayer.Models;
 using Common.Converter;
 using ServiceLayer.DataTransferObjects;
+using System.Collections.Generic;
 
 namespace ServiceLayer.Converters
 {
@@ -34,6 +35,16 @@ namespace ServiceLayer.Converters
                 Description = categoryModel.Description
             };
             return categoryDTO;
+        }
+
+        public ICollection<CategoryModel> ConvertTo(ICollection<CategoryDTO> t1)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ICollection<CategoryDTO> ConvertFrom(ICollection<CategoryModel> t2)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
