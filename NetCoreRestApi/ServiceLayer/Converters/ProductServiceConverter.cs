@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace ServiceLayer.Converters
 {
     public class ProductServiceConverter : IConverter<ProductDTO, ProductModel> 
-    {
+    {     
         public ProductModel ConvertTo(ProductDTO productDTO)
         {
             if (productDTO == null)
@@ -25,6 +25,19 @@ namespace ServiceLayer.Converters
             return productModel;
         }
 
+        public ICollection<ProductModel> ConvertTo(ICollection<ProductDTO> productDtoList)
+        {
+            var productModels = new List<ProductModel>();
+            if(productModels != null)
+            {
+                foreach(var productDTO in productDtoList)
+                {
+                    productModels.Add(ConvertTo(productDTO));
+                }
+            }
+            return productModels;
+        }
+
         public ProductDTO ConvertFrom(ProductModel productModel)
         {
             if (productModel == null)
@@ -41,6 +54,19 @@ namespace ServiceLayer.Converters
                 AvailableCount = productModel.AvailableCount
             };
             return productDTO;
+        }
+
+        public ICollection<ProductDTO> ConvertFrom(ICollection<ProductModel> productModels)
+        {
+            var productDtoList = new List<ProductDTO>();
+            if(productModels != null)
+            {
+                foreach(var productModel in productModels)
+                {
+                    productDtoList.Add(ConvertFrom(productModel));
+                }
+            }
+            return productDtoList;
         }
 
         private static List<CategoryModel> ConvertToCategoryList(ProductDTO productDTO)
@@ -64,16 +90,6 @@ namespace ServiceLayer.Converters
             productModel.CategoryList ??= new List<CategoryModel>();
             var categoryList = new List<CategoryModel>(productModel.CategoryList);
             return string.Join(", ", categoryList.ConvertAll(x => x.Name));
-        }
-
-        public ICollection<ProductModel> ConvertTo(ICollection<ProductDTO> t1)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public ICollection<ProductDTO> ConvertFrom(ICollection<ProductModel> t2)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

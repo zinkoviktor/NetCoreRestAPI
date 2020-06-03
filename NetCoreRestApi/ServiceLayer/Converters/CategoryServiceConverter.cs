@@ -22,6 +22,19 @@ namespace ServiceLayer.Converters
             return categoryModel;
         }
 
+        public ICollection<CategoryModel> ConvertTo(ICollection<CategoryDTO> categoryDtoList)
+        {
+            var categoryModels = new List<CategoryModel>();
+            if (categoryDtoList != null)
+            {
+                foreach (var categoryDTO in categoryDtoList)
+                {
+                    categoryModels.Add(ConvertTo(categoryDTO));
+                }
+            }
+            return categoryModels;
+        }
+        
         public CategoryDTO ConvertFrom(CategoryModel categoryModel)
         {
             if (categoryModel == null)
@@ -36,15 +49,18 @@ namespace ServiceLayer.Converters
             };
             return categoryDTO;
         }
-
-        public ICollection<CategoryModel> ConvertTo(ICollection<CategoryDTO> t1)
+                
+        public ICollection<CategoryDTO> ConvertFrom(ICollection<CategoryModel> categoryModels)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public ICollection<CategoryDTO> ConvertFrom(ICollection<CategoryModel> t2)
-        {
-            throw new System.NotImplementedException();
+            var categoryDtoList = new List<CategoryDTO>();
+            if(categoryDtoList != null)
+            {
+                foreach(var categoryModel in categoryModels)
+                {
+                    categoryDtoList.Add(ConvertFrom(categoryModel));
+                }
+            }
+            return categoryDtoList;
         }
     }
 }
