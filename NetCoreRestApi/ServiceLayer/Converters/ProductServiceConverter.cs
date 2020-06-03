@@ -28,7 +28,7 @@ namespace ServiceLayer.Converters
         public ICollection<ProductModel> ConvertTo(ICollection<ProductDTO> productDtoList)
         {
             var productModels = new List<ProductModel>();
-            if(productModels != null)
+            if(productDtoList != null)
             {
                 foreach(var productDTO in productDtoList)
                 {

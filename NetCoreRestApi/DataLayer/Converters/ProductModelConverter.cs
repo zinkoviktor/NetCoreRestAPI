@@ -35,14 +35,13 @@ namespace DataLayer.Converters
         public ICollection<ProductModel> ConvertTo(ICollection<ProductEntity> productEntities)
         {
             var productModels = new List<ProductModel>();
-            if (productEntities == null)
+            if (productEntities != null)
             {
-                return productModels;
-            }
-            foreach(var productEntity in productEntities)
-            {
-                productModels.Add(ConvertTo(productEntity));
-            }
+                foreach (var productEntity in productEntities)
+                {
+                    productModels.Add(ConvertTo(productEntity));
+                }
+            }            
             return productModels;
         }
 
@@ -67,14 +66,13 @@ namespace DataLayer.Converters
         public ICollection<ProductEntity> ConvertFrom(ICollection<ProductModel> productModels)
         {
             var productEntities = new List<ProductEntity>();
-            if(productModels == null)
+            if(productModels != null)
             {
-                return productEntities;
-            }
-            foreach(var productModel in productModels)
-            {
-                productEntities.Add(ConvertFrom(productModel));
-            }
+                foreach (var productModel in productModels)
+                {
+                    productEntities.Add(ConvertFrom(productModel));
+                }
+            }            
             return productEntities;
         }
     }

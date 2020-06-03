@@ -53,7 +53,7 @@ namespace ServiceLayer.Converters
         public ICollection<CategoryDTO> ConvertFrom(ICollection<CategoryModel> categoryModels)
         {
             var categoryDtoList = new List<CategoryDTO>();
-            if(categoryDtoList != null)
+            if(categoryModels != null)
             {
                 foreach(var categoryModel in categoryModels)
                 {

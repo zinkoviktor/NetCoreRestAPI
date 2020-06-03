@@ -25,14 +25,13 @@ namespace DataLayer.Converters
         public ICollection<CategoryModel> ConvertTo(ICollection<CategoryEntity> categoryEntities)
         {
             var categoryModels = new List<CategoryModel>();
-            if (categoryEntities == null)
+            if (categoryEntities != null)
             {
-                return categoryModels;
-            }
-            foreach(var categoryEntity in categoryEntities)
-            {
-                categoryModels.Add(ConvertTo(categoryEntity));
-            }
+                foreach (var categoryEntity in categoryEntities)
+                {
+                    categoryModels.Add(ConvertTo(categoryEntity));
+                }
+            }            
             return categoryModels;
         }
 
@@ -54,14 +53,13 @@ namespace DataLayer.Converters
         public ICollection<CategoryEntity> ConvertFrom(ICollection<CategoryModel> categoryModels)
         {
             var categoryEntities = new List<CategoryEntity>();
-            if (categoryModels == null)
+            if (categoryModels != null)
             {
-                return categoryEntities;
-            }
-            foreach(var categoryModel in categoryModels)
-            {
-                categoryEntities.Add(ConvertFrom(categoryModel));
-            }
+                foreach (var categoryModel in categoryModels)
+                {
+                    categoryEntities.Add(ConvertFrom(categoryModel));
+                }
+            }            
             return categoryEntities;
         }
     }
