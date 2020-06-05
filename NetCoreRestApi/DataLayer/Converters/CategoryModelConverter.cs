@@ -1,6 +1,7 @@
 ﻿using DataLayer.Models;
 using Common.Converter;
 using DataLayer.Entities;
+using System.Collections.Generic;
 
 namespace DataLayer.Converters
 {
@@ -21,6 +22,19 @@ namespace DataLayer.Converters
             return categoryModel;
         }
 
+        public ICollection<CategoryModel> ConvertTo(ICollection<CategoryEntity> categoryEntities)
+        {
+            var categoryModels = new List<CategoryModel>();
+            if (categoryEntities != null)
+            {
+                foreach (var categoryEntity in categoryEntities)
+                {
+                    categoryModels.Add(ConvertTo(categoryEntity));
+                }
+            }            
+            return categoryModels;
+        }
+
         public CategoryEntity ConvertFrom(CategoryModel categoryModel)
         {
             if (categoryModel == null)
@@ -34,6 +48,19 @@ namespace DataLayer.Converters
                 Description = categoryModel.Description
             };
             return categoryEntity;
+        }
+        
+        public ICollection<CategoryEntity> ConvertFrom(ICollection<CategoryModel> categoryModels)
+        {
+            var categoryEntities = new List<CategoryEntity>();
+            if (categoryModels != null)
+            {
+                foreach (var categoryModel in categoryModels)
+                {
+                    categoryEntities.Add(ConvertFrom(categoryModel));
+                }
+            }            
+            return categoryEntities;
         }
     }
 }

@@ -25,6 +25,19 @@ namespace ServiceLayer.Converters
             return productModel;
         }
 
+        public ICollection<ProductModel> ConvertTo(ICollection<ProductDTO> productDtoList)
+        {
+            var productModels = new List<ProductModel>();
+            if(productDtoList != null)
+            {
+                foreach(var productDTO in productDtoList)
+                {
+                    productModels.Add(ConvertTo(productDTO));
+                }
+            }
+            return productModels;
+        }
+
         public ProductDTO ConvertFrom(ProductModel productModel)
         {
             if (productModel == null)
@@ -41,6 +54,19 @@ namespace ServiceLayer.Converters
                 AvailableCount = productModel.AvailableCount
             };
             return productDTO;
+        }
+
+        public ICollection<ProductDTO> ConvertFrom(ICollection<ProductModel> productModels)
+        {
+            var productDtoList = new List<ProductDTO>();
+            if(productModels != null)
+            {
+                foreach(var productModel in productModels)
+                {
+                    productDtoList.Add(ConvertFrom(productModel));
+                }
+            }
+            return productDtoList;
         }
 
         private static List<CategoryModel> ConvertToCategoryList(ProductDTO productDTO)
@@ -62,7 +88,8 @@ namespace ServiceLayer.Converters
         private static string ConvertToCategories(ProductModel productModel)
         {
             productModel.CategoryList ??= new List<CategoryModel>();
-            return string.Join(", ", productModel.CategoryList.ConvertAll(x => x.Name));
+            var categoryList = new List<CategoryModel>(productModel.CategoryList);
+            return string.Join(", ", categoryList.ConvertAll(x => x.Name));
         }
     }
 }

@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
         public IActionResult Get()
         {            
             var products = _productManager.GetAll();
-            var productsDTO = products.Select(x => _converter.ConvertFrom(x));
+            var productsDTO = _converter.ConvertFrom(products.ToList());
             return Ok(productsDTO);
         }
     }
