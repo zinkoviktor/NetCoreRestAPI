@@ -1,7 +1,7 @@
 ﻿using DataLayer.Models;
 using System.Linq;
 
-namespace BusinessLayer.Manager
+namespace BusinessLayer.Managers
 {
     public interface IProductManager
     {

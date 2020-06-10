@@ -1,4 +1,4 @@
-using BusinessLayer.Manager;
+using BusinessLayer.Managers;
 using Common.Converter;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Builder;

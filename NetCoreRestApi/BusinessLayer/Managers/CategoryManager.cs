@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BusinessLayer.Manager
+namespace BusinessLayer.Managers
 {
     public class CategoryManager : ICategoryManager
     {
