@@ -14,7 +14,8 @@ namespace BusinessLayer.Manager
                 {
                     Id = 1,
                     Name = "HP 410",
-                    Description = "All-in-One Wireless Ink Tank Color Printer",                    
+                    Description = "All-in-One Wireless Ink Tank Color Printer",
+                    CategoryList = new List<CategoryModel>(new CategoryManager().GetAll()),
                     Price = 90,
                     AvailableCount = 9,
                 },

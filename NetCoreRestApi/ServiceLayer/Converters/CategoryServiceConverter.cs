@@ -1,6 +1,7 @@
 ﻿using DataLayer.Models;
 using Common.Converter;
 using ServiceLayer.DataTransferObjects;
+using System.Collections.Generic;
 
 namespace ServiceLayer.Converters
 {
@@ -21,6 +22,19 @@ namespace ServiceLayer.Converters
             return categoryModel;
         }
 
+        public ICollection<CategoryModel> ConvertTo(ICollection<CategoryDTO> categoryDtoList)
+        {
+            var categoryModels = new List<CategoryModel>();
+            if (categoryDtoList != null)
+            {
+                foreach (var categoryDTO in categoryDtoList)
+                {
+                    categoryModels.Add(ConvertTo(categoryDTO));
+                }
+            }
+            return categoryModels;
+        }
+        
         public CategoryDTO ConvertFrom(CategoryModel categoryModel)
         {
             if (categoryModel == null)
@@ -34,6 +48,19 @@ namespace ServiceLayer.Converters
                 Description = categoryModel.Description
             };
             return categoryDTO;
+        }
+                
+        public ICollection<CategoryDTO> ConvertFrom(ICollection<CategoryModel> categoryModels)
+        {
+            var categoryDtoList = new List<CategoryDTO>();
+            if(categoryModels != null)
+            {
+                foreach(var categoryModel in categoryModels)
+                {
+                    categoryDtoList.Add(ConvertFrom(categoryModel));
+                }
+            }
+            return categoryDtoList;
         }
     }
 }
