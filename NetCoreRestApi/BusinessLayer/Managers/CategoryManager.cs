@@ -6,16 +6,16 @@ namespace BusinessLayer.Managers
 {
     public class CategoryManager : ICategoryManager
     {
-        private readonly IRepository<CategoryModel> Repository;
+        private readonly IRepository<CategoryModel> _repository;
 
         public CategoryManager(IRepository<CategoryModel> repository)
         {
-            Repository = repository;
+            _repository = repository;
         }
 
         public IQueryable<CategoryModel> GetAll()
         {
-            return Repository.GetAll();
+            return _repository.GetAll();
         }
     }
 }

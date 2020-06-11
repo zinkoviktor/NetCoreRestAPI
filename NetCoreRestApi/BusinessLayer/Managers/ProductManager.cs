@@ -6,16 +6,16 @@ namespace BusinessLayer.Managers
 {
     public class ProductManager : IProductManager
     {
-        private readonly IRepository<ProductModel> Repository;
+        private readonly IRepository<ProductModel> _repository;
 
         public ProductManager(IRepository<ProductModel> repository)
         {
-            Repository = repository;
+            _repository = repository;
         }
 
         public IQueryable<ProductModel> GetAll()
         {
-            return Repository.GetAll();
+            return _repository.GetAll();
         }        
     }
 }

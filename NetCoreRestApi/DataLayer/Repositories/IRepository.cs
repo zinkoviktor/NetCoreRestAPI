@@ -5,10 +5,10 @@ namespace DataLayer.Repositories
 {
     public interface IRepository<T> where T : BaseModel
     {
-        IQueryable<T> GetAll();
         T GetById(int id);
-        void Create(T entity);
-        void Update(T entity);
-        void Delete(int id);
+        IQueryable<T> GetAll();
+        IQueryable<T> Create(T entity);
+        IQueryable<T> Update(T entity);
+        IQueryable<T> Delete(int id);
     }
 }

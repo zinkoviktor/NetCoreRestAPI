@@ -8,28 +8,25 @@ namespace DataLayer.Repositories
 {
     public class ProductRepository : IRepository<ProductModel>
     {
-        private IQueryable<CategoryModel> categoryModels;
-        private readonly Expression<Func<CategoryModel, bool>> IsLaptopsCategory = (x) => x.Name.Equals("Laptops");
-        private readonly Expression<Func<CategoryModel, bool>> IsPritersCategory = (x) => x.Name.Equals("Printers");
-        private readonly Expression<Func<CategoryModel, bool>> IsSaleCategory = (x) => x.Name.Equals("Sale");
+        private readonly IRepository<CategoryModel> _categoryRepository;
 
         public ProductRepository(IRepository<CategoryModel> categoryRepository)
         {
-            categoryModels = categoryRepository.GetAll();
+            _categoryRepository = categoryRepository;
         }
 
-        public void Create(ProductModel entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(int id)
+        public ProductModel GetById(int id)
         {
             throw new NotImplementedException();
         }
 
         public IQueryable<ProductModel> GetAll()
         {
+            IQueryable<CategoryModel> categoryModels = _categoryRepository.GetAll();
+            Expression<Func<CategoryModel, bool>> IsLaptopsCategory = (x) => x.Name.Equals("Laptops");
+            Expression<Func<CategoryModel, bool>> IsPritersCategory = (x) => x.Name.Equals("Printers");
+            Expression<Func<CategoryModel, bool>> IsSaleCategory = (x) => x.Name.Equals("Sale");
+
             var productModels = new List<ProductModel>
             {
                 new ProductModel()
@@ -85,12 +82,17 @@ namespace DataLayer.Repositories
             return productModels.AsQueryable();
         }
 
-        public ProductModel GetById(int id)
+        public IQueryable<ProductModel> Create(ProductModel entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(ProductModel entity)
+        public IQueryable<ProductModel> Update(ProductModel entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<ProductModel> Delete(int id)
         {
             throw new NotImplementedException();
         }

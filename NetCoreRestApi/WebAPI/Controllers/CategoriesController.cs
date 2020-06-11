@@ -23,8 +23,8 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var categories = _categoryManager.GetAll();           
-            var categoriesDTO = _converter.ConvertFrom(categories.ToList());
+            var categoryModels = _categoryManager.GetAll();           
+            var categoriesDTO = _converter.ConvertFrom(categoryModels.ToList());
 
             return Ok(categoriesDTO);
         }

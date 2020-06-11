@@ -6,12 +6,7 @@ namespace DataLayer.Repositories
 {
     public class CategoryRepository : IRepository<CategoryModel>
     {
-        public void Create(CategoryModel entity)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Delete(int id)
+        public CategoryModel GetById(int id)
         {
             throw new System.NotImplementedException();
         }
@@ -43,12 +38,17 @@ namespace DataLayer.Repositories
             return categories.AsQueryable();
         }
 
-        public CategoryModel GetById(int id)
+        public IQueryable<CategoryModel> Create(CategoryModel entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Update(CategoryModel entity)
+        public IQueryable<CategoryModel> Update(CategoryModel entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IQueryable<CategoryModel> Delete(int id)
         {
             throw new System.NotImplementedException();
         }
