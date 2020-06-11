@@ -1,9 +1,9 @@
-﻿using DataLayer.Entities;
+﻿using DataLayer.Models;
 using System.Linq;
 
 namespace DataLayer.Repositories
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IRepository<T> where T : BaseModel
     {
         IQueryable<T> GetAll();
         T GetById(int id);

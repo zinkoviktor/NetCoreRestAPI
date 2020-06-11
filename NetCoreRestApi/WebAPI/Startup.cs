@@ -1,6 +1,7 @@
 using BusinessLayer.Managers;
 using Common.Converter;
 using DataLayer.Models;
+using DataLayer.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,11 +17,13 @@ namespace WebAPI
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers();            
             services.AddTransient<IProductManager, ProductManager>();
             services.AddTransient<ICategoryManager, CategoryManager>();
             services.AddTransient<IConverter<ProductDTO, ProductModel>, ProductServiceConverter>();           
-            services.AddTransient<IConverter<CategoryDTO, CategoryModel>, CategoryServiceConverter>();            
+            services.AddTransient<IConverter<CategoryDTO, CategoryModel>, CategoryServiceConverter>();
+            services.AddTransient<IRepository<CategoryModel>, CategoryRepository>();
+            services.AddTransient<IRepository<ProductModel>, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

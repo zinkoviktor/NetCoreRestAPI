@@ -23,10 +23,10 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var products = _categoryManager.GetAll();           
-            var productsDTO = _converter.ConvertFrom(products.ToList());
+            var categories = _categoryManager.GetAll();           
+            var categoriesDTO = _converter.ConvertFrom(categories.ToList());
 
-            return Ok(productsDTO);
+            return Ok(categoriesDTO);
         }
     }
 }
