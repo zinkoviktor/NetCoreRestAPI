@@ -82,17 +82,17 @@ namespace DataLayer.Repositories
             return productModels.AsQueryable();
         }
 
-        public IQueryable<ProductModel> Create(ProductModel entity)
+        public IQueryable<ProductModel> Create(ICollection<ProductModel> entities)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<ProductModel> Update(ProductModel entity)
+        public void Update(ICollection<ProductModel> entities)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<ProductModel> Delete(int id)
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }

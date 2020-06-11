@@ -38,17 +38,17 @@ namespace DataLayer.Repositories
             return categories.AsQueryable();
         }
 
-        public IQueryable<CategoryModel> Create(CategoryModel entity)
+        public IQueryable<CategoryModel> Create(ICollection<CategoryModel> entities)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryModel> Update(CategoryModel entity)
+        public void Update(ICollection<CategoryModel> entities)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryModel> Delete(int id)
+        public void Delete(int id)
         {
             throw new System.NotImplementedException();
         }

@@ -1,4 +1,5 @@
 ﻿using DataLayer.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataLayer.Repositories
@@ -7,8 +8,8 @@ namespace DataLayer.Repositories
     {
         T GetById(int id);
         IQueryable<T> GetAll();
-        IQueryable<T> Create(T entity);
-        IQueryable<T> Update(T entity);
-        IQueryable<T> Delete(int id);
+        IQueryable<T> Create(ICollection<T> entities);
+        void Update(ICollection<T> entities);
+        void Delete(int id);
     }
 }
