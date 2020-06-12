@@ -1,14 +1,15 @@
-﻿using DataLayer.Entities;
+﻿using DataLayer.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataLayer.Repositories
 {
-    public interface IRepository<T> where T : BaseEntity
+    public interface IRepository<T> where T : BaseModel
     {
-        IQueryable<T> GetAll();
         T GetById(int id);
-        void Create(T entity);
-        void Update(T entity);
+        IQueryable<T> GetAll();
+        IQueryable<T> Create(ICollection<T> entities);
+        void Update(ICollection<T> entities);
         void Delete(int id);
     }
 }
