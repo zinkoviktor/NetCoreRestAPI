@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BusinessLayer.Manager
+namespace DataLayer.Repositories
 {
-    public class CategoryManager : ICategoryManager
+    public class CategoryRepository : IRepository<CategoryModel>
     {
+        public CategoryModel GetById(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IQueryable<CategoryModel> GetAll()
         {
             var categories = new List<CategoryModel>
@@ -29,7 +34,23 @@ namespace BusinessLayer.Manager
                     Description = "Shop all sale items"
                 }
             };
+
             return categories.AsQueryable();
+        }
+
+        public IQueryable<CategoryModel> Create(ICollection<CategoryModel> entities)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Update(ICollection<CategoryModel> entities)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

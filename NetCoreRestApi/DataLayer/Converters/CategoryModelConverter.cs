@@ -13,25 +13,31 @@ namespace DataLayer.Converters
             {
                 return null;
             }
+
             var categoryModel = new CategoryModel()
             {
                 Id = categoryEntity.Id,
                 Name = categoryEntity.Name,
                 Description = categoryEntity.Description
             };
+
             return categoryModel;
         }
 
         public ICollection<CategoryModel> ConvertTo(ICollection<CategoryEntity> categoryEntities)
         {
             var categoryModels = new List<CategoryModel>();
-            if (categoryEntities != null)
+
+            if (categoryEntities == null)
             {
-                foreach (var categoryEntity in categoryEntities)
-                {
-                    categoryModels.Add(ConvertTo(categoryEntity));
-                }
-            }            
+                return categoryModels;
+            }
+
+            foreach (var categoryEntity in categoryEntities)
+            {
+                categoryModels.Add(ConvertTo(categoryEntity));
+            }
+
             return categoryModels;
         }
 
@@ -41,25 +47,31 @@ namespace DataLayer.Converters
             {
                 return null;
             }
+
             var categoryEntity = new CategoryEntity()
             {
                 Id = categoryModel.Id,
                 Name = categoryModel.Name,
                 Description = categoryModel.Description
             };
+
             return categoryEntity;
         }
         
         public ICollection<CategoryEntity> ConvertFrom(ICollection<CategoryModel> categoryModels)
         {
             var categoryEntities = new List<CategoryEntity>();
-            if (categoryModels != null)
+
+            if (categoryModels == null)
             {
-                foreach (var categoryModel in categoryModels)
-                {
-                    categoryEntities.Add(ConvertFrom(categoryModel));
-                }
-            }            
+                return categoryEntities;
+            }
+
+            foreach (var categoryModel in categoryModels)
+            {
+                categoryEntities.Add(ConvertFrom(categoryModel));
+            }
+
             return categoryEntities;
         }
     }

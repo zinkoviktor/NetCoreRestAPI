@@ -20,6 +20,7 @@ namespace DataLayer.Converters
             {
                 return null;
             }
+
             var productModel = new ProductModel
             {
                 Id = productEntity.Id,
@@ -29,19 +30,23 @@ namespace DataLayer.Converters
                 AvailableCount = productEntity.AvailableCount,
                 Price = productEntity.Price
             };
+
             return productModel;
         }
 
         public ICollection<ProductModel> ConvertTo(ICollection<ProductEntity> productEntities)
         {
             var productModels = new List<ProductModel>();
-            if (productEntities != null)
+            if (productEntities == null)
             {
-                foreach (var productEntity in productEntities)
-                {
-                    productModels.Add(ConvertTo(productEntity));
-                }
-            }            
+                return productModels;
+            }
+
+            foreach (var productEntity in productEntities)
+            {
+                productModels.Add(ConvertTo(productEntity));
+            }
+
             return productModels;
         }
 
@@ -51,6 +56,7 @@ namespace DataLayer.Converters
             {
                 return null;
             }
+
             var productEntity = new ProductEntity()
             {
                 Id = productModel.Id,
@@ -60,19 +66,24 @@ namespace DataLayer.Converters
                 AvailableCount = productModel.AvailableCount,
                 Price = productModel.Price
             };
+
             return productEntity;
         }
 
         public ICollection<ProductEntity> ConvertFrom(ICollection<ProductModel> productModels)
         {
             var productEntities = new List<ProductEntity>();
-            if(productModels != null)
+
+            if(productModels == null)
             {
-                foreach (var productModel in productModels)
-                {
-                    productEntities.Add(ConvertFrom(productModel));
-                }
-            }            
+                return productEntities;
+            }
+
+            foreach (var productModel in productModels)
+            {
+                productEntities.Add(ConvertFrom(productModel));
+            }
+
             return productEntities;
         }
     }

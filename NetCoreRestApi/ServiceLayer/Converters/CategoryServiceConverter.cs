@@ -13,25 +13,31 @@ namespace ServiceLayer.Converters
             {
                 return null;
             }
+
             var categoryModel = new CategoryModel
             {
                 Id = categoryDTO.Id,
                 Name = categoryDTO.Name,
                 Description = categoryDTO.Description
-            };         
+            };   
+            
             return categoryModel;
         }
 
         public ICollection<CategoryModel> ConvertTo(ICollection<CategoryDTO> categoryDtoList)
         {
             var categoryModels = new List<CategoryModel>();
-            if (categoryDtoList != null)
+
+            if (categoryDtoList == null)
             {
-                foreach (var categoryDTO in categoryDtoList)
-                {
-                    categoryModels.Add(ConvertTo(categoryDTO));
-                }
+                return categoryModels;
             }
+
+            foreach (var categoryDTO in categoryDtoList)
+            {
+                categoryModels.Add(ConvertTo(categoryDTO));
+            }
+
             return categoryModels;
         }
         
@@ -41,25 +47,31 @@ namespace ServiceLayer.Converters
             {
                 return null;
             }
+
             var categoryDTO = new CategoryDTO()
             {
                 Id = categoryModel.Id,
                 Name = categoryModel.Name,
                 Description = categoryModel.Description
             };
+
             return categoryDTO;
         }
                 
         public ICollection<CategoryDTO> ConvertFrom(ICollection<CategoryModel> categoryModels)
         {
             var categoryDtoList = new List<CategoryDTO>();
-            if(categoryModels != null)
+
+            if(categoryModels == null)
             {
-                foreach(var categoryModel in categoryModels)
-                {
-                    categoryDtoList.Add(ConvertFrom(categoryModel));
-                }
+                return categoryDtoList;
             }
+
+            foreach (var categoryModel in categoryModels)
+            {
+                categoryDtoList.Add(ConvertFrom(categoryModel));
+            }
+
             return categoryDtoList;
         }
     }

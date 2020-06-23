@@ -2,9 +2,8 @@
 
 namespace DataLayer.Models
 {
-    public class ProductModel
-    {
-        public int Id { get; set; }
+    public class ProductModel : BaseModel
+    {      
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<CategoryModel> CategoryList { get; set; } = new List<CategoryModel>();
