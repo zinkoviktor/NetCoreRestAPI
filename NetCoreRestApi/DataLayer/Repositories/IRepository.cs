@@ -10,6 +10,6 @@ namespace DataLayer.Repositories
         IQueryable<T> GetAll();
         IQueryable<T> Create(ICollection<T> entities);
         void Update(ICollection<T> entities);
-        void Delete(int id);
+        void Delete(ICollection<T> entities);
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DataLayer.Repositories
 {
-    public class CategoryRepository : IRepository<CategoryModel>
+    public class CategoryRepository : ICategoryRepository
     {
         public CategoryModel GetById(int id)
         {
@@ -38,17 +38,17 @@ namespace DataLayer.Repositories
             return categories.AsQueryable();
         }
 
-        public IQueryable<CategoryModel> Create(ICollection<CategoryModel> entities)
+        public IQueryable<CategoryModel> Create(ICollection<CategoryModel> categoryModels)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Update(ICollection<CategoryModel> entities)
+        public void Update(ICollection<CategoryModel> categoryModels)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Delete(int id)
+        public void Delete(ICollection<CategoryModel> categoryModels)
         {
             throw new System.NotImplementedException();
         }

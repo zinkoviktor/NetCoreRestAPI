@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace DataLayer.Repositories
 {
-    public class ProductRepository : IRepository<ProductModel>
+    public class ProductRepository : IProductRepository
     {
         private readonly IRepository<CategoryModel> _categoryRepository;
 
@@ -82,17 +82,17 @@ namespace DataLayer.Repositories
             return productModels.AsQueryable();
         }
 
-        public IQueryable<ProductModel> Create(ICollection<ProductModel> entities)
+        public IQueryable<ProductModel> Create(ICollection<ProductModel> productModels)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(ICollection<ProductModel> entities)
+        public void Update(ICollection<ProductModel> productModels)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public void Delete(ICollection<ProductModel> productModels)
         {
             throw new NotImplementedException();
         }
