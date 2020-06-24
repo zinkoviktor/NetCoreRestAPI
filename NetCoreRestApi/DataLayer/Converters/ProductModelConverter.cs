@@ -20,16 +20,34 @@ namespace DataLayer.Converters
             {
                 return null;
             }
+
             var productModel = new ProductModel
             {
                 Id = productEntity.Id,
                 Name = productEntity.Name,
                 Description = productEntity.Description,
-                CategoryList = ConvertToCategoryList(productEntity, _categoryConverter),
+                CategoryList = _categoryConverter.ConvertTo(productEntity.Categories),
                 AvailableCount = productEntity.AvailableCount,
                 Price = productEntity.Price
             };
+
             return productModel;
+        }
+
+        public ICollection<ProductModel> ConvertTo(ICollection<ProductEntity> productEntities)
+        {
+            var productModels = new List<ProductModel>();
+            if (productEntities == null)
+            {
+                return productModels;
+            }
+
+            foreach (var productEntity in productEntities)
+            {
+                productModels.Add(ConvertTo(productEntity));
+            }
+
+            return productModels;
         }
 
         public ProductEntity ConvertFrom(ProductModel productModel)
@@ -38,31 +56,35 @@ namespace DataLayer.Converters
             {
                 return null;
             }
+
             var productEntity = new ProductEntity()
             {
                 Id = productModel.Id,
                 Name = productModel.Name,
                 Description = productModel.Description,
-                Categories = ConvertToCategories(productModel, _categoryConverter),
+                Categories = _categoryConverter.ConvertFrom(productModel.CategoryList),
                 AvailableCount = productModel.AvailableCount,
                 Price = productModel.Price
             };
+
             return productEntity;
         }
 
-        private static List<CategoryModel> ConvertToCategoryList(ProductEntity productEntity, IConverter<CategoryEntity, CategoryModel> converter)
+        public ICollection<ProductEntity> ConvertFrom(ICollection<ProductModel> productModels)
         {
-            var categoryModelList = new List<CategoryModel>();
-            foreach (var categoryEntity in productEntity.Categories)
-            {
-                categoryModelList.Add(converter.ConvertTo(categoryEntity));
-            }
-            return categoryModelList;
-        }
+            var productEntities = new List<ProductEntity>();
 
-        private static ICollection<CategoryEntity> ConvertToCategories(ProductModel productModel, IConverter<CategoryEntity, CategoryModel> converter)
-        {
-            return productModel.CategoryList.ConvertAll(categoryModel => converter.ConvertFrom(categoryModel));
+            if(productModels == null)
+            {
+                return productEntities;
+            }
+
+            foreach (var productModel in productModels)
+            {
+                productEntities.Add(ConvertFrom(productModel));
+            }
+
+            return productEntities;
         }
     }
 }

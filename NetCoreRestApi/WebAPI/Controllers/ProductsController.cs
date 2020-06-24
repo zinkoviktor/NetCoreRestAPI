@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using BusinessLayer.Manager;
+using BusinessLayer.Managers;
 using Common.Converter;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -23,8 +23,9 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {            
-            var products = _productManager.GetAll();
-            var productsDTO = products.Select(x => _converter.ConvertFrom(x));
+            var productModels = _productManager.GetAll();
+            var productsDTO = _converter.ConvertFrom(productModels.ToList());
+
             return Ok(productsDTO);
         }
     }

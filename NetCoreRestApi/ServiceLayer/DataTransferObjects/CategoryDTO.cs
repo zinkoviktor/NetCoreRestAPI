@@ -1,9 +1,8 @@
 ﻿
 namespace ServiceLayer.DataTransferObjects
 {
-    public class CategoryDTO
-    {
-        public int Id { get; set; }
+    public class CategoryDTO : BaseDto
+    {        
         public string Name { get; set; }
         public string Description { get; set; }
     }

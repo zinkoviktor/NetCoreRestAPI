@@ -1,9 +1,8 @@
 ﻿
 namespace DataLayer.Entities
 {
-    public class CategoryEntity
-    {
-        public int Id { get; set; }
+    public class CategoryEntity : BaseEntity
+    {        
         public string Name { get; set; }
         public string Description { get; set; }
     }
