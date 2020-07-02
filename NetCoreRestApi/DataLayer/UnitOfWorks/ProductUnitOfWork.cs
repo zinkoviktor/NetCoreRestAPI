@@ -13,13 +13,8 @@ namespace DataLayer.UnitOfWorks
         {
             _productRepository = productRepository;
         }
-       
-        public IQueryable<ProductEntity> Create(ProductEntity entity)
-        {
-            throw new System.NotImplementedException();
-        }
 
-        public IQueryable<ProductEntity> Delete(int id)
+        public ProductEntity GetById(int id)
         {
             throw new System.NotImplementedException();
         }
@@ -29,17 +24,22 @@ namespace DataLayer.UnitOfWorks
             throw new System.NotImplementedException();
         }
 
-        public ProductEntity GetById(int id)
+        public IQueryable<ProductEntity> Create(ProductEntity entity)
+        {
+            throw new System.NotImplementedException();
+        }        
+
+        public IQueryable<ProductEntity> Update(ProductEntity entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IQueryable<ProductEntity> Delete(int id)
         {
             throw new System.NotImplementedException();
         }
 
         public int Save()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IQueryable<ProductEntity> Update(ProductEntity entity)
         {
             throw new System.NotImplementedException();
         }

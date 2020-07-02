@@ -14,12 +14,7 @@ namespace DataLayer.UnitOfWorks
             _categoryRepository = categoryRepository;
         }
 
-        public IQueryable<CategoryEntity> Create(CategoryEntity entity)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IQueryable<CategoryEntity> Delete(int id)
+        public CategoryEntity GetById(int id)
         {
             throw new System.NotImplementedException();
         }
@@ -29,17 +24,22 @@ namespace DataLayer.UnitOfWorks
             throw new System.NotImplementedException();
         }
 
-        public CategoryEntity GetById(int id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public int Save()
+        public IQueryable<CategoryEntity> Create(CategoryEntity entity)
         {
             throw new System.NotImplementedException();
         }
 
         public IQueryable<CategoryEntity> Update(CategoryEntity entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IQueryable<CategoryEntity> Delete(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int Save()
         {
             throw new System.NotImplementedException();
         }
