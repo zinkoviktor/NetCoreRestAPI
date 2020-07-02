@@ -2,7 +2,7 @@
 
 namespace DataLayer.Repositories
 {
-    interface IProductRepository : IRepository<ProductModel>
+    public interface IProductRepository : IRepository<ProductModel>
     {
     }
 }
