@@ -1,20 +1,16 @@
-﻿using Common.Converter;
+﻿using Common.Converters;
 using DataLayer.Models;
 using ServiceLayer.DataTransferObjects;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace ServiceLayer.Converters
 {
-    public class ProductServiceConverter : IConverter<ProductDTO, ProductModel> 
+    public class ProductServiceConverter : BaseConvertor<ProductDTO, ProductModel> 
     {
-        public ProductModel ConvertTo(ProductDTO productDTO)
-        {
-            if (productDTO == null)
-            {
-                return null;
-            }       
-            
-            ProductModel productModel = new ProductModel
+        public override Expression<Func<ProductDTO, ProductModel>> ConvertToExpression =>
+            (productDTO) => new ProductModel()
             {
                 Id = productDTO.Id,
                 Name = productDTO.Name,
@@ -22,37 +18,11 @@ namespace ServiceLayer.Converters
                 Price = productDTO.Price,
                 CategoryList = ConvertToCategoryList(productDTO),
                 AvailableCount = productDTO.AvailableCount
-            };  
-            
-            return productModel;
-        }
+            };
 
-        public ICollection<ProductModel> ConvertTo(ICollection<ProductDTO> productDtoList)
-        {
-            var productModels = new List<ProductModel>();
-
-            if(productDtoList == null)
+        public override Expression<Func<ProductModel, ProductDTO>> ConvertFromExpression =>
+            (productModel) => new ProductDTO()
             {
-                return productModels;
-            }
-
-            foreach (var productDTO in productDtoList)
-            {
-                productModels.Add(ConvertTo(productDTO));
-            }
-
-            return productModels;
-        }
-
-        public ProductDTO ConvertFrom(ProductModel productModel)
-        {
-            if (productModel == null)
-            {
-                return null;
-            }   
-            
-            var productDTO = new ProductDTO
-            {                
                 Id = productModel.Id,
                 Name = productModel.Name,
                 Description = productModel.Description,
@@ -60,25 +30,6 @@ namespace ServiceLayer.Converters
                 Price = productModel.Price,
                 AvailableCount = productModel.AvailableCount
             };
-
-            return productDTO;
-        }
-
-        public ICollection<ProductDTO> ConvertFrom(ICollection<ProductModel> productModels)
-        {
-            var productDtoList = new List<ProductDTO>();
-            if(productModels == null)
-            {
-                return productDtoList;
-            }
-
-            foreach (var productModel in productModels)
-            {
-                productDtoList.Add(ConvertFrom(productModel));
-            }
-
-            return productDtoList;
-        }
 
         private static List<CategoryModel> ConvertToCategoryList(ProductDTO productDTO)
         {
