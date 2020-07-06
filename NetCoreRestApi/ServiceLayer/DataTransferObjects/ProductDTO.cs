@@ -1,7 +1,7 @@
 ﻿
 namespace ServiceLayer.DataTransferObjects
 {
-    public class ProductDTO : BaseDto
+    public class ProductDto<TId> : ItemDto<TId>
     {   
         public string Categories { get; set; }
         public decimal Price { get; set; }

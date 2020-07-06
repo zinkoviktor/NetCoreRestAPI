@@ -1,14 +1,15 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace DataLayer.UnitOfWorks
 {
-    public interface IUnitOfWork<T>
+    public interface IUnitOfWork<TEntity, TId>
     {
-        T GetById(int id);
-        IQueryable<T> GetAll();
-        IQueryable<T> Create(T entity);
-        IQueryable<T> Update(T entity);
-        IQueryable<T> Delete(int id);
+        TEntity GetById(TId id);
+        IQueryable<TEntity> GetAll();
+        IQueryable<TEntity> Create(ICollection<TEntity> entities);
+        IQueryable<TEntity> Update(ICollection<TEntity> entities);
+        IQueryable<TEntity> Delete(ICollection<TEntity> entities);
         int Save();
     }
 }

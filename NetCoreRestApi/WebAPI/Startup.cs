@@ -1,3 +1,4 @@
+using BusinessLayer.Interfaces;
 using BusinessLayer.Managers;
 using Common.Converter;
 using DataLayer.Models;
@@ -18,12 +19,12 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddTransient<IProductManager, ProductManager>();
-            services.AddTransient<ICategoryManager, CategoryManager>();
-            services.AddTransient<IConverter<ProductDTO, ProductModel>, ProductServiceConverter>();           
-            services.AddTransient<IConverter<CategoryDTO, CategoryModel>, CategoryServiceConverter>();
-            services.AddTransient<IRepository<CategoryModel>, CategoryRepository>();
-            services.AddTransient<IRepository<ProductModel>, ProductRepository>();
+            services.AddTransient<IManager<ProductModel<int>>, ProductManager<int>>();
+            services.AddTransient<IManager<CategoryModel<int>>, CategoryManager<int>>();
+            services.AddTransient<IConverter<ProductDto<int>, ProductModel<int>>, ProductServiceConverter<int>>();           
+            services.AddTransient<IConverter<CategoryDto<int>, CategoryModel<int>>, CategoryServiceConverter<int>>();
+            services.AddTransient<IRepository<CategoryModel<int>, int>, CategoryRepository<int>>();
+            services.AddTransient<IRepository<ProductModel<int>, int>, ProductRepository<int>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

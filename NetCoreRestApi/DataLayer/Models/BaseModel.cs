@@ -1,9 +1,7 @@
 ﻿namespace DataLayer.Models
 {
-    public class BaseModel
+    public class BaseModel<TId>
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public TId Id { get; set; }       
     }
 }

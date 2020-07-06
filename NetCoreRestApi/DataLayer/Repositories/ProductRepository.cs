@@ -6,35 +6,34 @@ using System.Linq.Expressions;
 
 namespace DataLayer.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository<TId> : IProductRepository<TId>
     {
-        private readonly IRepository<CategoryModel> _categoryRepository;
+        private readonly IRepository<CategoryModel<TId>, TId> _categoryRepository;
 
-        public ProductRepository(IRepository<CategoryModel> categoryRepository)
+        public ProductRepository(IRepository<CategoryModel<TId>, TId> categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
 
-        public ProductModel GetById(int id)
+        public ProductModel<TId> GetById(TId id)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<ProductModel> GetAll()
+        public IQueryable<ProductModel<TId>> GetAll()
         {
-            IQueryable<CategoryModel> categoryModels = _categoryRepository.GetAll();
-            Expression<Func<CategoryModel, bool>> IsLaptopsCategory = (x) => x.Name.Equals("Laptops");
-            Expression<Func<CategoryModel, bool>> IsPritersCategory = (x) => x.Name.Equals("Printers");
-            Expression<Func<CategoryModel, bool>> IsSaleCategory = (x) => x.Name.Equals("Sale");
+            IQueryable<CategoryModel<TId>> categoryModels = _categoryRepository.GetAll();
+            Expression<Func<CategoryModel<TId>, bool>> IsLaptopsCategory = (x) => x.Name.Equals("Laptops");
+            Expression<Func<CategoryModel<TId>, bool>> IsPritersCategory = (x) => x.Name.Equals("Printers");
+            Expression<Func<CategoryModel<TId>, bool>> IsSaleCategory = (x) => x.Name.Equals("Sale");
 
-            var productModels = new List<ProductModel>
+            var productModels = new List<ProductModel<TId>>
             {
-                new ProductModel()
-                {
-                    Id = 1,
+                new ProductModel<TId>()
+                {                    
                     Name = "HP 410",
                     Description = "All-in-One Wireless Ink Tank Color Printer",
-                    CategoryList = new List<CategoryModel>()
+                    CategoryList = new List<CategoryModel<TId>>()
                     {
                         categoryModels
                             .Where(IsPritersCategory)
@@ -46,12 +45,11 @@ namespace DataLayer.Repositories
                     Price = 90,
                     AvailableCount = 9,
                 },
-                new ProductModel()
-                {
-                    Id = 2,
+                new ProductModel<TId>()
+                {                   
                     Name = "Epson L3152",
                     Description = "WiFi All in One Ink Tank Printer",
-                    CategoryList = new List<CategoryModel>()
+                    CategoryList = new List<CategoryModel<TId>>()
                     {
                         categoryModels
                             .Where(IsPritersCategory)
@@ -60,12 +58,11 @@ namespace DataLayer.Repositories
                     Price = 60,
                     AvailableCount = 19,
                 },
-                new ProductModel()
-                {
-                    Id = 3,
+                new ProductModel<TId>()
+                {                    
                     Name = "Dell Inspiron 3583",
                     Description = "15.6-inch FHD Laptop",
-                    CategoryList = new List<CategoryModel>()
+                    CategoryList = new List<CategoryModel<TId>>()
                     {
                         categoryModels
                             .Where(IsLaptopsCategory)
@@ -82,17 +79,17 @@ namespace DataLayer.Repositories
             return productModels.AsQueryable();
         }
 
-        public IQueryable<ProductModel> Create(ICollection<ProductModel> productModels)
+        public IQueryable<ProductModel<TId>> Create(ICollection<ProductModel<TId>> productModels)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(ICollection<ProductModel> productModels)
+        public void Update(ICollection<ProductModel<TId>> productModels)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(ICollection<ProductModel> productModels)
+        public void Delete(ICollection<ProductModel<TId>> productModels)
         {
             throw new NotImplementedException();
         }

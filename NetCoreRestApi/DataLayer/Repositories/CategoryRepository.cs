@@ -4,32 +4,29 @@ using System.Linq;
 
 namespace DataLayer.Repositories
 {
-    public class CategoryRepository : ICategoryRepository
+    public class CategoryRepository<TId> : ICategoryRepository<TId>
     {
-        public CategoryModel GetById(int id)
+        public CategoryModel<TId> GetById(TId id)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryModel> GetAll()
+        public IQueryable<CategoryModel<TId>> GetAll()
         {
-            var categories = new List<CategoryModel>
+            var categories = new List<CategoryModel<TId>>
             {
-                new CategoryModel()
-                {
-                    Id = 1,
+                new CategoryModel<TId>()
+                {                    
                     Name = "Laptops",
                     Description = "Shop Laptops and find popular brands. Save money."
                 },
-                new CategoryModel()
-                {
-                    Id = 2,
+                new CategoryModel<TId>()
+                {                    
                     Name = "Printers",
                     Description = "The Best Printers for 2020."
                 },
-                new CategoryModel()
-                {
-                    Id = 3,
+                new CategoryModel<TId>()
+                {                    
                     Name = "Sale",
                     Description = "Shop all sale items"
                 }
@@ -38,17 +35,17 @@ namespace DataLayer.Repositories
             return categories.AsQueryable();
         }
 
-        public IQueryable<CategoryModel> Create(ICollection<CategoryModel> categoryModels)
+        public IQueryable<CategoryModel<TId>> Create(ICollection<CategoryModel<TId>> categoryModels)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Update(ICollection<CategoryModel> categoryModels)
+        public void Update(ICollection<CategoryModel<TId>> categoryModels)
         {
             throw new System.NotImplementedException();
         }
 
-        public void Delete(ICollection<CategoryModel> categoryModels)
+        public void Delete(ICollection<CategoryModel<TId>> categoryModels)
         {
             throw new System.NotImplementedException();
         }

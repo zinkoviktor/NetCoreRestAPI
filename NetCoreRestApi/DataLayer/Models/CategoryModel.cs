@@ -1,8 +1,7 @@
 ﻿
 namespace DataLayer.Models
 {
-    public class CategoryModel : BaseModel
+    public class CategoryModel<TId> : ItemModel<TId>
     {      
-        
     }
 }

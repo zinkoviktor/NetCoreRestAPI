@@ -4,12 +4,12 @@ using System.Linq;
 
 namespace DataLayer.Repositories
 {
-    public interface IRepository<T> where T : BaseModel
+    public interface IRepository<TModel, TId> where TModel : BaseModel<TId>
     {
-        T GetById(int id);
-        IQueryable<T> GetAll();
-        IQueryable<T> Create(ICollection<T> entities);
-        void Update(ICollection<T> entities);
-        void Delete(ICollection<T> entities);
+        TModel GetById(TId id);
+        IQueryable<TModel> GetAll();
+        IQueryable<TModel> Create(ICollection<TModel> models);
+        void Update(ICollection<TModel> models);
+        void Delete(ICollection<TModel> models);
     }
 }

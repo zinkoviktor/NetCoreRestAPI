@@ -1,40 +1,41 @@
 ﻿using DataLayer.Entities;
 using DataLayer.Repositories;
 using DataLayer.UnitOfWorks.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataLayer.UnitOfWorks
 {
-    public class ProductUnitOfWork : IProductUnitOfWork
+    public class ProductUnitOfWork<TId> : IProductUnitOfWork<TId>
     {
-        private IProductRepository _productRepository;
+        private IProductRepository<TId> _productRepository;
 
-        public ProductUnitOfWork(IProductRepository productRepository)
+        public ProductUnitOfWork(IProductRepository<TId> productRepository)
         {
             _productRepository = productRepository;
         }
 
-        public ProductEntity GetById(int id)
+        public ProductEntity<TId> GetById(TId id)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<ProductEntity> GetAll()
+        public IQueryable<ProductEntity<TId>> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<ProductEntity> Create(ProductEntity entity)
+        public IQueryable<ProductEntity<TId>> Create(ICollection<ProductEntity<TId>> entities)
         {
             throw new System.NotImplementedException();
         }        
 
-        public IQueryable<ProductEntity> Update(ProductEntity entity)
+        public IQueryable<ProductEntity<TId>> Update(ICollection<ProductEntity<TId>> entity)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<ProductEntity> Delete(int id)
+        public IQueryable<ProductEntity<TId>> Delete(ICollection<ProductEntity<TId>> id)
         {
             throw new System.NotImplementedException();
         }

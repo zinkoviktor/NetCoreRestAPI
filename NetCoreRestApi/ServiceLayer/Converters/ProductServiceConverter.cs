@@ -7,10 +7,10 @@ using System.Linq.Expressions;
 
 namespace ServiceLayer.Converters
 {
-    public class ProductServiceConverter : BaseConverter<ProductDTO, ProductModel> 
+    public class ProductServiceConverter<TId> : BaseConverter<ProductDto<TId>, ProductModel<TId>> 
     {
-        public override Expression<Func<ProductDTO, ProductModel>> ConvertToExpression =>
-            (productDTO) => new ProductModel()
+        public override Expression<Func<ProductDto<TId>, ProductModel<TId>>> ConvertToExpression =>
+            (productDTO) => new ProductModel<TId>()
             {
                 Id = productDTO.Id,
                 Name = productDTO.Name,
@@ -20,8 +20,8 @@ namespace ServiceLayer.Converters
                 AvailableCount = productDTO.AvailableCount
             };
 
-        public override Expression<Func<ProductModel, ProductDTO>> ConvertFromExpression =>
-            (productModel) => new ProductDTO()
+        public override Expression<Func<ProductModel<TId>, ProductDto<TId>>> ConvertFromExpression =>
+            (productModel) => new ProductDto<TId>()
             {
                 Id = productModel.Id,
                 Name = productModel.Name,
@@ -31,9 +31,9 @@ namespace ServiceLayer.Converters
                 AvailableCount = productModel.AvailableCount
             };
 
-        private static List<CategoryModel> ConvertToCategoryList(ProductDTO productDTO)
+        private static List<CategoryModel<TId>> ConvertToCategoryList(ProductDto<TId> productDTO)
         {
-            var categoryModels = new List<CategoryModel>();
+            var categoryModels = new List<CategoryModel<TId>>();
             productDTO.Categories ??= "";
             var categoryList = productDTO.Categories.Split(",");
 
@@ -44,18 +44,23 @@ namespace ServiceLayer.Converters
 
             for (var i = 1; i < categoryList.Length; i++)
             {
-                categoryModels.Add(new CategoryModel() { Id = i, Name = categoryList[i] });
+                categoryModels.Add(new CategoryModel<TId>() { Id = GetId(), Name = categoryList[i] });
             }
 
             return categoryModels;
         }
 
-        private static string ConvertToCategories(ProductModel productModel)
+        private static string ConvertToCategories(ProductModel<TId> productModel)
         {
-            productModel.CategoryList ??= new List<CategoryModel>();
-            var categoryList = new List<CategoryModel>(productModel.CategoryList);
+            productModel.CategoryList ??= new List<CategoryModel<TId>>();
+            var categoryList = new List<CategoryModel<TId>>(productModel.CategoryList);
 
             return string.Join(", ", categoryList.ConvertAll(x => x.Name));
+        }
+
+        private static TId GetId()
+        {
+            throw new NotImplementedException();
         }
     }
 }

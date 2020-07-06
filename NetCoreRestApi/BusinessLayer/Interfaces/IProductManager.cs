@@ -1,10 +1,8 @@
-﻿using DataLayer.Models;
-using System.Linq;
+﻿using BusinessLayer.Interfaces;
 
 namespace BusinessLayer.Managers
 {
-    public interface IProductManager
-    {
-        IQueryable<ProductModel> GetAll();
+    public interface IProductManager<TModel> : IManager<TModel>
+    {      
     }
 }

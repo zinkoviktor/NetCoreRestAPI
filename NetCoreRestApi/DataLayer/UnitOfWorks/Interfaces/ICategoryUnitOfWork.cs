@@ -2,7 +2,7 @@
 
 namespace DataLayer.UnitOfWorks.Interfaces
 {
-    public interface ICategoryUnitOfWork : IUnitOfWork<CategoryEntity>
+    public interface ICategoryUnitOfWork<TId> : IUnitOfWork<CategoryEntity<TId>, TId>
     {
     }
 }

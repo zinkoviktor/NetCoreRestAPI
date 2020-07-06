@@ -1,40 +1,41 @@
 ﻿using DataLayer.Entities;
 using DataLayer.Repositories;
 using DataLayer.UnitOfWorks.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataLayer.UnitOfWorks
 {
-    public class CategoryUnitOfWork : ICategoryUnitOfWork
+    public class CategoryUnitOfWork<TId> : ICategoryUnitOfWork<TId>
     {
-        private ICategoryRepository _categoryRepository;
+        private ICategoryRepository<TId> _categoryRepository;
 
-        public CategoryUnitOfWork(ICategoryRepository categoryRepository)
+        public CategoryUnitOfWork(ICategoryRepository<TId> categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
 
-        public CategoryEntity GetById(int id)
+        public CategoryEntity<TId> GetById(TId id)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryEntity> GetAll()
+        public IQueryable<CategoryEntity<TId>> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryEntity> Create(CategoryEntity entity)
+        public IQueryable<CategoryEntity<TId>> Create(ICollection<CategoryEntity<TId>> entities)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryEntity> Update(CategoryEntity entity)
+        public IQueryable<CategoryEntity<TId>> Update(ICollection<CategoryEntity<TId>> entities)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryEntity> Delete(int id)
+        public IQueryable<CategoryEntity<TId>> Delete(ICollection<CategoryEntity<TId>> entities)
         {
             throw new System.NotImplementedException();
         }
