@@ -9,6 +9,14 @@ namespace Common.Converters
     {
         public abstract Expression<Func<T1, T2>> ConvertToExpression { get; }
         public abstract Expression<Func<T2, T1>> ConvertFromExpression { get; }
+        private Func<T1, T2> _convertingToFunction;
+        private Func<T2, T1> _convertingFromFunction;
+
+        public BaseConverter()
+        {
+            _convertingToFunction = ConvertToExpression.Compile();
+            _convertingFromFunction = ConvertFromExpression.Compile();
+        }
 
         public virtual T2 ConvertTo(T1 t1)
         {
@@ -16,9 +24,7 @@ namespace Common.Converters
             {
                 return default;
             }
-
-            var _convertingFunction = ConvertToExpression.Compile();
-            return _convertingFunction(t1);
+            return _convertingToFunction(t1);
         }
 
         public virtual ICollection<T2> ConvertTo(ICollection<T1> t1Collection)
@@ -44,9 +50,8 @@ namespace Common.Converters
             {
                 return default;
             }
-
-            var _convertingFunction = ConvertFromExpression.Compile();
-            return  _convertingFunction(t2);           
+            
+            return _convertingFromFunction(t2);           
         }
 
         public virtual ICollection<T1> ConvertFrom(ICollection<T2> t2Collection)
