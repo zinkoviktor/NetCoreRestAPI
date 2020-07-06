@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace ServiceLayer.Converters
 {
-    public class ProductServiceConverter : BaseConvertor<ProductDTO, ProductModel> 
+    public class ProductServiceConverter : BaseConverter<ProductDTO, ProductModel> 
     {
         public override Expression<Func<ProductDTO, ProductModel>> ConvertToExpression =>
             (productDTO) => new ProductModel()

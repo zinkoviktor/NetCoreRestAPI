@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace DataLayer.Converters
 {
-    public class ProductModelConverter : BaseConvertor<ProductEntity, ProductModel>
+    public class ProductModelConverter : BaseConverter<ProductEntity, ProductModel>
     {
         private readonly IConverter<CategoryEntity, CategoryModel> _categoryConverter;
         

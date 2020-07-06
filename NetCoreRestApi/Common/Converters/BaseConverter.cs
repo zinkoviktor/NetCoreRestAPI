@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Common.Converters
 {
-    public abstract class BaseConvertor<T1, T2> : IConverter<T1, T2>
+    public abstract class BaseConverter<T1, T2> : IConverter<T1, T2>
     {
         public abstract Expression<Func<T1, T2>> ConvertToExpression { get; }
         public abstract Expression<Func<T2, T1>> ConvertFromExpression { get; }

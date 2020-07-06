@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace DataLayer.Converters
 {
-    public class CategoryModelConverter : BaseConvertor<CategoryEntity, CategoryModel>
+    public class CategoryModelConverter : BaseConverter<CategoryEntity, CategoryModel>
     {       
         public override Expression<Func<CategoryEntity, CategoryModel>> ConvertToExpression => 
             (categoryEntity) => new CategoryModel()

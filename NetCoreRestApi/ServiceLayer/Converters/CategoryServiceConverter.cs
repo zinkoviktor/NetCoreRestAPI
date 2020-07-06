@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace ServiceLayer.Converters
 {
-    public class CategoryServiceConverter : BaseConvertor<CategoryDTO, CategoryModel>
+    public class CategoryServiceConverter : BaseConverter<CategoryDTO, CategoryModel>
     {
         public override Expression<Func<CategoryDTO, CategoryModel>> ConvertToExpression =>
             (categoryDTO) => new CategoryModel()
