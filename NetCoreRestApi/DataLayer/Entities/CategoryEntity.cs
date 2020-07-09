@@ -1,7 +1,7 @@
 ﻿
 namespace DataLayer.Entities
 {
-    public class CategoryEntity<TId> : ItemEntity<TId>
+    public class CategoryEntity : ItemEntity<int>
     {     
     }
 }

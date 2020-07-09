@@ -1,19 +1,18 @@
-﻿using System.Linq;
-using BusinessLayer.Interfaces;
-using BusinessLayer.Managers;
+﻿using BusinessLayer.Managers;
 using Common.Converter;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.DataTransferObjects;
+using System.Linq;
 
 namespace WebAPI.Controllers
-{  
+{
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriesController : GenericController<CategoryDto<int>, CategoryModel<int>>
+    public class CategoriesController : GenericController<CategoryDto, CategoryModel>
     {       
-        public CategoriesController(IManager<CategoryModel<int>> manager, 
-            IConverter<CategoryDto<int>, CategoryModel<int>> converter) : base(manager, converter)
+        public CategoriesController(ICategoryManager manager, 
+            IConverter<CategoryDto, CategoryModel> converter) : base(manager, converter)
         {
         }
 

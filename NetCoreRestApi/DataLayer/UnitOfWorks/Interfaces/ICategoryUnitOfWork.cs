@@ -1,8 +1,9 @@
 ﻿using DataLayer.Entities;
+using DataLayer.Models;
 
 namespace DataLayer.UnitOfWorks.Interfaces
 {
-    public interface ICategoryUnitOfWork<TId> : IUnitOfWork<CategoryEntity<TId>, TId>
+    public interface ICategoryUnitOfWork : IUnitOfWork<CategoryModel, CategoryEntity, int>
     {
     }
 }

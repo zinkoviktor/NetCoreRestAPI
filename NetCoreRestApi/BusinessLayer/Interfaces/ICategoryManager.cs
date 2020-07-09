@@ -3,7 +3,7 @@ using DataLayer.Models;
 
 namespace BusinessLayer.Managers
 {
-    public interface ICategoryManager<TModel> : IManager<TModel>
+    public interface ICategoryManager : IManager<CategoryModel>
     {      
     }
 }

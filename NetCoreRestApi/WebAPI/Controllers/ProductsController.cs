@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Interfaces;
+﻿using BusinessLayer.Managers;
 using Common.Converter;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +9,10 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : GenericController<ProductDto<int>, ProductModel<int>>
+    public class ProductsController : GenericController<ProductDto, ProductModel>
     {
-        public ProductsController(IManager<ProductModel<int>> manager, IConverter<ProductDto<int>, ProductModel<int>> converter) 
-            : base(manager, converter)
+        public ProductsController(IProductManager manager, 
+            IConverter<ProductDto, ProductModel> converter) : base(manager, converter)
         {
         }
 

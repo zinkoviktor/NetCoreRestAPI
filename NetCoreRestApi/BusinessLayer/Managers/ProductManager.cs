@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace BusinessLayer.Managers
 {
-    public class ProductManager<TId> : IProductManager<ProductModel<TId>>
+    public class ProductManager : IProductManager
     {
-        private readonly IRepository<ProductModel<TId>, TId> _repository;
+        private readonly IProductRepository _repository;
 
-        public ProductManager(IRepository<ProductModel<TId>, TId> repository)
+        public ProductManager(IProductRepository repository)
         {
             _repository = repository;
         }
 
-        public IQueryable<ProductModel<TId>> GetAll()
+        public IQueryable<ProductModel> GetAll()
         {
             return _repository.GetAll();
         }        

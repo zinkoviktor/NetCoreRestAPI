@@ -2,10 +2,10 @@
 
 namespace DataLayer.Models
 {
-    public class ProductModel<T> : ItemModel<T>
+    public class ProductModel : ItemModel<int>
     {     
-        public ICollection<CategoryModel<T>> CategoryList { get; set; } =
-            new List<CategoryModel<T>>();
+        public ICollection<CategoryModel> CategoryList { get; set; } =
+            new List<CategoryModel>();
         public decimal Price { get; set; }
         public int AvailableCount { get; set; }
     }

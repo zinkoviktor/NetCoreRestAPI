@@ -7,17 +7,17 @@ using System.Linq.Expressions;
 
 namespace DataLayer.Converters
 {
-    public class ProductModelConverter<TId> : BaseConverter<ProductEntity<TId>, ProductModel<TId>>
+    public class ProductModelConverter : BaseConverter<ProductEntity, ProductModel>
     {
-        private readonly IConverter<CategoryEntity<TId>, CategoryModel<TId>> _categoryConverter;
+        private readonly IConverter<CategoryEntity, CategoryModel> _categoryConverter;
         
-        public ProductModelConverter(IConverter<CategoryEntity<TId>, CategoryModel<TId>> categoryConverter)
+        public ProductModelConverter(IConverter<CategoryEntity, CategoryModel> categoryConverter)
         {
             _categoryConverter = categoryConverter;
         }
 
-        public override Expression<Func<ProductEntity<TId>, ProductModel<TId>>> ConvertToExpression =>
-            (productEntity) => new ProductModel<TId>()
+        public override Expression<Func<ProductEntity, ProductModel>> ConvertToExpression =>
+            (productEntity) => new ProductModel()
             {
                 Id = productEntity.Id,
                 Name = productEntity.Name,
@@ -27,8 +27,8 @@ namespace DataLayer.Converters
                 Price = productEntity.Price
             };
 
-        public override Expression<Func<ProductModel<TId>, ProductEntity<TId>>> ConvertFromExpression =>
-            (productModel) => new ProductEntity<TId>()
+        public override Expression<Func<ProductModel, ProductEntity>> ConvertFromExpression =>
+            (productModel) => new ProductEntity()
             {
                 Id = productModel.Id,
                 Name = productModel.Name,

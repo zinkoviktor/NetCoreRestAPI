@@ -1,8 +1,6 @@
 ﻿using BusinessLayer.Interfaces;
 using Common.Converter;
-using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
-using ServiceLayer.DataTransferObjects;
 
 namespace WebAPI.Controllers
 {

@@ -1,4 +1,5 @@
 ﻿using DataLayer.Entities;
+using DataLayer.Models;
 using DataLayer.Repositories;
 using DataLayer.UnitOfWorks.Interfaces;
 using System.Collections.Generic;
@@ -6,41 +7,32 @@ using System.Linq;
 
 namespace DataLayer.UnitOfWorks
 {
-    public class ProductUnitOfWork<TId> : IProductUnitOfWork<TId>
+    public class ProductUnitOfWork : BaseUnitOfWork<ProductEntity, int>, IProductUnitOfWork
     {
-        private IProductRepository<TId> _productRepository;
+        private IProductRepository _productRepository;
 
-        public ProductUnitOfWork(IProductRepository<TId> productRepository)
+        public ProductUnitOfWork(IProductRepository productRepository, IDbContext dbContext) :
+            base(dbContext)
         {
             _productRepository = productRepository;
         }
 
-        public ProductEntity<TId> GetById(TId id)
+        public IQueryable<ProductEntity> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<ProductEntity<TId>> GetAll()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IQueryable<ProductEntity<TId>> Create(ICollection<ProductEntity<TId>> entities)
+        public IQueryable<ProductEntity> Create(ICollection<ProductModel> models)
         {
             throw new System.NotImplementedException();
         }        
 
-        public IQueryable<ProductEntity<TId>> Update(ICollection<ProductEntity<TId>> entity)
+        public IQueryable<ProductEntity> Update(ICollection<ProductModel> models)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<ProductEntity<TId>> Delete(ICollection<ProductEntity<TId>> id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public int Save()
+        public IQueryable<ProductEntity> Delete(ICollection<ProductModel> models)
         {
             throw new System.NotImplementedException();
         }

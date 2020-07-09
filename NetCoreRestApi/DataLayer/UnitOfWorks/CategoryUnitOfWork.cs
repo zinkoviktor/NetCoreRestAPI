@@ -1,4 +1,5 @@
 ﻿using DataLayer.Entities;
+using DataLayer.Models;
 using DataLayer.Repositories;
 using DataLayer.UnitOfWorks.Interfaces;
 using System.Collections.Generic;
@@ -6,41 +7,32 @@ using System.Linq;
 
 namespace DataLayer.UnitOfWorks
 {
-    public class CategoryUnitOfWork<TId> : ICategoryUnitOfWork<TId>
+    public class CategoryUnitOfWork : BaseUnitOfWork<CategoryEntity, int>, ICategoryUnitOfWork
     {
-        private ICategoryRepository<TId> _categoryRepository;
+        private ICategoryRepository _categoryRepository;
 
-        public CategoryUnitOfWork(ICategoryRepository<TId> categoryRepository)
+        public CategoryUnitOfWork(ICategoryRepository categoryRepository, IDbContext dbContext) :
+            base(dbContext)
         {
             _categoryRepository = categoryRepository;
         }
 
-        public CategoryEntity<TId> GetById(TId id)
+        public IQueryable<CategoryEntity> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryEntity<TId>> GetAll()
+        public IQueryable<CategoryEntity> Create(ICollection<CategoryModel> models)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryEntity<TId>> Create(ICollection<CategoryEntity<TId>> entities)
+        public IQueryable<CategoryEntity> Update(ICollection<CategoryModel> models)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryEntity<TId>> Update(ICollection<CategoryEntity<TId>> entities)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public IQueryable<CategoryEntity<TId>> Delete(ICollection<CategoryEntity<TId>> entities)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public int Save()
+        public IQueryable<CategoryEntity> Delete(ICollection<CategoryModel> models)
         {
             throw new System.NotImplementedException();
         }

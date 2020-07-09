@@ -1,7 +1,7 @@
 ﻿
 namespace ServiceLayer.DataTransferObjects
 {
-    public class CategoryDto<TId> : ItemDto<TId>
+    public class CategoryDto : ItemDto<int>
     {     
     }
 }

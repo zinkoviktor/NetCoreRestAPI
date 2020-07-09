@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace BusinessLayer.Managers
 {
-    public class CategoryManager<TId> : ICategoryManager<CategoryModel<TId>>
+    public class CategoryManager : ICategoryManager
     {
-        private readonly IRepository<CategoryModel<TId>, TId> _repository;
+        private readonly ICategoryRepository _repository;
 
-        public CategoryManager(IRepository<CategoryModel<TId>, TId> repository)
+        public CategoryManager(ICategoryRepository repository)
         {
             _repository = repository;
         }
 
-        public IQueryable<CategoryModel<TId>> GetAll()
+        public IQueryable<CategoryModel> GetAll()
         {
             return _repository.GetAll();
         }

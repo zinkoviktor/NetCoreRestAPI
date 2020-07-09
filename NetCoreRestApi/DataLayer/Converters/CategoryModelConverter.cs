@@ -6,18 +6,18 @@ using System.Linq.Expressions;
 
 namespace DataLayer.Converters
 {
-    public class CategoryModelConverter<TId> : BaseConverter<CategoryEntity<TId>, CategoryModel<TId>>
+    public class CategoryModelConverter : BaseConverter<CategoryEntity, CategoryModel>
     {       
-        public override Expression<Func<CategoryEntity<TId>, CategoryModel<TId>>> ConvertToExpression => 
-            (categoryEntity) => new CategoryModel<TId>()
+        public override Expression<Func<CategoryEntity, CategoryModel>> ConvertToExpression => 
+            (categoryEntity) => new CategoryModel()
             {
                 Id = categoryEntity.Id,
                 Name = categoryEntity.Name,
                 Description = categoryEntity.Description
             };        
 
-        public override Expression<Func<CategoryModel<TId>, CategoryEntity<TId>>> ConvertFromExpression =>
-            (categoryModel) => new CategoryEntity<TId>()
+        public override Expression<Func<CategoryModel, CategoryEntity>> ConvertFromExpression =>
+            (categoryModel) => new CategoryEntity()
             {
                 Id = categoryModel.Id,
                 Name = categoryModel.Name,
