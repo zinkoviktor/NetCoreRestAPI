@@ -1,5 +1,5 @@
 ﻿using Common.Converters;
-using DataLayer.Entities;
+using DataLayer.EF.Entities;
 using DataLayer.Models;
 using System;
 using System.Linq.Expressions;

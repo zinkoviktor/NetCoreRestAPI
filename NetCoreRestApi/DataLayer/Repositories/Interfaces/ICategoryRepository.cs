@@ -2,7 +2,8 @@
 
 namespace DataLayer.Repositories
 {
-    public interface ICategoryRepository : IRepository<CategoryModel, int>
+    public interface ICategoryRepository 
+        : IRepository<CategoryModel, int>
     {
     }
 }

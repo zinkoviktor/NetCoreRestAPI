@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace DataLayer.UnitOfWorks
 {
-    public interface IUnitOfWork<TModel, TEntity, TId>
+    public interface IUnitOfWork<TModel, TId>
     {
-        TEntity GetById(TId id);
-        IQueryable<TEntity> GetAll();
-        IQueryable<TEntity> Create(ICollection<TModel> models);
-        IQueryable<TEntity> Update(ICollection<TModel> models);
-        IQueryable<TEntity> Delete(ICollection<TModel> models);
+        TModel GetById(TId id);
+        IQueryable<TModel> GetAll();
+        IQueryable<TModel> Create(ICollection<TModel> models);
+        IQueryable<TModel> Update(ICollection<TModel> models);
+        IQueryable<TModel> Delete(ICollection<TModel> models);
         int Save();
     }
 }

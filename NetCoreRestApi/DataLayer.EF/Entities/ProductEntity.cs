@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DataLayer.Entities
+namespace DataLayer.EF.Entities
 {
     public class ProductEntity : ItemEntity<int>
     {      

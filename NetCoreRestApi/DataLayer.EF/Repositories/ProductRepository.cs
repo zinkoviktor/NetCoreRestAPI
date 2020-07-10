@@ -1,4 +1,5 @@
-﻿using DataLayer.Models;
+﻿using DataLayer.EF.Entities;
+using DataLayer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace DataLayer.Repositories
 {
-    public class ProductRepository : BaseRepository<ProductModel, int>, IProductRepository
+    public class ProductRepository : BaseRepository<ProductModel, ProductEntity, int>, IProductRepository
     {
         private readonly ICategoryRepository _categoryRepository;
 

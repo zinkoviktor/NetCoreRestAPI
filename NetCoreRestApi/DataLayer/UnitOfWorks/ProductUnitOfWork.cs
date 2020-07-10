@@ -1,5 +1,4 @@
-﻿using DataLayer.Entities;
-using DataLayer.Models;
+﻿using DataLayer.Models;
 using DataLayer.Repositories;
 using DataLayer.UnitOfWorks.Interfaces;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Linq;
 
 namespace DataLayer.UnitOfWorks
 {
-    public class ProductUnitOfWork : BaseUnitOfWork<ProductEntity, int>, IProductUnitOfWork
+    public class ProductUnitOfWork : BaseUnitOfWork<ProductModel, int>, IProductUnitOfWork
     {
         private IProductRepository _productRepository;
 
@@ -17,22 +16,22 @@ namespace DataLayer.UnitOfWorks
             _productRepository = productRepository;
         }
 
-        public IQueryable<ProductEntity> GetAll()
+        public IQueryable<ProductModel> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<ProductEntity> Create(ICollection<ProductModel> models)
+        public IQueryable<ProductModel> Create(ICollection<ProductModel> models)
         {
             throw new System.NotImplementedException();
         }        
 
-        public IQueryable<ProductEntity> Update(ICollection<ProductModel> models)
+        public IQueryable<ProductModel> Update(ICollection<ProductModel> models)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<ProductEntity> Delete(ICollection<ProductModel> models)
+        public IQueryable<ProductModel> Delete(ICollection<ProductModel> models)
         {
             throw new System.NotImplementedException();
         }

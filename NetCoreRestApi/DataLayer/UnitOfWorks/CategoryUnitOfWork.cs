@@ -1,5 +1,4 @@
-﻿using DataLayer.Entities;
-using DataLayer.Models;
+﻿using DataLayer.Models;
 using DataLayer.Repositories;
 using DataLayer.UnitOfWorks.Interfaces;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Linq;
 
 namespace DataLayer.UnitOfWorks
 {
-    public class CategoryUnitOfWork : BaseUnitOfWork<CategoryEntity, int>, ICategoryUnitOfWork
+    public class CategoryUnitOfWork : BaseUnitOfWork<CategoryModel, int>, ICategoryUnitOfWork
     {
         private ICategoryRepository _categoryRepository;
 
@@ -17,22 +16,22 @@ namespace DataLayer.UnitOfWorks
             _categoryRepository = categoryRepository;
         }
 
-        public IQueryable<CategoryEntity> GetAll()
+        public IQueryable<CategoryModel> GetAll()
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryEntity> Create(ICollection<CategoryModel> models)
+        public IQueryable<CategoryModel> Create(ICollection<CategoryModel> models)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryEntity> Update(ICollection<CategoryModel> models)
+        public IQueryable<CategoryModel> Update(ICollection<CategoryModel> models)
         {
             throw new System.NotImplementedException();
         }
 
-        public IQueryable<CategoryEntity> Delete(ICollection<CategoryModel> models)
+        public IQueryable<CategoryModel> Delete(ICollection<CategoryModel> models)
         {
             throw new System.NotImplementedException();
         }

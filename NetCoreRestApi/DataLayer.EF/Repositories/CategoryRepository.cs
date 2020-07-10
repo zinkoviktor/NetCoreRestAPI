@@ -1,10 +1,11 @@
-﻿using DataLayer.Models;
+﻿using DataLayer.EF.Entities;
+using DataLayer.Models;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace DataLayer.Repositories
 {
-    public class CategoryRepository : BaseRepository<CategoryModel, int>, ICategoryRepository
+    public class CategoryRepository : BaseRepository<CategoryModel, CategoryEntity, int>, ICategoryRepository
     {
         public IQueryable<CategoryModel> GetAll()
         {

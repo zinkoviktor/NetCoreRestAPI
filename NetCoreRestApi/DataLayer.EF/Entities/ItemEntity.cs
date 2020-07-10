@@ -1,4 +1,4 @@
-﻿namespace DataLayer.Entities
+﻿namespace DataLayer.EF.Entities
 {
     public class ItemEntity<TId> : BaseEntity<TId>
     {
