@@ -1,9 +1,7 @@
 ﻿
 namespace DataLayer.Models
 {
-    public class CategoryModel : BaseModel
+    public class CategoryModel : ItemModel<int>
     {      
-        public string Name { get; set; }
-        public string Description { get; set; }
     }
 }

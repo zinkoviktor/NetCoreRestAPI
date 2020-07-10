@@ -6,9 +6,9 @@ namespace BusinessLayer.Managers
 {
     public class CategoryManager : ICategoryManager
     {
-        private readonly IRepository<CategoryModel> _repository;
+        private readonly ICategoryRepository _repository;
 
-        public CategoryManager(IRepository<CategoryModel> repository)
+        public CategoryManager(ICategoryRepository repository)
         {
             _repository = repository;
         }

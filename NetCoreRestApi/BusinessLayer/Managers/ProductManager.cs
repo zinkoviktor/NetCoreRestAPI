@@ -6,9 +6,9 @@ namespace BusinessLayer.Managers
 {
     public class ProductManager : IProductManager
     {
-        private readonly IRepository<ProductModel> _repository;
+        private readonly IProductRepository _repository;
 
-        public ProductManager(IRepository<ProductModel> repository)
+        public ProductManager(IProductRepository repository)
         {
             _repository = repository;
         }

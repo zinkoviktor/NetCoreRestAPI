@@ -1,8 +1,7 @@
-﻿
-namespace DataLayer.Entities
+﻿namespace DataLayer.EF.Entities
 {
-    public class CategoryEntity : BaseEntity
-    {        
+    public class ItemEntity<TId> : BaseEntity<TId>
+    {
         public string Name { get; set; }
         public string Description { get; set; }
     }

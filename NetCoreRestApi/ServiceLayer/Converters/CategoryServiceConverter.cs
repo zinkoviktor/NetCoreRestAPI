@@ -1,78 +1,27 @@
-﻿using DataLayer.Models;
-using Common.Converter;
+﻿using Common.Converters;
+using DataLayer.Models;
 using ServiceLayer.DataTransferObjects;
-using System.Collections.Generic;
+using System;
+using System.Linq.Expressions;
 
 namespace ServiceLayer.Converters
 {
-    public class CategoryServiceConverter : IConverter<CategoryDTO, CategoryModel>
+    public class CategoryServiceConverter : BaseConverter<CategoryDto, CategoryModel>
     {
-        public CategoryModel ConvertTo(CategoryDTO categoryDTO)
-        {
-            if (categoryDTO == null)
-            {
-                return null;
-            }
-
-            var categoryModel = new CategoryModel
+        public override Expression<Func<CategoryDto, CategoryModel>> ConvertToExpression =>
+            (categoryDTO) => new CategoryModel()
             {
                 Id = categoryDTO.Id,
                 Name = categoryDTO.Name,
                 Description = categoryDTO.Description
-            };   
-            
-            return categoryModel;
-        }
+            };
 
-        public ICollection<CategoryModel> ConvertTo(ICollection<CategoryDTO> categoryDtoList)
-        {
-            var categoryModels = new List<CategoryModel>();
-
-            if (categoryDtoList == null)
-            {
-                return categoryModels;
-            }
-
-            foreach (var categoryDTO in categoryDtoList)
-            {
-                categoryModels.Add(ConvertTo(categoryDTO));
-            }
-
-            return categoryModels;
-        }
-        
-        public CategoryDTO ConvertFrom(CategoryModel categoryModel)
-        {
-            if (categoryModel == null)
-            {
-                return null;
-            }
-
-            var categoryDTO = new CategoryDTO()
+        public override Expression<Func<CategoryModel, CategoryDto>> ConvertFromExpression =>
+            (categoryModel) => new CategoryDto()
             {
                 Id = categoryModel.Id,
                 Name = categoryModel.Name,
                 Description = categoryModel.Description
             };
-
-            return categoryDTO;
-        }
-                
-        public ICollection<CategoryDTO> ConvertFrom(ICollection<CategoryModel> categoryModels)
-        {
-            var categoryDtoList = new List<CategoryDTO>();
-
-            if(categoryModels == null)
-            {
-                return categoryDtoList;
-            }
-
-            foreach (var categoryModel in categoryModels)
-            {
-                categoryDtoList.Add(ConvertFrom(categoryModel));
-            }
-
-            return categoryDtoList;
-        }
     }
 }
