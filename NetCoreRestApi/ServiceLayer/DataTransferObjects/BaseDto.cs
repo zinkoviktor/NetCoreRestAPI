@@ -1,7 +1,8 @@
 ﻿namespace ServiceLayer.DataTransferObjects
 {
-    public class BaseDto
+    public class BaseDto<TId>
     {
-        public int Id { get; set; }
+        public TId Id { get; set; }
+        
     }
 }

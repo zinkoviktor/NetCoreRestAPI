@@ -6,20 +6,15 @@ using System.Linq.Expressions;
 
 namespace DataLayer.Repositories
 {
-    public class ProductRepository : IRepository<ProductModel>
+    public class ProductRepository : BaseRepository<ProductModel, int>, IProductRepository
     {
-        private readonly IRepository<CategoryModel> _categoryRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public ProductRepository(IRepository<CategoryModel> categoryRepository)
+        public ProductRepository(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
-
-        public ProductModel GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public IQueryable<ProductModel> GetAll()
         {
             IQueryable<CategoryModel> categoryModels = _categoryRepository.GetAll();
@@ -30,7 +25,7 @@ namespace DataLayer.Repositories
             var productModels = new List<ProductModel>
             {
                 new ProductModel()
-                {
+                {   
                     Id = 1,
                     Name = "HP 410",
                     Description = "All-in-One Wireless Ink Tank Color Printer",
@@ -47,7 +42,7 @@ namespace DataLayer.Repositories
                     AvailableCount = 9,
                 },
                 new ProductModel()
-                {
+                {       
                     Id = 2,
                     Name = "Epson L3152",
                     Description = "WiFi All in One Ink Tank Printer",
@@ -61,7 +56,7 @@ namespace DataLayer.Repositories
                     AvailableCount = 19,
                 },
                 new ProductModel()
-                {
+                {     
                     Id = 3,
                     Name = "Dell Inspiron 3583",
                     Description = "15.6-inch FHD Laptop",
@@ -82,17 +77,17 @@ namespace DataLayer.Repositories
             return productModels.AsQueryable();
         }
 
-        public IQueryable<ProductModel> Create(ICollection<ProductModel> entities)
+        public IQueryable<ProductModel> Create(ICollection<ProductModel> productModels)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(ICollection<ProductModel> entities)
+        public void Update(ICollection<ProductModel> productModels)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public void Delete(ICollection<ProductModel> productModels)
         {
             throw new NotImplementedException();
         }

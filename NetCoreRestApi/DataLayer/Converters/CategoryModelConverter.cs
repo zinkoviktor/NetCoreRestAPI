@@ -1,78 +1,27 @@
-﻿using DataLayer.Models;
-using Common.Converter;
+﻿using Common.Converters;
 using DataLayer.Entities;
-using System.Collections.Generic;
+using DataLayer.Models;
+using System;
+using System.Linq.Expressions;
 
 namespace DataLayer.Converters
 {
-    public class CategoryModelConverter : IConverter<CategoryEntity, CategoryModel>
-    {
-        public CategoryModel ConvertTo(CategoryEntity categoryEntity)
-        {
-            if (categoryEntity == null)
-            {
-                return null;
-            }
-
-            var categoryModel = new CategoryModel()
+    public class CategoryModelConverter : BaseConverter<CategoryEntity, CategoryModel>
+    {       
+        public override Expression<Func<CategoryEntity, CategoryModel>> ConvertToExpression => 
+            (categoryEntity) => new CategoryModel()
             {
                 Id = categoryEntity.Id,
                 Name = categoryEntity.Name,
                 Description = categoryEntity.Description
-            };
+            };        
 
-            return categoryModel;
-        }
-
-        public ICollection<CategoryModel> ConvertTo(ICollection<CategoryEntity> categoryEntities)
-        {
-            var categoryModels = new List<CategoryModel>();
-
-            if (categoryEntities == null)
-            {
-                return categoryModels;
-            }
-
-            foreach (var categoryEntity in categoryEntities)
-            {
-                categoryModels.Add(ConvertTo(categoryEntity));
-            }
-
-            return categoryModels;
-        }
-
-        public CategoryEntity ConvertFrom(CategoryModel categoryModel)
-        {
-            if (categoryModel == null)
-            {
-                return null;
-            }
-
-            var categoryEntity = new CategoryEntity()
+        public override Expression<Func<CategoryModel, CategoryEntity>> ConvertFromExpression =>
+            (categoryModel) => new CategoryEntity()
             {
                 Id = categoryModel.Id,
                 Name = categoryModel.Name,
                 Description = categoryModel.Description
             };
-
-            return categoryEntity;
-        }
-        
-        public ICollection<CategoryEntity> ConvertFrom(ICollection<CategoryModel> categoryModels)
-        {
-            var categoryEntities = new List<CategoryEntity>();
-
-            if (categoryModels == null)
-            {
-                return categoryEntities;
-            }
-
-            foreach (var categoryModel in categoryModels)
-            {
-                categoryEntities.Add(ConvertFrom(categoryModel));
-            }
-
-            return categoryEntities;
-        }
     }
 }

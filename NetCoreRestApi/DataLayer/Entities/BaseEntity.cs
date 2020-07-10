@@ -1,8 +1,8 @@
 ﻿
 namespace DataLayer.Entities
 {
-    public class BaseEntity : IEntity
+    public class BaseEntity<TId>
     {
-        public int Id { get; set; }        
+        public TId Id { get; set; }
     }
 }
