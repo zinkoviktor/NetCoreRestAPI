@@ -1,40 +1,57 @@
-﻿using DataLayer.Models;
+﻿using Common.Converter;
+using DataLayer.EF.Entities;
+using DataLayer.Models;
+using DataLayer.Repositories;
+using DataLayerEF;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DataLayer.Repositories
+namespace DataLayer.EF.Repositories
 {
-    public class BaseRepository<TModel, TEntity, TId> : IRepository<TModel, TId>
-         where TModel : BaseModel<TId>
+    public class BaseRepository<TModel, TEntity, TId> : IRepository<TModel, TId> 
+        where TModel : BaseModel<TId>
+        where TEntity : BaseEntity<TId>
     {
-        public BaseRepository()
-        {
+        protected IConverter<TEntity, TModel> Сonverter { get; private set; }
+        protected IDbContext<TEntity> DBContext { get; private set; }
 
+        public BaseRepository(IDbContext<TEntity> dbContext, IConverter<TEntity, TModel> converter)
+        {
+            Сonverter = converter;
+            DBContext = dbContext;
         }
 
-        public IQueryable<TModel> Create(ICollection<TModel> models)
+        public virtual TModel GetById(TId id)
         {
-            throw new System.NotImplementedException();
+            var entity = DBContext.GetDbSet().FirstOrDefault(entity => entity.Id.Equals(id));
+            return Сonverter.ConvertTo(entity);
         }
 
-        public void Delete(ICollection<TModel> models)
+        public virtual IQueryable<TModel> GetAll()
         {
-            throw new System.NotImplementedException();
+            var entities = DBContext.GetDbSet().ToList();
+            return Сonverter.ConvertTo(entities).AsQueryable();
         }
 
-        public IQueryable<TModel> GetAll()
+        public virtual IQueryable<TModel> Create(ICollection<TModel> models)
         {
-            throw new System.NotImplementedException();
+            DBContext.GetDbSet().AddRange(Сonverter.ConvertFrom(models));
+            var entities = DBContext.Save();
+            return Сonverter.ConvertTo(entities).AsQueryable();            
         }
 
-        public TModel GetById(TId id)
+        public virtual IQueryable<TModel> Update(ICollection<TModel> models)
         {
-            throw new System.NotImplementedException();
+            DBContext.GetDbSet().UpdateRange(Сonverter.ConvertFrom(models));
+            var entities = DBContext.Save();
+            return Сonverter.ConvertTo(entities).AsQueryable();
         }
 
-        public void Update(ICollection<TModel> models)
+        public virtual IQueryable<TModel> Delete(ICollection<TModel> models)
         {
-            throw new System.NotImplementedException();
+            DBContext.GetDbSet().RemoveRange(Сonverter.ConvertFrom(models));
+            var entities = DBContext.Save();
+            return Сonverter.ConvertTo(entities).AsQueryable();
         }
     }
 }

@@ -1,13 +1,22 @@
-﻿using DataLayer.EF.Entities;
+﻿using Common.Converter;
+using DataLayer.EF.Entities;
 using DataLayer.Models;
+using DataLayer.Repositories;
+using DataLayerEF;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DataLayer.Repositories
+namespace DataLayer.EF.Repositories
 {
     public class CategoryRepository : BaseRepository<CategoryModel, CategoryEntity, int>, ICategoryRepository
     {
-        public IQueryable<CategoryModel> GetAll()
+        public CategoryRepository(IDbContext<CategoryEntity> dbContext,
+            IConverter<CategoryEntity, CategoryModel> converter)
+                : base(dbContext, converter)
+        {                        
+        }
+
+        public override IQueryable<CategoryModel> GetAll()
         {
             var categories = new List<CategoryModel>
             {
@@ -32,21 +41,6 @@ namespace DataLayer.Repositories
             };
 
             return categories.AsQueryable();
-        }
-
-        public IQueryable<CategoryModel> Create(ICollection<CategoryModel> categoryModels)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Update(ICollection<CategoryModel> categoryModels)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Delete(ICollection<CategoryModel> categoryModels)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,22 +1,26 @@
-﻿using DataLayer.EF.Entities;
+﻿using Common.Converter;
+using DataLayer.EF.Entities;
 using DataLayer.Models;
+using DataLayer.Repositories;
+using DataLayerEF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace DataLayer.Repositories
+namespace DataLayer.EF.Repositories
 {
     public class ProductRepository : BaseRepository<ProductModel, ProductEntity, int>, IProductRepository
     {
-        private readonly ICategoryRepository _categoryRepository;
-
-        public ProductRepository(ICategoryRepository categoryRepository)
+        private readonly ICategoryRepository _categoryRepository;   
+        public ProductRepository(IDbContext<ProductEntity> dbContext, 
+            IConverter<ProductEntity, ProductModel> converter, ICategoryRepository categoryRepository) 
+                : base(dbContext, converter)
         {
             _categoryRepository = categoryRepository;
         }
-        
-        public IQueryable<ProductModel> GetAll()
+
+        public override IQueryable<ProductModel> GetAll()
         {
             IQueryable<CategoryModel> categoryModels = _categoryRepository.GetAll();
             Expression<Func<CategoryModel, bool>> IsLaptopsCategory = (x) => x.Name.Equals("Laptops");
@@ -76,21 +80,6 @@ namespace DataLayer.Repositories
             };
 
             return productModels.AsQueryable();
-        }
-
-        public IQueryable<ProductModel> Create(ICollection<ProductModel> productModels)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(ICollection<ProductModel> productModels)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(ICollection<ProductModel> productModels)
-        {
-            throw new NotImplementedException();
         }
     }
 }

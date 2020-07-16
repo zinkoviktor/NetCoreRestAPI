@@ -4,7 +4,7 @@ using DataLayer.Models;
 using System;
 using System.Linq.Expressions;
 
-namespace DataLayer.Converters
+namespace DataLayer.EF.Converters
 {
     public class CategoryModelConverter : BaseConverter<CategoryEntity, CategoryModel>
     {       
