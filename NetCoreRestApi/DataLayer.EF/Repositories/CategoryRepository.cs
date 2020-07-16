@@ -2,7 +2,6 @@
 using DataLayer.EF.Entities;
 using DataLayer.Models;
 using DataLayer.Repositories;
-using DataLayerEF;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,7 +9,7 @@ namespace DataLayer.EF.Repositories
 {
     public class CategoryRepository : BaseRepository<CategoryModel, CategoryEntity, int>, ICategoryRepository
     {
-        public CategoryRepository(IDbContext<CategoryEntity> dbContext,
+        public CategoryRepository(IRepositoryDbContext<CategoryEntity> dbContext,
             IConverter<CategoryEntity, CategoryModel> converter)
                 : base(dbContext, converter)
         {                        

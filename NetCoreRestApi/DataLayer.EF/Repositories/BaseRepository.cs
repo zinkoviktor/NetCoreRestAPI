@@ -2,7 +2,6 @@
 using DataLayer.EF.Entities;
 using DataLayer.Models;
 using DataLayer.Repositories;
-using DataLayerEF;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,9 +12,9 @@ namespace DataLayer.EF.Repositories
         where TEntity : BaseEntity<TId>
     {
         protected IConverter<TEntity, TModel> Сonverter { get; private set; }
-        protected IDbContext<TEntity> DBContext { get; private set; }
+        protected IRepositoryDbContext<TEntity> DBContext { get; private set; }
 
-        public BaseRepository(IDbContext<TEntity> dbContext, IConverter<TEntity, TModel> converter)
+        public BaseRepository(IRepositoryDbContext<TEntity> dbContext, IConverter<TEntity, TModel> converter)
         {
             Сonverter = converter;
             DBContext = dbContext;
@@ -35,23 +34,20 @@ namespace DataLayer.EF.Repositories
 
         public virtual IQueryable<TModel> Create(ICollection<TModel> models)
         {
-            DBContext.GetDbSet().AddRange(Сonverter.ConvertFrom(models));
-            var entities = DBContext.Save();
-            return Сonverter.ConvertTo(entities).AsQueryable();            
+            DBContext.GetDbSet().AddRange(Сonverter.ConvertFrom(models));            
+            return models.AsQueryable();            
         }
 
         public virtual IQueryable<TModel> Update(ICollection<TModel> models)
         {
-            DBContext.GetDbSet().UpdateRange(Сonverter.ConvertFrom(models));
-            var entities = DBContext.Save();
-            return Сonverter.ConvertTo(entities).AsQueryable();
+            DBContext.GetDbSet().UpdateRange(Сonverter.ConvertFrom(models));           
+            return models.AsQueryable();
         }
 
         public virtual IQueryable<TModel> Delete(ICollection<TModel> models)
         {
             DBContext.GetDbSet().RemoveRange(Сonverter.ConvertFrom(models));
-            var entities = DBContext.Save();
-            return Сonverter.ConvertTo(entities).AsQueryable();
+            return models.AsQueryable();
         }
     }
 }

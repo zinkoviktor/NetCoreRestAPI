@@ -1,45 +1,51 @@
-﻿using System.Collections.Generic;
+﻿using DataLayer.Models;
+using DataLayer.Repositories;
+using DataLayer.Repositories.Intefaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DataLayer.UnitOfWorks
 {
-    public abstract class BaseUnitOfWork<Model, TId> : IUnitOfWork<Model, TId>
+    public abstract class BaseUnitOfWork<TModel, TId> : IUnitOfWork<TModel, TId>
+        where TModel : BaseModel<TId>
     {
-        private IDbContext _dbContext;
+        protected readonly IRepository<TModel, TId> _repository;
+        protected readonly IDbContext _dbContext;
 
-        public BaseUnitOfWork(IDbContext dbContext)
+        public BaseUnitOfWork(IDbContext dbContext, IRepository<TModel, TId> repository)
         {
             _dbContext = dbContext;
+            _repository = repository;
         }
 
-        public IQueryable<Model> Create(ICollection<Model> models)
+        public TModel GetById(TId id)
         {
-            throw new System.NotImplementedException();
+            return _repository.GetById(id);
         }
 
-        public IQueryable<Model> Delete(ICollection<Model> models)
+        public IQueryable<TModel> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _repository.GetAll();
         }
 
-        public IQueryable<Model> GetAll()
+        public IQueryable<TModel> Create(ICollection<TModel> models)
         {
-            throw new System.NotImplementedException();
+            return _repository.Create(models);
         }
 
-        public Model GetById(TId id)
+        public IQueryable<TModel> Delete(ICollection<TModel> models)
         {
-            throw new System.NotImplementedException();
+            return _repository.Delete(models);
+        }
+
+        public IQueryable<TModel> Update(ICollection<TModel> models)
+        {
+            return _repository.Update(models);
         }
 
         public int Save()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public IQueryable<Model> Update(ICollection<Model> models)
-        {
-            throw new System.NotImplementedException();
+            return _dbContext.Save();
         }
     }
 }

@@ -2,7 +2,6 @@
 using DataLayer.EF.Entities;
 using DataLayer.Models;
 using DataLayer.Repositories;
-using DataLayerEF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +12,7 @@ namespace DataLayer.EF.Repositories
     public class ProductRepository : BaseRepository<ProductModel, ProductEntity, int>, IProductRepository
     {
         private readonly ICategoryRepository _categoryRepository;   
-        public ProductRepository(IDbContext<ProductEntity> dbContext, 
+        public ProductRepository(IRepositoryDbContext<ProductEntity> dbContext, 
             IConverter<ProductEntity, ProductModel> converter, ICategoryRepository categoryRepository) 
                 : base(dbContext, converter)
         {
