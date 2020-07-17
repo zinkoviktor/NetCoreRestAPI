@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DataLayer.Repositories.Intefaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.EF
 {
