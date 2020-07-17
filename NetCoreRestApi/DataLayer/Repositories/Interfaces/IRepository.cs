@@ -10,7 +10,7 @@ namespace DataLayer.Repositories
         TModel GetById(TId id);
         IQueryable<TModel> GetAll();
         IQueryable<TModel> Create(ICollection<TModel> models);
-        void Update(ICollection<TModel> models);
-        void Delete(ICollection<TModel> models);
+        IQueryable<TModel> Update(ICollection<TModel> models);
+        IQueryable<TModel> Delete(ICollection<TModel> models);
     }
 }
