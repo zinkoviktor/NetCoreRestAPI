@@ -1,30 +1,27 @@
-﻿using System.Linq;
-using BusinessLayer.Manager;
+﻿using BusinessLayer.Managers;
 using Common.Converter;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.DataTransferObjects;
+using System.Linq;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductsController : GenericController<ProductDto, ProductModel>
     {
-        private IProductManager _productManager;
-        private IConverter<ProductDTO, ProductModel> _converter;        
-
-        public ProductsController(IProductManager productManager, IConverter<ProductDTO, ProductModel> converter)
+        public ProductsController(IProductManager manager, 
+            IConverter<ProductDto, ProductModel> converter) : base(manager, converter)
         {
-            _productManager = productManager;
-            _converter = converter;            
         }
 
         [HttpGet]
         public IActionResult Get()
         {            
-            var products = _productManager.GetAll();
-            var productsDTO = _converter.ConvertFrom(products.ToList());
+            var productModels = Manager.GetAll();
+            var productsDTO = Converter.ConvertFrom(productModels.ToList());
+
             return Ok(productsDTO);
         }
     }

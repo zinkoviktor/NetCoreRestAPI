@@ -1,6 +1,8 @@
-using BusinessLayer.Manager;
+using BusinessLayer.Managers;
 using Common.Converter;
+using DataLayer.EF.Repositories;
 using DataLayer.Models;
+using DataLayer.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,8 +21,10 @@ namespace WebAPI
             services.AddControllers();
             services.AddTransient<IProductManager, ProductManager>();
             services.AddTransient<ICategoryManager, CategoryManager>();
-            services.AddTransient<IConverter<ProductDTO, ProductModel>, ProductServiceConverter>();           
-            services.AddTransient<IConverter<CategoryDTO, CategoryModel>, CategoryServiceConverter>();            
+            services.AddTransient<IConverter<ProductDto, ProductModel>, ProductServiceConverter>();           
+            services.AddTransient<IConverter<CategoryDto, CategoryModel>, CategoryServiceConverter>();
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
