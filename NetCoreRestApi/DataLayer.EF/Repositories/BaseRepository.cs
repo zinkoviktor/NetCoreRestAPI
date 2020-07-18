@@ -2,6 +2,7 @@
 using DataLayer.EF.Entities;
 using DataLayer.Models;
 using DataLayer.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,41 +13,41 @@ namespace DataLayer.EF.Repositories
         where TEntity : BaseEntity<TId>
     {
         protected IConverter<TEntity, TModel> Сonverter { get; private set; }
-        protected IRepositoryDbContext<TEntity> DBContext { get; private set; }
+        protected DbSet<TEntity> DbSet { get; private set; }
 
         public BaseRepository(IRepositoryDbContext<TEntity> dbContext, IConverter<TEntity, TModel> converter)
         {
             Сonverter = converter;
-            DBContext = dbContext;
+            DbSet = dbContext.GetDbSet();
         }
 
         public virtual TModel GetById(TId id)
         {
-            var entity = DBContext.GetDbSet().FirstOrDefault(entity => entity.Id.Equals(id));
+            var entity = DbSet.FirstOrDefault(entity => entity.Id.Equals(id));
             return Сonverter.ConvertTo(entity);
         }
 
         public virtual IQueryable<TModel> GetAll()
         {
-            var entities = DBContext.GetDbSet().ToList();
+            var entities = DbSet.ToList();
             return Сonverter.ConvertTo(entities).AsQueryable();
         }
 
         public virtual IQueryable<TModel> Create(ICollection<TModel> models)
         {
-            DBContext.GetDbSet().AddRange(Сonverter.ConvertFrom(models));            
+            DbSet.AddRange(Сonverter.ConvertFrom(models));            
             return models.AsQueryable();            
         }
 
         public virtual IQueryable<TModel> Update(ICollection<TModel> models)
         {
-            DBContext.GetDbSet().UpdateRange(Сonverter.ConvertFrom(models));           
+            DbSet.UpdateRange(Сonverter.ConvertFrom(models));           
             return models.AsQueryable();
         }
 
         public virtual IQueryable<TModel> Delete(ICollection<TModel> models)
         {
-            DBContext.GetDbSet().RemoveRange(Сonverter.ConvertFrom(models));
+            DbSet.RemoveRange(Сonverter.ConvertFrom(models));
             return models.AsQueryable();
         }
     }
