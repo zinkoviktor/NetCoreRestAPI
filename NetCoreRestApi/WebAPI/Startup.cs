@@ -1,5 +1,8 @@
 using BusinessLayer.Managers;
 using Common.Converter;
+using DataLayer.EF;
+using DataLayer.EF.Converters;
+using DataLayer.EF.Entities;
 using DataLayer.EF.Repositories;
 using DataLayer.Models;
 using DataLayer.Repositories;
@@ -23,8 +26,12 @@ namespace WebAPI
             services.AddTransient<ICategoryManager, CategoryManager>();
             services.AddTransient<IConverter<ProductDto, ProductModel>, ProductServiceConverter>();           
             services.AddTransient<IConverter<CategoryDto, CategoryModel>, CategoryServiceConverter>();
+            services.AddTransient<IConverter<ProductEntity, ProductModel>, ProductModelConverter>();
+            services.AddTransient<IConverter<CategoryEntity, CategoryModel>, CategoryModelConverter>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IRepositoryDbContext<ProductEntity>, EfDbContextMock<ProductEntity>>();
+            services.AddTransient<IRepositoryDbContext<CategoryEntity>, EfDbContextMock<CategoryEntity>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
