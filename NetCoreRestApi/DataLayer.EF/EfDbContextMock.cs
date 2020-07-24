@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.EF
 {
-    public class EfDbContext<TEntity> : IRepositoryDbContext<TEntity>
+    public class EfDbContextMock<TEntity> : IRepositoryDbContext<TEntity>
         where TEntity : BaseEntity<int>
     {      
 

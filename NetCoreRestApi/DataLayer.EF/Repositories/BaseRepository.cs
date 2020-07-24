@@ -13,41 +13,41 @@ namespace DataLayer.EF.Repositories
         where TEntity : BaseEntity<TId>
     {
         protected IConverter<TEntity, TModel> Сonverter { get; private set; }
-        protected DbSet<TEntity> DbSet { get; private set; }
+        private DbSet<TEntity> _dbSet;
 
         public BaseRepository(IRepositoryDbContext<TEntity> dbContext, IConverter<TEntity, TModel> converter)
         {
             Сonverter = converter;
-            DbSet = dbContext.GetDbSet();
+            _dbSet = dbContext.GetDbSet();
         }
 
         public virtual TModel GetById(TId id)
         {
-            var entity = DbSet.FirstOrDefault(entity => entity.Id.Equals(id));
+            var entity = _dbSet.FirstOrDefault(entity => entity.Id.Equals(id));
             return Сonverter.ConvertTo(entity);
         }
 
         public virtual IQueryable<TModel> GetAll()
         {
-            var entities = DbSet.ToList();
+            var entities = _dbSet.ToList();
             return Сonverter.ConvertTo(entities).AsQueryable();
         }
 
         public virtual IQueryable<TModel> Create(ICollection<TModel> models)
         {
-            DbSet.AddRange(Сonverter.ConvertFrom(models));            
+            _dbSet.AddRange(Сonverter.ConvertFrom(models));            
             return models.AsQueryable();            
         }
 
         public virtual IQueryable<TModel> Update(ICollection<TModel> models)
         {
-            DbSet.UpdateRange(Сonverter.ConvertFrom(models));           
+            _dbSet.UpdateRange(Сonverter.ConvertFrom(models));           
             return models.AsQueryable();
         }
 
         public virtual IQueryable<TModel> Delete(ICollection<TModel> models)
         {
-            DbSet.RemoveRange(Сonverter.ConvertFrom(models));
+            _dbSet.RemoveRange(Сonverter.ConvertFrom(models));
             return models.AsQueryable();
         }
     }

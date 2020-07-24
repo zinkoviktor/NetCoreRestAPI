@@ -30,8 +30,8 @@ namespace WebAPI
             services.AddTransient<IConverter<CategoryEntity, CategoryModel>, CategoryModelConverter>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<IRepositoryDbContext<ProductEntity>, EfDbContext<ProductEntity>>();
-            services.AddTransient<IRepositoryDbContext<CategoryEntity>, EfDbContext<CategoryEntity>>();
+            services.AddTransient<IRepositoryDbContext<ProductEntity>, EfDbContextMock<ProductEntity>>();
+            services.AddTransient<IRepositoryDbContext<CategoryEntity>, EfDbContextMock<CategoryEntity>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
