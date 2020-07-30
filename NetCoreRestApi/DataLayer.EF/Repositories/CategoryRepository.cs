@@ -9,7 +9,7 @@ namespace DataLayer.EF.Repositories
 {
     public class CategoryRepository : BaseRepository<CategoryModel, CategoryEntity, int>, ICategoryRepository
     {
-        public CategoryRepository(IRepositoryDbContext<CategoryEntity> dbContext,
+        public CategoryRepository(IRepositoryDbContext dbContext,
             IConverter<CategoryEntity, CategoryModel> converter)
                 : base(dbContext, converter)
         {                        
