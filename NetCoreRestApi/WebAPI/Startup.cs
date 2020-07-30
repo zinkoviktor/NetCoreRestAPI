@@ -32,7 +32,7 @@ namespace WebAPI
             services.AddTransient<IConverter<CategoryEntity, CategoryModel>, CategoryModelConverter>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddScoped<IRepositoryDbContext, EfDbContext>();
+            services.AddTransient<IRepositoryDbContext, EfDbContext>();
             services.AddDbContext<EfDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()), ServiceLifetime.Singleton, ServiceLifetime.Singleton);
         }
 
