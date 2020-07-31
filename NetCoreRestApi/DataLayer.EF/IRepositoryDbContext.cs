@@ -3,9 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.EF
 {
-    public interface IRepositoryDbContext<TEntity> : IDbContext  
-        where TEntity: class
+    public interface IRepositoryDbContext : IDbContext          
     {
-        DbSet<TEntity> GetDbSet();
+        DbSet<TEntity> GetDbSet<TEntity>() where TEntity : class;
     }
 }

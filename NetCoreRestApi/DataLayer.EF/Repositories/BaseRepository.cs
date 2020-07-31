@@ -15,10 +15,10 @@ namespace DataLayer.EF.Repositories
         protected IConverter<TEntity, TModel> Сonverter { get; private set; }
         private DbSet<TEntity> _dbSet;
 
-        public BaseRepository(IRepositoryDbContext<TEntity> dbContext, IConverter<TEntity, TModel> converter)
+        public BaseRepository(IRepositoryDbContext dbContext, IConverter<TEntity, TModel> converter)
         {
             Сonverter = converter;
-            _dbSet = dbContext.GetDbSet();
+            _dbSet = dbContext.GetDbSet<TEntity>();
         }
 
         public virtual TModel GetById(TId id)

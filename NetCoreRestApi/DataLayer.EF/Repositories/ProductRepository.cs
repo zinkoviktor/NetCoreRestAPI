@@ -12,7 +12,7 @@ namespace DataLayer.EF.Repositories
     public class ProductRepository : BaseRepository<ProductModel, ProductEntity, int>, IProductRepository
     {
         private readonly ICategoryRepository _categoryRepository;   
-        public ProductRepository(IRepositoryDbContext<ProductEntity> dbContext, 
+        public ProductRepository(IRepositoryDbContext dbContext, 
             IConverter<ProductEntity, ProductModel> converter, ICategoryRepository categoryRepository) 
                 : base(dbContext, converter)
         {
