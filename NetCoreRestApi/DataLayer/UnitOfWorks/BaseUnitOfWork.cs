@@ -28,17 +28,17 @@ namespace DataLayer.UnitOfWorks
             return _repository.GetAll();
         }
 
-        public IQueryable<TModel> Create(ICollection<TModel> models)
+        public IQueryable<TModel> Create(IEnumerable<TModel> models)
         {
             return _repository.Create(models);
         }
 
-        public IQueryable<TModel> Delete(ICollection<TModel> models)
+        public IQueryable<TModel> Delete(IEnumerable<TModel> models)
         {
             return _repository.Delete(models);
         }
 
-        public IQueryable<TModel> Update(ICollection<TModel> models)
+        public IQueryable<TModel> Update(IEnumerable<TModel> models)
         {
             return _repository.Update(models);
         }

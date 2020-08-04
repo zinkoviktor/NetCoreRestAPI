@@ -33,19 +33,19 @@ namespace DataLayer.EF.Repositories
             return Сonverter.ConvertTo(entities).AsQueryable();
         }
 
-        public virtual IQueryable<TModel> Create(ICollection<TModel> models)
+        public virtual IQueryable<TModel> Create(IEnumerable<TModel> models)
         {
             _dbSet.AddRange(Сonverter.ConvertFrom(models));            
             return models.AsQueryable();            
         }
 
-        public virtual IQueryable<TModel> Update(ICollection<TModel> models)
+        public virtual IQueryable<TModel> Update(IEnumerable<TModel> models)
         {
             _dbSet.UpdateRange(Сonverter.ConvertFrom(models));           
             return models.AsQueryable();
         }
 
-        public virtual IQueryable<TModel> Delete(ICollection<TModel> models)
+        public virtual IQueryable<TModel> Delete(IEnumerable<TModel> models)
         {
             _dbSet.RemoveRange(Сonverter.ConvertFrom(models));
             return models.AsQueryable();

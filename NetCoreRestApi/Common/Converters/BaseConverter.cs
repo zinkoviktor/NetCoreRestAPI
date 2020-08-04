@@ -27,7 +27,7 @@ namespace Common.Converters
             return _convertingToFunction(t1);
         }
 
-        public virtual ICollection<T2> ConvertTo(ICollection<T1> t1Collection)
+        public virtual IEnumerable<T2> ConvertTo(IEnumerable<T1> t1Collection)
         {
             var collection = new List<T2>();
 
@@ -54,7 +54,7 @@ namespace Common.Converters
             return _convertingFromFunction(t2);           
         }
 
-        public virtual ICollection<T1> ConvertFrom(ICollection<T2> t2Collection)
+        public virtual IEnumerable<T1> ConvertFrom(IEnumerable<T2> t2Collection)
         {
             var collection = new List<T1>();
 
