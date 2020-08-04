@@ -1,6 +1,6 @@
 ﻿namespace DataLayer.Repositories.Intefaces
 {
-    public interface IDbContext
+    public interface IUnitOfWorkDbContext
     {        
         int Save();
     }

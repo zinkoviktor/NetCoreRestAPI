@@ -10,40 +10,40 @@ namespace DataLayer.UnitOfWorks
         where TModel : BaseModel<TId>
     {
         protected readonly IRepository<TModel, TId> _repository;
-        protected readonly IDbContext _dbContext;
+        protected readonly IUnitOfWorkDbContext _dbContext;
 
-        public BaseUnitOfWork(IDbContext dbContext, IRepository<TModel, TId> repository)
+        public BaseUnitOfWork(IUnitOfWorkDbContext dbContext, IRepository<TModel, TId> repository)
         {
             _dbContext = dbContext;
             _repository = repository;
         }
 
-        public TModel GetById(TId id)
+        public virtual TModel GetById(TId id)
         {
             return _repository.GetById(id);
         }
 
-        public IQueryable<TModel> GetAll()
+        public virtual IQueryable<TModel> GetAll()
         {
             return _repository.GetAll();
         }
 
-        public IQueryable<TModel> Create(IEnumerable<TModel> models)
+        public virtual IEnumerable<TModel> Create(IEnumerable<TModel> models)
         {
             return _repository.Create(models);
         }
 
-        public IQueryable<TModel> Delete(IEnumerable<TModel> models)
+        public virtual void Delete(IEnumerable<TModel> models)
         {
-            return _repository.Delete(models);
+            _repository.Delete(models);
         }
 
-        public IQueryable<TModel> Update(IEnumerable<TModel> models)
+        public virtual void Update(IEnumerable<TModel> models)
         {
-            return _repository.Update(models);
+            _repository.Update(models);
         }
 
-        public int Save()
+        public virtual int Save()
         {
             return _dbContext.Save();
         }
