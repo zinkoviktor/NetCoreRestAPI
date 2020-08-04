@@ -6,6 +6,9 @@ using DataLayer.EF.Entities;
 using DataLayer.EF.Repositories;
 using DataLayer.Models;
 using DataLayer.Repositories;
+using DataLayer.Repositories.Intefaces;
+using DataLayer.UnitOfWorks;
+using DataLayer.UnitOfWorks.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -30,8 +33,12 @@ namespace WebAPI
             services.AddTransient<IConverter<CategoryDto, CategoryModel>, CategoryServiceConverter>();
             services.AddTransient<IConverter<ProductEntity, ProductModel>, ProductModelConverter>();
             services.AddTransient<IConverter<CategoryEntity, CategoryModel>, CategoryModelConverter>();
+            services.AddTransient<ICategoryUnitOfWork, CategoryUnitOfWork>();
+            services.AddTransient<IProductUnitOfWork, ProductUnitOfWork>();
+            services.AddTransient<IConverter<CategoryEntity, CategoryModel>, CategoryModelConverter>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IUnitOfWorkDbContext, EfDbContext>();
             services.AddTransient<IRepositoryDbContext, EfDbContext>();
             services.AddDbContext<EfDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()), ServiceLifetime.Singleton, ServiceLifetime.Singleton);
         }

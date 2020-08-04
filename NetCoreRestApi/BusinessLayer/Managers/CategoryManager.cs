@@ -1,21 +1,12 @@
 ﻿using DataLayer.Models;
-using DataLayer.Repositories;
-using System.Linq;
+using DataLayer.UnitOfWorks.Interfaces;
 
 namespace BusinessLayer.Managers
 {
-    public class CategoryManager : ICategoryManager
+    public class CategoryManager : BaseManager<CategoryModel, int>,  ICategoryManager
     {
-        private readonly ICategoryRepository _repository;
-
-        public CategoryManager(ICategoryRepository repository)
+        public CategoryManager(ICategoryUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _repository = repository;
-        }
-
-        public IQueryable<CategoryModel> GetAll()
-        {
-            return _repository.GetAll();
         }
     }
 }
