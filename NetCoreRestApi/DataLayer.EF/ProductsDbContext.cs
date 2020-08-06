@@ -21,13 +21,21 @@ namespace DataLayer.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ProductEntity>()
-                    .Property(p => p.Id)                    
-                    .IsRequired();
+            modelBuilder.Entity<ProductEntity>(ep =>
+            {
+                ep.HasKey(p => p.Id);
+                ep.Property(p => p.Id).IsRequired();
+                ep.Property(c => c.Name).HasMaxLength(50);
+                ep.Property(p => p.Description).HasMaxLength(150);
+            });
 
-            modelBuilder.Entity<CategoryEntity>()
-                    .Property(c => c.Id)
-                    .IsRequired();
+            modelBuilder.Entity<CategoryEntity>(ec =>
+            {
+                ec.HasKey(c => c.Id);
+                ec.Property(c => c.Id).IsRequired();
+                ec.Property(c => c.Name).HasMaxLength(50);
+                ec.Property(c => c.Description).HasMaxLength(150);
+            });                   
         }
 
         public int Save()
@@ -62,7 +70,7 @@ namespace DataLayer.EF
                     Name = "Epson L3152",
                     Description = "WiFi All in One Ink Tank Printer",
                     CategoryList = new List<CategoryModel>()
-                    {
+                    {                        
                         new CategoryModel()
                             {
                                 Id = 2,
