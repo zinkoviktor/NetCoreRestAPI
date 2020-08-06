@@ -10,9 +10,9 @@ namespace DataLayer.UnitOfWorks
         where TModel : BaseModel<TId>
     {
         protected readonly IRepository<TModel, TId> _repository;
-        protected readonly IUnitOfWorkDbContext _dbContext;
+        protected readonly IUnitOfWorkContext _dbContext;
 
-        public BaseUnitOfWork(IUnitOfWorkDbContext dbContext, IRepository<TModel, TId> repository)
+        public BaseUnitOfWork(IUnitOfWorkContext dbContext, IRepository<TModel, TId> repository)
         {
             _dbContext = dbContext;
             _repository = repository;

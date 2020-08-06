@@ -38,8 +38,8 @@ namespace WebAPI
             services.AddTransient<IConverter<CategoryEntity, CategoryModel>, CategoryModelConverter>();
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<IUnitOfWorkDbContext, ProductsDbContext>();
-            services.AddTransient<IDbContext, ProductsDbContext>();
+            services.AddTransient<IUnitOfWorkContext, ProductMockDbContext>();
+            services.AddTransient<IDbContext, ProductMockDbContext>();
             services.AddDbContext<ProductsDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()), 
                 ServiceLifetime.Transient, ServiceLifetime.Transient);
         }
