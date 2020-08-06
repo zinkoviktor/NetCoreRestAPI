@@ -40,7 +40,8 @@ namespace WebAPI
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IUnitOfWorkDbContext, ProductsDbContext>();
             services.AddTransient<IDbContext, ProductsDbContext>();
-            services.AddDbContext<ProductsDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()), ServiceLifetime.Transient, ServiceLifetime.Transient);
+            services.AddDbContext<ProductsDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()), 
+                ServiceLifetime.Transient, ServiceLifetime.Transient);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
