@@ -1,21 +1,12 @@
 ﻿using DataLayer.Models;
-using DataLayer.Repositories;
-using System.Linq;
+using DataLayer.UnitOfWorks.Interfaces;
 
 namespace BusinessLayer.Managers
 {
-    public class ProductManager : IProductManager
+    public class ProductManager : BaseManager<ProductModel, int>, IProductManager
     {
-        private readonly IProductRepository _repository;
-
-        public ProductManager(IProductRepository repository)
+        public ProductManager(IProductUnitOfWork unitOfWork) : base(unitOfWork)
         {
-            _repository = repository;
         }
-
-        public IQueryable<ProductModel> GetAll()
-        {
-            return _repository.GetAll();
-        }        
     }
 }

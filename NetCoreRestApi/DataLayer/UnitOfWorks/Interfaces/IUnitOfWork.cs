@@ -7,9 +7,9 @@ namespace DataLayer.UnitOfWorks
     {
         TModel GetById(TId id);
         IQueryable<TModel> GetAll();
-        IQueryable<TModel> Create(ICollection<TModel> models);
-        IQueryable<TModel> Update(ICollection<TModel> models);
-        IQueryable<TModel> Delete(ICollection<TModel> models);
+        IEnumerable<TModel> Create(IEnumerable<TModel> models);
+        void Update(IEnumerable<TModel> models);
+        void Delete(IEnumerable<TModel> models);
         int Save();
     }
 }

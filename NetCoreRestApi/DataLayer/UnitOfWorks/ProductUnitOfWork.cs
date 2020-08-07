@@ -8,7 +8,7 @@ namespace DataLayer.UnitOfWorks
     public class ProductUnitOfWork : BaseUnitOfWork<ProductModel, int>, IProductUnitOfWork
     {     
 
-        public ProductUnitOfWork(IDbContext dbContext, IProductRepository productRepository) :
+        public ProductUnitOfWork(IUnitOfWorkContext dbContext, IProductRepository productRepository) :
             base(dbContext, productRepository)
         {          
         }

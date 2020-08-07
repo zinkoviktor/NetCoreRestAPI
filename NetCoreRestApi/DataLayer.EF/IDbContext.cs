@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataLayer.EF
 {
-    public interface IRepositoryDbContext : IDbContext          
+    public interface IDbContext : IUnitOfWorkContext          
     {
         DbSet<TEntity> GetDbSet<TEntity>() where TEntity : class;
     }
