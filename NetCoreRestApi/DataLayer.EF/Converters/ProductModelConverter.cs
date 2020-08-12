@@ -3,6 +3,7 @@ using Common.Converters;
 using DataLayer.EF.Entities;
 using DataLayer.Models;
 using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace DataLayer.EF.Converters
@@ -33,7 +34,7 @@ namespace DataLayer.EF.Converters
                 Id = productModel.Id,
                 Name = productModel.Name,
                 Description = productModel.Description,
-                Categories = _categoryConverter.ConvertFrom(productModel.CategoryList),
+                Categories = _categoryConverter.ConvertFrom(productModel.CategoryList).ToList(),
                 AvailableCount = productModel.AvailableCount,
                 Price = productModel.Price
             };
