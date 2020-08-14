@@ -1,5 +1,6 @@
-﻿using DataLayer.EF.Entities;
+﻿using DataLayer.EF.Configurations;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace DataLayer.EF
 {
@@ -15,23 +16,8 @@ namespace DataLayer.EF
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ProductEntity>(ep =>
-            {
-                ep.HasKey(p => p.Id);
-                ep.Property(p => p.Id).IsRequired();
-                ep.Property(c => c.Name).HasMaxLength(50);
-                ep.Property(p => p.Description).HasMaxLength(150);
-                ep.HasMany(p => p.Categories).WithOne();
-            });
-
-            modelBuilder.Entity<CategoryEntity>(ec =>
-            {
-                ec.HasKey(c => c.Id);
-                ec.Property(c => c.Id).IsRequired();
-                ec.Property(c => c.Name).HasMaxLength(50);
-                ec.Property(c => c.Description).HasMaxLength(150);                
-            });                   
+        {           
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         public int Save()
