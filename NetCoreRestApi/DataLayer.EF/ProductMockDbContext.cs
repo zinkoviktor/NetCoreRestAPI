@@ -30,7 +30,7 @@ namespace DataLayer.EF
                                 Id = 1,
                                 Name = "Laptops",
                                 Description = "Shop Laptops and find popular brands. Save money."
-                            }                       
+                            }
                     },
                     Price = 90,
                     AvailableCount = 9
