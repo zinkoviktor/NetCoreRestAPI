@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataLayer.EF
 {
-    public class ProductMockDbContext : ProductsDbContext, IDbContext
+    public class ProductMockDbContext : ProductsDbContext
     {
         private List<ProductEntity> _productModels;
         private List<CategoryEntity> _categoryEntities;
