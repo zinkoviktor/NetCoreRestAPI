@@ -40,7 +40,8 @@ namespace DataLayer.EF.Converters
                 Price = productModel.Price
             };
 
-        private ICollection<ProductCategoriesEntity> ConvertToProductCategoriesEntities(ProductModel productModel, IEnumerable<CategoryModel> categories)
+        private ICollection<ProductCategoriesEntity> ConvertToProductCategoriesEntities(ProductModel productModel, 
+            IEnumerable<CategoryModel> categories)
         {
             var productCategoriesEntities = new List<ProductCategoriesEntity>();
 
