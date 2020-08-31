@@ -6,6 +6,7 @@ namespace DataLayer.EF.Entities
     {
         public decimal Price { get; set; }
         public int AvailableCount { get; set; }
-        public ICollection<CategoryEntity> Categories { get; set; }
+        public ICollection<ProductCategoriesEntity> ProductCategoriesEntities { get; set; }
+               = new List<ProductCategoriesEntity>();
     }
 }

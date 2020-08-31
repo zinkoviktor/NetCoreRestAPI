@@ -20,11 +20,7 @@ namespace DataLayer.EF.Configurations
                 .IsRequired();
             builder
                 .Property(c => c.Description)
-                .HasMaxLength(150);
-            builder
-                .HasOne<ProductEntity>()
-                .WithMany(p => p.Categories)
-                .HasForeignKey(c => c.Id);
+                .HasMaxLength(150);            
         }
     }
 }

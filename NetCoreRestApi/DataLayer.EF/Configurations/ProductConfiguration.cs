@@ -22,10 +22,6 @@ namespace DataLayer.EF.Configurations
             builder
                 .Property(p => p.Description)
                 .HasMaxLength(150);
-            builder
-                .HasMany(p => p.Categories)
-                .WithOne()
-                .HasForeignKey(c => c.Id);
         }
     }
 }

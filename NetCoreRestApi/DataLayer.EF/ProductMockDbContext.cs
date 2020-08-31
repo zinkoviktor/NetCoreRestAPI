@@ -6,37 +6,31 @@ namespace DataLayer.EF
 {
     public class ProductMockDbContext : ProductsDbContext
     {
-        private List<ProductEntity> _productModels;
+        private List<ProductEntity> _productEntities;
         private List<CategoryEntity> _categoryEntities;
+        private List<ProductCategoriesEntity> _productCategoryEntities;
 
         public ProductMockDbContext(DbContextOptions<ProductMockDbContext> options) : base(options)
         {
             SetupCategories();
-            SetupProducts();            
-            Database.EnsureCreated();
-        }
+            SetupProducts();
+            SetupProductCategory();
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);           
-            modelBuilder
-                .Entity<CategoryEntity>()
-                .HasData(_categoryEntities);
-            modelBuilder                
-                .Entity<ProductEntity>()                
-                .HasData(_productModels);            
+            AddRange(_productCategoryEntities);
+            
+            SaveChanges();
         }
 
         private void SetupProducts()
         {
-            _productModels = new List<ProductEntity>
+            _productEntities = new List<ProductEntity>
             {
                 new ProductEntity()
                 {
                     Id = 1,
                     Name = "HP 410",
-                    Description = "All-in-One Wireless Ink Tank Color Printer",                      
-                    Price = 90,                   
+                    Description = "All-in-One Wireless Ink Tank Color Printer",
+                    Price = 90,                    
                     AvailableCount = 9
                 },
                 new ProductEntity()
@@ -79,6 +73,43 @@ namespace DataLayer.EF
                     Id = 3,
                     Name = "Sale",
                     Description = "Shop all sale items"
+                }
+            };
+        }
+
+        private void SetupProductCategory()
+        {
+            _productCategoryEntities = new List<ProductCategoriesEntity>()
+            {
+                new ProductCategoriesEntity()
+                {
+                    Product = _productEntities[0],
+                    Category = _categoryEntities[0]
+                },
+                new ProductCategoriesEntity()
+                {
+                    Product = _productEntities[0],
+                    Category = _categoryEntities[2]
+                },
+                new ProductCategoriesEntity()
+                {
+                    Product = _productEntities[1],
+                    Category = _categoryEntities[1]
+                },
+                new ProductCategoriesEntity()
+                {
+                    Product = _productEntities[2],
+                    Category = _categoryEntities[0]
+                },
+                new ProductCategoriesEntity()
+                {
+                    Product = _productEntities[2],
+                    Category = _categoryEntities[1]
+                },
+                new ProductCategoriesEntity()
+                {
+                    Product = _productEntities[2],
+                    Category = _categoryEntities[2]
                 }
             };
         }

@@ -3,6 +3,7 @@ using Common.Converters;
 using DataLayer.EF.Entities;
 using DataLayer.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -23,7 +24,7 @@ namespace DataLayer.EF.Converters
                 Id = productEntity.Id,
                 Name = productEntity.Name,
                 Description = productEntity.Description,
-                CategoryList = _categoryConverter.ConvertTo(productEntity.Categories),
+                CategoryList = ConvertFromProductCategoriesEntities(productEntity.ProductCategoriesEntities),
                 AvailableCount = productEntity.AvailableCount,
                 Price = productEntity.Price
             };
@@ -34,9 +35,32 @@ namespace DataLayer.EF.Converters
                 Id = productModel.Id,
                 Name = productModel.Name,
                 Description = productModel.Description,
-                Categories = _categoryConverter.ConvertFrom(productModel.CategoryList).ToList(),
+                ProductCategoriesEntities = ConvertToProductCategoriesEntities(productModel, productModel.CategoryList),
                 AvailableCount = productModel.AvailableCount,
                 Price = productModel.Price
             };
+
+        private ICollection<ProductCategoriesEntity> ConvertToProductCategoriesEntities(ProductModel productModel, IEnumerable<CategoryModel> categories)
+        {
+            var productCategoriesEntities = new List<ProductCategoriesEntity>();
+
+            foreach(var categoryModel in categories)
+            {
+                productCategoriesEntities.Add(new ProductCategoriesEntity
+                {
+                    Product = ConvertFrom(productModel),
+                    Category = _categoryConverter.ConvertFrom(categoryModel)
+                });
+            }
+
+            return productCategoriesEntities;
+        }
+
+        private IEnumerable<CategoryModel> ConvertFromProductCategoriesEntities(ICollection<ProductCategoriesEntity> productCategoriesEntities)
+        {
+            var categoryEntities = productCategoriesEntities.Select(pc => pc.Category).ToList();
+
+            return _categoryConverter.ConvertTo(categoryEntities);
+        }
     }
 }
