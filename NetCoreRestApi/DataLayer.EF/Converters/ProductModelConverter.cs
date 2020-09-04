@@ -24,7 +24,7 @@ namespace DataLayer.EF.Converters
                 Id = productEntity.Id,
                 Name = productEntity.Name,
                 Description = productEntity.Description,
-                CategoryList = ConvertFromProductCategoriesEntities(productEntity.ProductCategoryEntities),
+                CategoryList = ConvertFromProductCategoryEntities(productEntity.ProductCategoryEntities),
                 AvailableCount = productEntity.AvailableCount,
                 Price = productEntity.Price
             };
@@ -35,29 +35,29 @@ namespace DataLayer.EF.Converters
                 Id = productModel.Id,
                 Name = productModel.Name,
                 Description = productModel.Description,
-                ProductCategoryEntities = ConvertToProductCategoriesEntities(productModel, productModel.CategoryList),
+                ProductCategoryEntities = ConvertToProductCategoryEntities(productModel, productModel.CategoryList),
                 AvailableCount = productModel.AvailableCount,
                 Price = productModel.Price
             };
 
-        private ICollection<ProductCategoryEntity> ConvertToProductCategoriesEntities(ProductModel productModel, 
+        private ICollection<ProductCategoryEntity> ConvertToProductCategoryEntities(ProductModel productModel, 
             IEnumerable<CategoryModel> categories)
         {
-            var productCategoriesEntities = new List<ProductCategoryEntity>();
+            var productCategoryEntities = new List<ProductCategoryEntity>();
 
             foreach(var categoryModel in categories)
             {
-                productCategoriesEntities.Add(new ProductCategoryEntity
+                productCategoryEntities.Add(new ProductCategoryEntity
                 {
                     Product = ConvertFrom(productModel),
                     Category = _categoryConverter.ConvertFrom(categoryModel)
                 });
             }
 
-            return productCategoriesEntities;
+            return productCategoryEntities;
         }
 
-        private IEnumerable<CategoryModel> ConvertFromProductCategoriesEntities(ICollection<ProductCategoryEntity> productCategory)
+        private IEnumerable<CategoryModel> ConvertFromProductCategoryEntities(ICollection<ProductCategoryEntity> productCategory)
         {
             var categoryEntities = productCategory.Select(pc => pc.Category).ToList();
 
