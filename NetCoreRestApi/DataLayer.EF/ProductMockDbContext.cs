@@ -8,7 +8,7 @@ namespace DataLayer.EF
     {
         private List<ProductEntity> _productEntities;
         private List<CategoryEntity> _categoryEntities;
-        private List<ProductCategoriesEntity> _productCategoryEntities;
+        private List<ProductCategory> _productCategoryEntities;
 
         public ProductMockDbContext(DbContextOptions<ProductMockDbContext> options) : base(options)
         {
@@ -79,34 +79,34 @@ namespace DataLayer.EF
 
         private void SetupProductCategory()
         {
-            _productCategoryEntities = new List<ProductCategoriesEntity>()
+            _productCategoryEntities = new List<ProductCategory>()
             {
-                new ProductCategoriesEntity()
+                new ProductCategory()
                 {
                     Product = _productEntities[0],
                     Category = _categoryEntities[0]
                 },
-                new ProductCategoriesEntity()
+                new ProductCategory()
                 {
                     Product = _productEntities[0],
                     Category = _categoryEntities[2]
                 },
-                new ProductCategoriesEntity()
+                new ProductCategory()
                 {
                     Product = _productEntities[1],
                     Category = _categoryEntities[1]
                 },
-                new ProductCategoriesEntity()
+                new ProductCategory()
                 {
                     Product = _productEntities[2],
                     Category = _categoryEntities[0]
                 },
-                new ProductCategoriesEntity()
+                new ProductCategory()
                 {
                     Product = _productEntities[2],
                     Category = _categoryEntities[1]
                 },
-                new ProductCategoriesEntity()
+                new ProductCategory()
                 {
                     Product = _productEntities[2],
                     Category = _categoryEntities[2]

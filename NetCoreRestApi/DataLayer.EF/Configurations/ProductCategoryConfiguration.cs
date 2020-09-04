@@ -4,19 +4,19 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DataLayer.EF.Configurations
 {
-    public class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCategoriesEntity>
+    public class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCategory>
     {
-        public void Configure(EntityTypeBuilder<ProductCategoriesEntity> builder)
+        public void Configure(EntityTypeBuilder<ProductCategory> builder)
         {
             builder
                 .HasKey(pc => new { pc.CategoryId, pc.ProductId });
             builder
                  .HasOne(pc => pc.Product)
-                 .WithMany(p => p.ProductCategoriesEntities)
+                 .WithMany(p => p.ProductCategory)
                  .HasForeignKey(pc => pc.ProductId);
             builder
                  .HasOne(pc => pc.Category)
-                 .WithMany(c => c.ProductCategoriesEntities)
+                 .WithMany(c => c.ProductCategory)
                  .HasForeignKey(pc => pc.CategoryId);
         }
     }
