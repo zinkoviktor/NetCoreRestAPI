@@ -1,6 +1,6 @@
 ﻿namespace DataLayer.EF.Entities
 {
-    public class ProductCategory
+    public class ProductCategoryEntity
     {       
         public int ProductId { get; set; }
         public ProductEntity Product { get; set; }

@@ -5,7 +5,7 @@ namespace DataLayer.EF.Entities
 {
     public class CategoryEntity : ItemEntity<int>
     {
-        public ICollection<ProductCategory> ProductCategory { get; set; }
-            = new List<ProductCategory>();
+        public ICollection<ProductCategoryEntity> ProductCategoryEntities { get; set; }
+            = new List<ProductCategoryEntity>();
     }
 }
