@@ -9,7 +9,7 @@ namespace DataLayer.EF.Configurations
         public void Configure(EntityTypeBuilder<ProductCategoryEntity> builder)
         {
             builder
-                .HasKey(pc => new { pc.CategoryId, pc.ProductId });
+                .HasKey(pc => new { pc.ProductId, pc.CategoryId });
             builder
                  .HasOne(pc => pc.Product)
                  .WithMany(p => p.ProductCategoryEntities)
