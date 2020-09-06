@@ -1,6 +1,4 @@
-﻿using DataLayer.EF.Converters;
-using DataLayer.EF.Entities;
-using DataLayer.Models;
+﻿using DataLayer.EF.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -8,71 +6,106 @@ namespace DataLayer.EF
 {
     public class ProductMockDbContext : ProductsDbContext
     {
-        public ProductMockDbContext(DbContextOptions<ProductsDbContext> options) : base(options)
+        private List<ProductEntity> _productEntities;
+        private List<CategoryEntity> _categoryEntities;
+        private List<ProductCategoryEntity> _productCategoryEntities;
+
+        public ProductMockDbContext(DbContextOptions<ProductMockDbContext> options) : base(options)
         {
-            AddRange(GetProductsMock());
-            Save();
+            SetupCategories();
+            SetupProducts();
+            SetupProductCategory();
+
+            AddRange(_productCategoryEntities);
+            
+            SaveChanges();
         }
 
-        private IEnumerable<ProductEntity> GetProductsMock()
+        private void SetupProducts()
         {
-            var productModels = new List<ProductModel>
+            _productEntities = new List<ProductEntity>
             {
-                new ProductModel()
+                new ProductEntity()
                 {
-                    Id = 1,
                     Name = "HP 410",
                     Description = "All-in-One Wireless Ink Tank Color Printer",
-                    CategoryList = new List<CategoryModel>()
-                    {
-                       new CategoryModel()
-                            {
-                                Id = 1,
-                                Name = "Laptops",
-                                Description = "Shop Laptops and find popular brands. Save money."
-                            }
-                    },
-                    Price = 90,
+                    Price = 90,                    
                     AvailableCount = 9
                 },
-                new ProductModel()
+                new ProductEntity()
                 {
-                    Id = 2,
                     Name = "Epson L3152",
-                    Description = "WiFi All in One Ink Tank Printer",
-                    CategoryList = new List<CategoryModel>()
-                    {
-                        new CategoryModel()
-                            {
-                                Id = 2,
-                                Name = "Printers",
-                                Description = "The Best Printers for 2020."
-                            }
-                    },
-                    Price = 60,
+                    Description = "WiFi All in One Ink Tank Printer",                    
+                    Price = 60,                    
                     AvailableCount = 19
                 },
-                new ProductModel()
+                new ProductEntity()
                 {
-                    Id = 3,
                     Name = "Dell Inspiron 3583",
                     Description = "15.6-inch FHD Laptop",
-                    CategoryList = new List<CategoryModel>()
-                    {
-                        new CategoryModel()
-                            {
-                                Id = 3,
-                                Name = "Sale",
-                                Description = "Shop all sale items"
-                            }
-                    },
-                    Price = 50,
+                    Price = 50,                    
                     AvailableCount = 5
                 }
             };
+        }
 
-            var converter = new ProductModelConverter(new CategoryModelConverter());
-            return converter.ConvertFrom(productModels);
+        private void SetupCategories()
+        {
+            _categoryEntities = new List<CategoryEntity>()
+            {
+                new CategoryEntity()
+                {
+                    Name = "Laptops",
+                    Description = "Shop Laptops and find popular brands. Save money."
+                },
+                new CategoryEntity()
+                {
+                    Name = "Printers",
+                    Description = "The Best Printers for 2020."
+                },
+                new CategoryEntity()
+                {
+                    Name = "Sale",
+                    Description = "Shop all sale items"
+                }
+            };
+        }
+
+        private void SetupProductCategory()
+        {
+            _productCategoryEntities = new List<ProductCategoryEntity>()
+            {
+                new ProductCategoryEntity()
+                {
+                    Product = _productEntities[0],
+                    Category = _categoryEntities[0]
+                },
+                new ProductCategoryEntity()
+                {
+                    Product = _productEntities[0],
+                    Category = _categoryEntities[2]
+                },
+                new ProductCategoryEntity()
+                {
+                    Product = _productEntities[1],
+                    Category = _categoryEntities[1]
+                },
+                new ProductCategoryEntity()
+                {
+                    Product = _productEntities[2],
+                    Category = _categoryEntities[0]
+                },
+                new ProductCategoryEntity()
+                {
+                    Product = _productEntities[2],
+                    Category = _categoryEntities[1]
+                },
+                new ProductCategoryEntity()
+                {
+                    Product = _productEntities[2],
+                    Category = _categoryEntities[2]
+                }
+            };
         }
     }
 }
