@@ -27,21 +27,21 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddTransient<IProductManager, ProductManager>();
-            services.AddTransient<ICategoryManager, CategoryManager>();
-            services.AddTransient<IConverter<ProductDto, ProductModel>, ProductServiceConverter>();           
-            services.AddTransient<IConverter<CategoryDto, CategoryModel>, CategoryServiceConverter>();
-            services.AddTransient<IConverter<ProductEntity, ProductModel>, ProductModelConverter>();
-            services.AddTransient<IConverter<CategoryEntity, CategoryModel>, CategoryModelConverter>();
-            services.AddTransient<ICategoryUnitOfWork, CategoryUnitOfWork>();
-            services.AddTransient<IProductUnitOfWork, ProductUnitOfWork>();
-            services.AddTransient<IConverter<CategoryEntity, CategoryModel>, CategoryModelConverter>();
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
-            services.AddTransient<IProductRepository, ProductRepository>();
-            services.AddTransient<IUnitOfWorkContext, ProductMockDbContext>();
-            services.AddTransient<IDbContext, ProductMockDbContext>();
-            services.AddDbContext<ProductsDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()), 
-                ServiceLifetime.Transient, ServiceLifetime.Transient);
+            services.AddTransient<IProductManager, ProductManager>()
+                    .AddTransient<ICategoryManager, CategoryManager>()
+                    .AddTransient<IConverter<ProductDto, ProductModel>, ProductServiceConverter>()
+                    .AddTransient<IConverter<CategoryDto, CategoryModel>, CategoryServiceConverter>()
+                    .AddTransient<IConverter<ProductEntity, ProductModel>, ProductModelConverter>()
+                    .AddTransient<IConverter<CategoryEntity, CategoryModel>, CategoryModelConverter>()
+                    .AddTransient<ICategoryUnitOfWork, CategoryUnitOfWork>()
+                    .AddTransient<IProductUnitOfWork, ProductUnitOfWork>()
+                    .AddTransient<IConverter<CategoryEntity, CategoryModel>, CategoryModelConverter>()
+                    .AddTransient<ICategoryRepository, CategoryRepository>()
+                    .AddTransient<IProductRepository, ProductRepository>()
+                    .AddTransient<IUnitOfWorkContext, ProductMockDbContext>()
+                    .AddTransient<IDbContext, ProductMockDbContext>()
+                    .AddDbContext<ProductMockDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()),
+                        ServiceLifetime.Transient, ServiceLifetime.Transient);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

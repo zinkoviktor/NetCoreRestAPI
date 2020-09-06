@@ -6,7 +6,7 @@ namespace DataLayer.EF
 {
     public class ProductsDbContext : DbContext, IDbContext       
     {
-        public ProductsDbContext(DbContextOptions<ProductsDbContext> options) : base(options)
+        public ProductsDbContext(DbContextOptions options) : base(options)
         {            
         }
 
