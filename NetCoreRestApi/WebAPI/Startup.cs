@@ -33,11 +33,10 @@ namespace WebAPI
                     .AddTransient<IConverter<CategoryDto, CategoryModel>, CategoryServiceConverter>()
                     .AddTransient<IConverter<ProductEntity, ProductModel>, ProductModelConverter>()
                     .AddTransient<IConverter<CategoryEntity, CategoryModel>, CategoryModelConverter>()
-                    .AddTransient<ICategoryUnitOfWork, CategoryUnitOfWork>()
                     .AddTransient<IProductUnitOfWork, ProductUnitOfWork>()
-                    .AddTransient<IConverter<CategoryEntity, CategoryModel>, CategoryModelConverter>()
-                    .AddTransient<ICategoryRepository, CategoryRepository>()
+                    .AddTransient<ICategoryUnitOfWork, CategoryUnitOfWork>()
                     .AddTransient<IProductRepository, ProductRepository>()
+                    .AddTransient<ICategoryRepository, CategoryRepository>()                    
                     .AddTransient<IUnitOfWorkContext, ProductMockDbContext>()
                     .AddTransient<IDbContext, ProductMockDbContext>()
                     .AddDbContext<ProductMockDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()),

@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DataLayer.EF\DataLayer.EF.csproj" />
     <ProjectReference Include="..\..\ServiceLayer\ServiceLayer.csproj" />
   </ItemGroup>
 
