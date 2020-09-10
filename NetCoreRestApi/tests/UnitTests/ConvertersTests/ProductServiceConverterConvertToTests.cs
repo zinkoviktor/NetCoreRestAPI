@@ -5,10 +5,10 @@ using ServiceLayer.DataTransferObjects;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests.ConvertersTests.ServiceLayer.ProductConverter
+namespace UnitTests.ConvertersTests
 {
     [TestClass]
-    public class ConvertToproductDtoTests
+    public class ProductServiceConverterConvertToTests
     {
         ProductServiceConverter converter;
         CategoryDto categoryDto;

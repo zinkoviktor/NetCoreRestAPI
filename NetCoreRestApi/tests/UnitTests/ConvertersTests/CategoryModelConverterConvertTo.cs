@@ -1,35 +1,35 @@
-﻿using DataLayer.Models;
+﻿using DataLayer.EF.Converters;
+using DataLayer.EF.Entities;
+using DataLayer.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ServiceLayer.Converters;
-using ServiceLayer.DataTransferObjects;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
+namespace UnitTests.ConvertersTests
 {
     [TestClass]    
-    public class ConvertToCategoryModelTests
+    public class CategoryModelConverterConvertTo
     {
-        CategoryServiceConverter converter;
-        CategoryDto categoryDto;
-        List<CategoryDto> categoryDtos;
+        CategoryModelConverter converter;
+        CategoryEntity categoryEntity;
+        List<CategoryEntity> categoryEntities;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            converter = new CategoryServiceConverter();
+            converter = new CategoryModelConverter();
 
-            categoryDto = new CategoryDto()
+            categoryEntity = new CategoryEntity()
             {
                 Id = 1,
                 Name = "Test Name",
                 Description = "Test Description",
             };
 
-            categoryDtos = new List<CategoryDto>()
+            categoryEntities = new List<CategoryEntity>()
             {
-                categoryDto,
-                new CategoryDto()
+                categoryEntity,
+                new CategoryEntity()
                 {
                      Id = 0,
                      Name = "",
@@ -39,24 +39,24 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         }
         
         [TestMethod]         
-        public void CorrectClassTypeConvertedToModel()
+        public void CorrectClassTypeConvertedToCategoryModel()
         {
             // Arrange
 
             // Act
-            var actualCategoryModel = converter.ConvertTo(categoryDto);
+            var actualCategoryModel = converter.ConvertTo(categoryEntity);
 
             // Assert            
             Assert.IsInstanceOfType(actualCategoryModel, typeof(CategoryModel));           
         }
 
         [TestMethod]        
-        public void ConvertToModelIsNotNull()
+        public void ConvertToCategoryModelIsNotNull()
         {
             // Arrange 
 
             // Act
-            var actualCategoryModel = converter.ConvertTo(categoryDto);
+            var actualCategoryModel = converter.ConvertTo(categoryEntity);
 
             // Assert            
             Assert.IsNotNull(actualCategoryModel);
@@ -67,13 +67,13 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         [DataRow(1)]
         [DataRow(0)]
         [DataRow(-5)]
-        public void ConvertToModelIdPropertyValueIsSameId(int expectedId)
+        public void ConvertToCategoryModelIdPropertyValueIsSameId(int expectedId)
         {
             // Arrange 
-            categoryDto.Id = expectedId;
+            categoryEntity.Id = expectedId;
 
             // Act
-            var actualCategoryModel = converter.ConvertTo(categoryDto);
+            var actualCategoryModel = converter.ConvertTo(categoryEntity);
 
             // Assert            
             Assert.AreEqual(expectedId, actualCategoryModel.Id);
@@ -84,13 +84,13 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         [DataRow("Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,")]
         [DataRow(null)]
         [DataRow("")]
-        public void ConvertToModelNamePropertyValueIsSameName(string expectedName)
+        public void ConvertToCategoryModelNamePropertyValueIsSameName(string expectedName)
         {
             // Arrange 
-            categoryDto.Name = expectedName;
+            categoryEntity.Name = expectedName;
 
             // Act
-            var actualCategoryModel = converter.ConvertTo(categoryDto);
+            var actualCategoryModel = converter.ConvertTo(categoryEntity);
 
             // Assert            
             Assert.AreEqual(expectedName, actualCategoryModel.Name);
@@ -101,61 +101,61 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         [DataRow("Description 1 !@~#$%^&*()_+=-\\||'\"?/.><,")]
         [DataRow(null)]
         [DataRow("")]
-        public void ConvertToModelDescriptionPropertyValueIsSameDescription(string expectedDescription)
+        public void ConvertToCategoryModelDescriptionPropertyValueIsSameDescription(string expectedDescription)
         {
             // Arrange 
-            categoryDto.Description = expectedDescription;
+            categoryEntity.Description = expectedDescription;
 
             // Act
-            var actualCategoryModel = converter.ConvertTo(categoryDto);
+            var actualCategoryModel = converter.ConvertTo(categoryEntity);
 
             // Assert            
             Assert.AreEqual(expectedDescription, actualCategoryModel.Description);
         }
 
         [TestMethod]
-        public void CorrectClassTypeConvertedToModelCollection()
+        public void CorrectClassTypeConvertedToCategoryModelCollection()
         {
             // Arrange             
 
             // Act
-            var actualCategoryModels = converter.ConvertTo(categoryDtos);
+            var actualCategoryModels = converter.ConvertTo(categoryEntities);
 
             // Assert            
             Assert.IsInstanceOfType(actualCategoryModels, typeof(IEnumerable<CategoryModel>));
         }
 
         [TestMethod]
-        public void CorrectAllItemsTypesConvertedToModelCollection()
+        public void CorrectAllItemsTypesConvertedToCategoryModelCollection()
         {
             // Arrange             
 
             // Act
-            var actualCategoryModels = converter.ConvertTo(categoryDtos);
+            var actualCategoryModels = converter.ConvertTo(categoryEntities);
 
             // Assert            
             CollectionAssert.AllItemsAreInstancesOfType(actualCategoryModels.ToList(), typeof(CategoryModel));
         }
 
         [TestMethod]
-        public void ConvertToModelCollectionIsNotNull()
+        public void ConvertToCategoryModelCollectionIsNotNull()
         {
             // Arrange             
 
             // Act
-            var actualCategoryModels = converter.ConvertTo(categoryDtos);
+            var actualCategoryModels = converter.ConvertTo(categoryEntities);
 
             // Assert            
             Assert.IsNotNull(actualCategoryModels);
         }
 
         [TestMethod]
-        public void ConvertToModelsCollectionAllItemsAreNotNull()
+        public void ConvertToCategoryModelsCollectionAllItemsAreNotNull()
         {
             // Arrange             
 
             // Act
-            var actualCategoryModels = converter.ConvertTo(categoryDtos);
+            var actualCategoryModels = converter.ConvertTo(categoryEntities);
 
             // Assert            
             CollectionAssert.AllItemsAreNotNull(actualCategoryModels.ToList());
@@ -166,13 +166,13 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         [DataRow(7)]
         [DataRow(0)]
         [DataRow(-5)]
-        public void ConvertToModelIdPropertyValueInCollectionIsSameId(int expectedId)
+        public void ConvertToCategoryModelIdPropertyValueInCollectionIsSameId(int expectedId)
         {
             // Arrange 
-            categoryDtos.Last().Id = expectedId;
+            categoryEntities.Last().Id = expectedId;
 
             // Act
-            var actualCategoryModels = converter.ConvertTo(categoryDtos);
+            var actualCategoryModels = converter.ConvertTo(categoryEntities);
 
             // Assert            
             Assert.AreEqual(expectedId, actualCategoryModels.Last().Id);
@@ -183,13 +183,13 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         [DataRow("Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,")]
         [DataRow(null)]
         [DataRow("")]
-        public void ConvertToModelNamePropertyValueInCollectionIsSameName(string expectedName)
+        public void ConvertToCategoryModelNamePropertyValueInCollectionIsSameName(string expectedName)
         {
             // Arrange 
-            categoryDtos.First().Name = expectedName;
+            categoryEntities.First().Name = expectedName;
 
             // Act
-            var actualCategoryModels = converter.ConvertTo(categoryDtos);
+            var actualCategoryModels = converter.ConvertTo(categoryEntities);
 
             // Assert            
             Assert.AreEqual(expectedName, actualCategoryModels.First().Name);
@@ -200,13 +200,13 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         [DataRow("Description 1 !@~#$%^&*()_+=-\\||'\"?/.><,")]
         [DataRow(null)]
         [DataRow("")]
-        public void ConvertToModelDescriptionPropertyValueInCollectionIsSameDescription(string expectedDescription)
+        public void ConvertToCategoryModelDescriptionPropertyValueInCollectionIsSameDescription(string expectedDescription)
         {
             // Arrange 
-            categoryDtos.Last().Description = expectedDescription;
+            categoryEntities.Last().Description = expectedDescription;
 
             // Act
-            var actualCategoryModels = converter.ConvertTo(categoryDtos);
+            var actualCategoryModels = converter.ConvertTo(categoryEntities);
 
             // Assert            
             Assert.AreEqual(expectedDescription, actualCategoryModels.Last().Description);

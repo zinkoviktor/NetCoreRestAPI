@@ -5,10 +5,10 @@ using ServiceLayer.DataTransferObjects;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
+namespace UnitTests.ConvertersTests 
 {
     [TestClass]    
-    public class ConvertFromCategoryDtoTests
+    public class CategoryServiceConverterConvertFromTests
     {
         CategoryServiceConverter converter;
         CategoryModel categoryModel;
@@ -39,7 +39,7 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         }
         
         [TestMethod]         
-        public void CorrectClassTypeConvertedToDto()
+        public void CorrectClassTypeConvertedToCategoryDto()
         {
             // Arrange
 
@@ -51,7 +51,7 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         }
 
         [TestMethod]        
-        public void ConvertToDtoIsNotNull()
+        public void ConvertToCategoryDtoIsNotNull()
         {
             // Arrange 
 
@@ -67,7 +67,7 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         [DataRow(1)]
         [DataRow(0)]
         [DataRow(-5)]
-        public void ConvertToDtoIdPropertyValueIsSameId(int expectedId)
+        public void ConvertToCategoryDtoIdPropertyValueIsSameId(int expectedId)
         {
             // Arrange 
             categoryModel.Id = expectedId;
@@ -84,7 +84,7 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         [DataRow("Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,")]
         [DataRow(null)]
         [DataRow("")]
-        public void ConvertToDtoNamePropertyValueIsSameName(string expectedName)
+        public void ConvertToCategoryDtoNamePropertyValueIsSameName(string expectedName)
         {
             // Arrange 
             categoryModel.Name = expectedName;
@@ -101,7 +101,7 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         [DataRow("Description 1 !@~#$%^&*()_+=-\\||'\"?/.><,")]
         [DataRow(null)]
         [DataRow("")]
-        public void ConvertToDtoDescriptionPropertyValueIsSameDescription(string expectedDescription)
+        public void ConvertToCategoryDtoDescriptionPropertyValueIsSameDescription(string expectedDescription)
         {
             // Arrange 
             categoryModel.Description = expectedDescription;
@@ -114,7 +114,7 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         }
 
         [TestMethod]
-        public void CorrectClassTypeConvertedToDtoCollection()
+        public void CorrectClassTypeConvertedToCategoryDtoCollection()
         {
             // Arrange             
 
@@ -126,7 +126,7 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         }
 
         [TestMethod]
-        public void CorrectAllItemsTypesConvertedToDtoCollection()
+        public void CorrectAllItemsTypesConvertedToCategoryDtoCollection()
         {
             // Arrange             
 
@@ -138,7 +138,7 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         }
 
         [TestMethod]
-        public void ConvertToDtoCollectionIsNotNull()
+        public void ConvertToCategoryDtoCollectionIsNotNull()
         {
             // Arrange             
 
@@ -150,7 +150,7 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         }
 
         [TestMethod]
-        public void ConvertToDtoCollectionAllItemsAreNotNull()
+        public void ConvertToCategoryDtoCollectionAllItemsAreNotNull()
         {
             // Arrange             
 
@@ -166,7 +166,7 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         [DataRow(7)]
         [DataRow(0)]
         [DataRow(-5)]
-        public void ConvertToDtoIdPropertyValueInCollectionIsSameId(int expectedId)
+        public void ConvertToCategoryDtoIdPropertyValueInCollectionIsSameId(int expectedId)
         {
             // Arrange 
             categoryModels.Last().Id = expectedId;
@@ -183,7 +183,7 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         [DataRow("Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,")]
         [DataRow(null)]
         [DataRow("")]
-        public void ConvertToDtoNamePropertyValueInCollectionIsSameName(string expectedName)
+        public void ConvertToCategoryDtoNamePropertyValueInCollectionIsSameName(string expectedName)
         {
             // Arrange 
             categoryModels.First().Name = expectedName;
@@ -200,7 +200,7 @@ namespace UnitTests.ConvertersTests.ServiceLayer.CategoryConverter
         [DataRow("Description 1 !@~#$%^&*()_+=-\\||'\"?/.><,")]
         [DataRow(null)]
         [DataRow("")]
-        public void ConvertToDtoDescriptionPropertyValueInCollectionIsSameDescription(string expectedDescription)
+        public void ConvertToCategoryDtoDescriptionPropertyValueInCollectionIsSameDescription(string expectedDescription)
         {
             // Arrange 
             categoryModels.Last().Description = expectedDescription;

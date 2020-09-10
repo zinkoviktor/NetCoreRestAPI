@@ -7,13 +7,12 @@ using Moq;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests.ConvertersTests.DataLayer.EF.ProductConverter
+namespace UnitTests.ConvertersTests
 {
     [TestClass]
-    public class ConvertToProductEntityTests
+    public class ProductModelConverterConvertToTests
     {        
-        CategoryEntity categoryEntityStub;
-        CategoryEntity categoryEntity2Stub;
+        CategoryEntity categoryEntityStub;       
         CategoryModel categoryModelStub;
         ProductEntity productEntityStub;
         ProductCategoryEntity productCategoryEntityStub;
@@ -27,13 +26,6 @@ namespace UnitTests.ConvertersTests.DataLayer.EF.ProductConverter
                 Id = 1,
                 Name = "Test Name",
                 Description = "Test Description",
-            };
-
-            categoryEntity2Stub = new CategoryEntity()
-            {
-                Id = 2,
-                Name = "Name2",
-                Description = "description"
             };
 
             categoryModelStub = new CategoryModel()
@@ -114,10 +106,10 @@ namespace UnitTests.ConvertersTests.DataLayer.EF.ProductConverter
             var converter = new ProductModelConverter(categotyConverter.Object);
 
             // Act
-            var actualProductDto = converter.ConvertTo(productEntityStub);
+            var actualProductModel = converter.ConvertTo(productEntityStub);
 
             // Assert            
-            Assert.IsNotNull(actualProductDto);
+            Assert.IsNotNull(actualProductModel);
         }
 
         [TestMethod]
