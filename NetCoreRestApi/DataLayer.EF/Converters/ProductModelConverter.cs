@@ -30,31 +30,40 @@ namespace DataLayer.EF.Converters
             };
 
         public override Expression<Func<ProductModel, ProductEntity>> ConvertFromExpression =>
-            (productModel) => new ProductEntity()
+            (productModel) => ConvertToEntity(productModel);
+
+        private ProductEntity ConvertToEntity(ProductModel productModel)
+        {
+            var productEntity = new ProductEntity()
             {
                 Id = productModel.Id,
                 Name = productModel.Name,
                 Description = productModel.Description,
-                ProductCategoryEntities = ConvertToProductCategoryEntities(productModel, productModel.CategoryList),
                 AvailableCount = productModel.AvailableCount,
                 Price = productModel.Price
             };
 
-        private ICollection<ProductCategoryEntity> ConvertToProductCategoryEntities(ProductModel productModel, 
-            IEnumerable<CategoryModel> categories)
-        {
-            var productCategoryEntities = new List<ProductCategoryEntity>();
+            var productCategoryEntities = new List<ProductCategoryEntity>();            
 
-            foreach(var categoryModel in categories)
+            foreach (var categoryModel in productModel.CategoryList)
             {
+                var categoryEntity = _categoryConverter.ConvertFrom(categoryModel);               
                 productCategoryEntities.Add(new ProductCategoryEntity
-                {
-                    Product = ConvertFrom(productModel),
-                    Category = _categoryConverter.ConvertFrom(categoryModel)
+                {                    
+                    Category = categoryEntity,
+                    CategoryId = categoryEntity.Id
                 });
             }
 
-            return productCategoryEntities;
+            foreach (var productCategoryEntity in productCategoryEntities)
+            {
+                productCategoryEntity.Product = productEntity;
+                productCategoryEntity.ProductId = productEntity.Id;
+            }
+
+            productEntity.ProductCategoryEntities = productCategoryEntities;
+
+            return productEntity;
         }
 
         private IEnumerable<CategoryModel> ConvertFromProductCategoryEntities(ICollection<ProductCategoryEntity> productCategory)

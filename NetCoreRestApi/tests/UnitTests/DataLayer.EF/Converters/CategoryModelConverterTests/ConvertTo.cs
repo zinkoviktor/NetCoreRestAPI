@@ -7,10 +7,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests.ConvertersTests
+namespace UnitTests.DataLayer.EF.Converters.CategoryModelConverterTests
 {
     [TestClass]    
-    public class CategoryModelConverterConvertFrom
+    public class ConvertTo
     {
         IConverter<CategoryEntity, CategoryModel> _converter;
         IComparer _entityComparer;
@@ -19,18 +19,24 @@ namespace UnitTests.ConvertersTests
         public void TestInitialize()
         {
             _converter = new CategoryModelConverter();
-            _entityComparer = new CategoryEntityComparer();
+
+            static bool predicate(CategoryModel model1, CategoryModel model2) =>
+                model1.Id.Equals(model2.Id) &&
+                model1.Name.Equals(model2.Name) &&
+                model1.Description.Equals(model2.Description);
+
+            _entityComparer = new BaseComparer<CategoryModel>(predicate);
         }
 
-        [TestMethod]
-        public void ConvertToCategoryEntityCollectionAllItemsAreNotNull()
+        [TestMethod]         
+        public void AllItemsAreNotNull()
         {
-            // Arrange             
-            var categoryModel = new CategoryModel();
-            var categoryModels = new List<CategoryModel>()
+            // Arrange
+            var categoryEntity = new CategoryEntity();
+            var categoryEntities = new List<CategoryEntity>()
             {
-                categoryModel,
-                new CategoryModel()
+                categoryEntity,
+                new CategoryEntity()
                 {
                      Id = 0,
                      Name = "",
@@ -38,18 +44,34 @@ namespace UnitTests.ConvertersTests
                 }
             };
 
-            // Act
-            var actualCategoryEntities = _converter.ConvertFrom(categoryModels);
+            var actualCategoryModels = _converter.ConvertTo(categoryEntities);
 
             // Assert            
-            CollectionAssert.AllItemsAreNotNull(actualCategoryEntities.ToList());
+            Assert.IsNotNull(actualCategoryModels);
         }
 
         [TestMethod]
-        [Description("Is Id property value converted correct")]       
-        public void ConvertToCategoryEntityIdPropertyValueInCollectionIsSameId()
+        public void AllFieldsConverted()
         {
             // Arrange
+            var categoryEntity = new CategoryEntity()
+            {
+                Id = 1,
+                Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
+                Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
+            };
+            var categoryEntity2 = new CategoryEntity()
+            {
+                Id = 0,
+                Name = "",
+                Description = ""
+            };
+            var categoryEntities = new List<CategoryEntity> 
+            { 
+                categoryEntity, 
+                categoryEntity2 
+            };
+
             var categoryModel = new CategoryModel()
             {
                 Id = 1,
@@ -62,26 +84,13 @@ namespace UnitTests.ConvertersTests
                 Name = "",
                 Description = ""
             };
-            var categoryModels = new List<CategoryModel>()
+            var expected = new List<CategoryModel>()
             {
                 categoryModel, categoryModel2
-            };
-            var categoryEntity = new CategoryEntity()
-            {
-                Id = 1,
-                Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
-                Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
-            };
-            var categoryEntity2 = new CategoryEntity()
-            {
-                Id = 0,
-                Name = "",
-                Description = ""
             };            
-            var expected = new List<CategoryEntity> { categoryEntity, categoryEntity2 };
 
             // Act
-            var actual = _converter.ConvertFrom(categoryModels).ToList();
+            var actual = _converter.ConvertTo(categoryEntities).ToList();
 
             // Assert            
             CollectionAssert.AreEqual(expected, actual, _entityComparer);
