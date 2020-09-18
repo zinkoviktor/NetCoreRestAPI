@@ -12,9 +12,9 @@ namespace UnitTests.DataLayer.EF.Converters.ProductModelConverterTests
     [TestClass]
     public class ConvertTo
     {
-        IConverter<CategoryEntity, CategoryModel> _categoryConverter;
-        IConverter<ProductEntity, ProductModel> _productConverter;
-        IComparer _comparer;
+        private IConverter<CategoryEntity, CategoryModel> _categoryConverter;
+        private IConverter<ProductEntity, ProductModel> _productConverter;
+        private IComparer _comparer;
 
         [TestInitialize]
         public void TestInitialize()

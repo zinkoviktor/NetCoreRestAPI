@@ -11,9 +11,9 @@ namespace UnitTests.DataLayer.EF.Converters.ProductModelConverterTests
 {
     [TestClass]
     public class ConvertFrom
-    {        
-        IConverter<ProductEntity, ProductModel> _converter;
-        IComparer _comparer;
+    {
+        private IConverter<ProductEntity, ProductModel> _converter;
+        private IComparer _comparer;
 
         [TestInitialize]
         public void TestInitialize()

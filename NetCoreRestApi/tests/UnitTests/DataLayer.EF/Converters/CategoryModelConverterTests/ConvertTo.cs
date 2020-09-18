@@ -12,8 +12,8 @@ namespace UnitTests.DataLayer.EF.Converters.CategoryModelConverterTests
     [TestClass]    
     public class ConvertTo
     {
-        IConverter<CategoryEntity, CategoryModel> _converter;
-        IComparer _entityComparer;
+        private IConverter<CategoryEntity, CategoryModel> _converter;
+        private IComparer _entityComparer;
 
         [TestInitialize]
         public void TestInitialize()
