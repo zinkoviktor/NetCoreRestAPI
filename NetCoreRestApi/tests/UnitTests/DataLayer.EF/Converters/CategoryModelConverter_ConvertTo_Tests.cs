@@ -3,41 +3,44 @@ using DataLayer.EF.Converters;
 using DataLayer.EF.Entities;
 using DataLayer.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests.DataLayer.EF.Converters.CategoryModelConverterTests
+namespace UnitTests.DataLayer.EF.Converters
 {
     [TestClass]    
-    public class ConvertFrom
+    public class CategoryModelConverter_ConvertTo_Tests
     {
         private IConverter<CategoryEntity, CategoryModel> _converter;
         private IComparer _entityComparer;
+        private Func<CategoryModel, CategoryModel, bool> _comparerPredicate;
 
         [TestInitialize]
         public void TestInitialize()
         {
             _converter = new CategoryModelConverter();
 
-            static bool predicate(CategoryEntity entity1, CategoryEntity entity2) =>
-                entity1.Id.Equals(entity2.Id) &&
-                entity1.Name.Equals(entity2.Name) &&
-                entity1.Description.Equals(entity2.Description);
+            _comparerPredicate = delegate(CategoryModel model1, CategoryModel model2)
+            {
+                return model1.Id.Equals(model2.Id) &&
+                    model1.Name.Equals(model2.Name) &&
+                    model1.Description.Equals(model2.Description);
+            };
 
-            _entityComparer = new BaseComparer<CategoryEntity>(predicate);
+            _entityComparer = new BaseComparer<CategoryModel>(_comparerPredicate);
         }
 
-        [TestMethod]
-        [Description("Convert To CategoryEntity collection all items are not Null")]
+        [TestMethod]         
         public void AllItemsAreNotNull()
         {
-            // Arrange             
-            var categoryModel = new CategoryModel();
-            var categoryModels = new List<CategoryModel>()
+            // Arrange
+            var categoryEntity = new CategoryEntity();
+            var categoryEntities = new List<CategoryEntity>()
             {
-                categoryModel,
-                new CategoryModel()
+                categoryEntity,
+                new CategoryEntity()
                 {
                      Id = 0,
                      Name = "",
@@ -45,17 +48,34 @@ namespace UnitTests.DataLayer.EF.Converters.CategoryModelConverterTests
                 }
             };
 
-            // Act
-            var actualCategoryEntities = _converter.ConvertFrom(categoryModels);
+            var actualCategoryModels = _converter.ConvertTo(categoryEntities);
 
             // Assert            
-            CollectionAssert.AllItemsAreNotNull(actualCategoryEntities.ToList());
+            Assert.IsNotNull(actualCategoryModels);
         }
 
         [TestMethod]
         public void AllFieldsConverted()
         {
             // Arrange
+            var categoryEntity = new CategoryEntity()
+            {
+                Id = 1,
+                Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
+                Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
+            };
+            var categoryEntity2 = new CategoryEntity()
+            {
+                Id = 0,
+                Name = "",
+                Description = ""
+            };
+            var categoryEntities = new List<CategoryEntity> 
+            { 
+                categoryEntity, 
+                categoryEntity2 
+            };
+
             var categoryModel = new CategoryModel()
             {
                 Id = 1,
@@ -68,26 +88,13 @@ namespace UnitTests.DataLayer.EF.Converters.CategoryModelConverterTests
                 Name = "",
                 Description = ""
             };
-            var categoryModels = new List<CategoryModel>()
+            var expected = new List<CategoryModel>()
             {
                 categoryModel, categoryModel2
-            };
-            var categoryEntity = new CategoryEntity()
-            {
-                Id = 1,
-                Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
-                Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
-            };
-            var categoryEntity2 = new CategoryEntity()
-            {
-                Id = 0,
-                Name = "",
-                Description = ""
             };            
-            var expected = new List<CategoryEntity> { categoryEntity, categoryEntity2 };
 
             // Act
-            var actual = _converter.ConvertFrom(categoryModels).ToList();
+            var actual = _converter.ConvertTo(categoryEntities).ToList();
 
             // Assert            
             CollectionAssert.AreEqual(expected, actual, _entityComparer);

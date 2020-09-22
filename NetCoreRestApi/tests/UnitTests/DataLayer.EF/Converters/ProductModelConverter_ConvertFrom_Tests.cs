@@ -3,17 +3,19 @@ using DataLayer.EF.Converters;
 using DataLayer.EF.Entities;
 using DataLayer.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests.DataLayer.EF.Converters.ProductModelConverterTests
+namespace UnitTests.DataLayer.EF.Converters
 {
     [TestClass]
-    public class ConvertFrom
+    public class ProductModelConverter_ConvertFrom_Tests
     {
         private IConverter<ProductEntity, ProductModel> _converter;
         private IComparer _comparer;
+        private Func<ProductEntity, ProductEntity, bool> _comparerPredicate;
 
         [TestInitialize]
         public void TestInitialize()
@@ -21,14 +23,16 @@ namespace UnitTests.DataLayer.EF.Converters.ProductModelConverterTests
             var categoryConverter = new CategoryModelConverter();
             _converter = new ProductModelConverter(categoryConverter);
 
-            static bool predicate(ProductEntity entity1, ProductEntity entity2) =>
-                entity1.Id.Equals(entity2.Id) &&
-                entity1.Name.Equals(entity2.Name) &&
-                entity1.Description.Equals(entity2.Description) &&
-                entity1.Price.Equals(entity2.Price) &&
-                entity1.AvailableCount.Equals(entity2.AvailableCount);
+            _comparerPredicate = delegate(ProductEntity entity1, ProductEntity entity2)
+            {
+                return entity1.Id.Equals(entity2.Id) &&
+                    entity1.Name.Equals(entity2.Name) &&
+                    entity1.Description.Equals(entity2.Description) &&
+                    entity1.Price.Equals(entity2.Price) &&
+                    entity1.AvailableCount.Equals(entity2.AvailableCount);
+            };       
 
-            _comparer = new BaseComparer<ProductEntity>(predicate);
+            _comparer = new BaseComparer<ProductEntity>(_comparerPredicate);
         }  
 
         [TestMethod]        

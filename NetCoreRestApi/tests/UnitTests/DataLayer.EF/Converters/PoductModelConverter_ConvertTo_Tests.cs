@@ -3,18 +3,20 @@ using DataLayer.EF.Converters;
 using DataLayer.EF.Entities;
 using DataLayer.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests.DataLayer.EF.Converters.ProductModelConverterTests
+namespace UnitTests.DataLayer.EF.Converters
 {
     [TestClass]
-    public class ConvertTo
+    public class PoductModelConverter_ConvertTo_Tests
     {
         private IConverter<CategoryEntity, CategoryModel> _categoryConverter;
         private IConverter<ProductEntity, ProductModel> _productConverter;
         private IComparer _comparer;
+        private Func<ProductModel, ProductModel, bool> _comparerPredicate;
 
         [TestInitialize]
         public void TestInitialize()
@@ -22,14 +24,16 @@ namespace UnitTests.DataLayer.EF.Converters.ProductModelConverterTests
             _categoryConverter = new CategoryModelConverter();
             _productConverter = new ProductModelConverter(_categoryConverter);
 
-            static bool predicate(ProductModel model1, ProductModel model2) =>
-                model1.Id.Equals(model2.Id) &&
-                model1.Name.Equals(model2.Name) &&
-                model1.Description.Equals(model2.Description) &&
-                model1.Price.Equals(model2.Price) &&
-                model1.AvailableCount.Equals(model2.AvailableCount);
+            _comparerPredicate = delegate (ProductModel model1, ProductModel model2)
+            {
+                return model1.Id.Equals(model2.Id) &&
+                    model1.Name.Equals(model2.Name) &&
+                    model1.Description.Equals(model2.Description) &&
+                    model1.Price.Equals(model2.Price) &&
+                    model1.AvailableCount.Equals(model2.AvailableCount);
+            };                
 
-            _comparer = new BaseComparer<ProductModel>(predicate);
+            _comparer = new BaseComparer<ProductModel>(_comparerPredicate);
         }
         
         [TestMethod]       
@@ -122,24 +126,23 @@ namespace UnitTests.DataLayer.EF.Converters.ProductModelConverterTests
                 };
             }
 
-            var productModelStub = new ProductModel()
-            {
-                Id = 1,
-                Name = "Test Name",
-                Description = "Test Description",
-                AvailableCount = 5,
-                Price = 19
-            };
             var expected = new List<ProductModel>()
             {
-                productModelStub,
                 new ProductModel()
                 {
-                        Id = 0,
-                        Name = "",
-                        Description = "",
-                        AvailableCount = -9,
-                        Price = 9.999m
+                    Id = 1,
+                    Name = "Test Name",
+                    Description = "Test Description",
+                    AvailableCount = 5,
+                    Price = 19
+                },
+                new ProductModel()
+                {
+                    Id = 0,
+                    Name = "",
+                    Description = "",
+                    AvailableCount = -9,
+                    Price = 9.999m
                 }
             };           
 
