@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace UnitTests.DataLayer.EF.Converters
 {
-    [TestClass]    
+    [TestClass]
     public class CategoryModelConverter_ConvertFrom_Tests
     {
         private IConverter<CategoryEntity, CategoryModel> _converter;
@@ -22,7 +22,7 @@ namespace UnitTests.DataLayer.EF.Converters
         {
             _converter = new CategoryModelConverter();
 
-            _comparerPredicate = delegate(CategoryEntity entity1, CategoryEntity entity2)
+            _comparerPredicate = delegate (CategoryEntity entity1, CategoryEntity entity2)
             {
                 return entity1.Id.Equals(entity2.Id) &&
                     entity1.Name.Equals(entity2.Name) &&
@@ -34,13 +34,12 @@ namespace UnitTests.DataLayer.EF.Converters
 
         [TestMethod]
         [Description("Convert To CategoryEntity collection all items are not Null")]
-        public void AllItemsAreNotNull()
+        public void All_ConvertedItems_AreNotNull()
         {
-            // Arrange             
-            var categoryModel = new CategoryModel();
+            // Arrange
             var categoryModels = new List<CategoryModel>()
             {
-                categoryModel,
+                new CategoryModel(),
                 new CategoryModel()
                 {
                      Id = 0,
@@ -57,38 +56,40 @@ namespace UnitTests.DataLayer.EF.Converters
         }
 
         [TestMethod]
-        public void AllFieldsConverted()
+        public void All_CategoryModelFields_ConvertedInCategoryEntity()
         {
             // Arrange
-            var categoryModel = new CategoryModel()
-            {
-                Id = 1,
-                Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
-                Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
-            };
-            var categoryModel2 = new CategoryModel()
-            {
-                Id = 0,
-                Name = "",
-                Description = ""
-            };
             var categoryModels = new List<CategoryModel>()
             {
-                categoryModel, categoryModel2
+                new CategoryModel()
+                {
+                    Id = 1,
+                    Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
+                    Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
+                },
+                new CategoryModel()
+                {
+                    Id = 0,
+                    Name = "",
+                    Description = ""
+                }
             };
-            var categoryEntity = new CategoryEntity()
+
+            var expected = new List<CategoryEntity> 
             {
-                Id = 1,
-                Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
-                Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
+                new CategoryEntity()
+                {
+                    Id = 1,
+                    Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
+                    Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
+                },
+                new CategoryEntity()
+                {
+                    Id = 0,
+                    Name = "",
+                    Description = ""
+                }
             };
-            var categoryEntity2 = new CategoryEntity()
-            {
-                Id = 0,
-                Name = "",
-                Description = ""
-            };            
-            var expected = new List<CategoryEntity> { categoryEntity, categoryEntity2 };
 
             // Act
             var actual = _converter.ConvertFrom(categoryModels).ToList();
