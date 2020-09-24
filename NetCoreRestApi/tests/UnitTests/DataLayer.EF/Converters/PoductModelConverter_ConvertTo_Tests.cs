@@ -37,7 +37,7 @@ namespace UnitTests.DataLayer.EF.Converters
         }
         
         [TestMethod]       
-        public void CategoryAddedToModel()
+        public void Convert_ToProductModels_CategoryAddedToModel()
         {
             // Arrange           
             var productEntityStub = new ProductEntity()
@@ -80,7 +80,7 @@ namespace UnitTests.DataLayer.EF.Converters
         }
 
         [TestMethod]        
-        public void AllFieldsConverted()
+        public void Convert_ToProductModels_FromProductEntities()
         {
             // Arrange
             var productEntityStub = new ProductEntity()
@@ -91,18 +91,6 @@ namespace UnitTests.DataLayer.EF.Converters
                 AvailableCount = 5,
                 Price = 19
             };
-            var productEntitiesStub = new List<ProductEntity>()
-            {
-                productEntityStub,
-                new ProductEntity()
-                {
-                        Id = 0,
-                        Name = "",
-                        Description = "",
-                        AvailableCount = -9,
-                        Price = 9.999m
-                }
-            };
 
             var categoryEntityStub = new CategoryEntity()
             {
@@ -110,21 +98,50 @@ namespace UnitTests.DataLayer.EF.Converters
                 Name = "Test Name",
                 Description = "Test Description",
             };
-            var productCategoryEntityStub = new ProductCategoryEntity()
+
+            productEntityStub.ProductCategoryEntities = new List<ProductCategoryEntity>
             {
-                Product = productEntityStub,
-                ProductId = productEntityStub.Id,
-                Category = categoryEntityStub,
-                CategoryId = categoryEntityStub.Id
+                new ProductCategoryEntity()
+                {
+                    Product = productEntityStub,
+                    ProductId = productEntityStub.Id,
+                    Category = categoryEntityStub,
+                    CategoryId = categoryEntityStub.Id
+                }
             };
 
-            foreach (var pe in productEntitiesStub)
+            var productEntityStub2 = new ProductEntity()
             {
-                pe.ProductCategoryEntities = new List<ProductCategoryEntity>
+                Id = 0,
+                Name = "",
+                Description = "",
+                AvailableCount = -9,
+                Price = 9.999m
+            };
+
+            var categoryEntityStub2 = new CategoryEntity()
+            {
+                Id = 0,
+                Name = "Test Name 2 ",
+                Description = "Test Description 2",
+            };
+
+            productEntityStub2.ProductCategoryEntities = new List<ProductCategoryEntity>
+            {
+                new ProductCategoryEntity()
                 {
-                    productCategoryEntityStub
-                };
-            }
+                    Product = productEntityStub2,
+                    ProductId = productEntityStub2.Id,
+                    Category = categoryEntityStub2,
+                    CategoryId = categoryEntityStub2.Id
+                }
+            };
+
+            var productEntitiesStub = new List<ProductEntity>()
+            {
+                productEntityStub,
+                productEntityStub2
+            };
 
             var expected = new List<ProductModel>()
             {

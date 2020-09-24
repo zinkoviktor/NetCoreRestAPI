@@ -33,13 +33,12 @@ namespace UnitTests.DataLayer.EF.Converters
         }
 
         [TestMethod]         
-        public void AllItemsAreNotNull()
+        public void Convert_ToCategoryEntity_ItemsAreNotNull()
         {
-            // Arrange
-            var categoryEntity = new CategoryEntity();
+            // Arrange           
             var categoryEntities = new List<CategoryEntity>()
             {
-                categoryEntity,
+                new CategoryEntity(),
                 new CategoryEntity()
                 {
                      Id = 0,
@@ -55,42 +54,39 @@ namespace UnitTests.DataLayer.EF.Converters
         }
 
         [TestMethod]
-        public void AllFieldsConverted()
+        public void Convert_ToCategoryModels_FromCategoryEntities()
         {
-            // Arrange
-            var categoryEntity = new CategoryEntity()
-            {
-                Id = 1,
-                Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
-                Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
-            };
-            var categoryEntity2 = new CategoryEntity()
-            {
-                Id = 0,
-                Name = "",
-                Description = ""
-            };
+            // Arrange            
             var categoryEntities = new List<CategoryEntity> 
-            { 
-                categoryEntity, 
-                categoryEntity2 
+            {
+                new CategoryEntity()
+                {
+                    Id = 1,
+                    Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
+                    Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
+                },
+                new CategoryEntity()
+                {
+                    Id = 0,
+                    Name = "",
+                    Description = ""
+                }
             };
 
-            var categoryModel = new CategoryModel()
-            {
-                Id = 1,
-                Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
-                Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
-            };
-            var categoryModel2 = new CategoryModel()
-            {
-                Id = 0,
-                Name = "",
-                Description = ""
-            };
             var expected = new List<CategoryModel>()
             {
-                categoryModel, categoryModel2
+                new CategoryModel()
+                {
+                    Id = 1,
+                    Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
+                    Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
+                }, 
+                new CategoryModel()
+                {
+                    Id = 0,
+                    Name = "",
+                    Description = ""
+                }
             };            
 
             // Act
