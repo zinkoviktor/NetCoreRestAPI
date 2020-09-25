@@ -42,9 +42,9 @@ namespace ServiceLayer.Converters
                 return categoryModels;
             }
 
-            for (var i = 1; i < categoryList.Length; i++)
+            for (var i = 0; i < categoryList.Length; i++)
             {
-                categoryModels.Add(new CategoryModel() { Id = i, Name = categoryList[i] });
+                categoryModels.Add(new CategoryModel() { Name = categoryList[i] });
             }
 
             return categoryModels;
