@@ -6,7 +6,7 @@ namespace UnitTests
     public class BaseComparer<T> : IComparer
     {
         private Func<T, T, bool> _compareFunc;
-        private const int GREATER_THAN  = -1;
+        private const int LESS_THAN  = -1;
         private const int EQUALS = 0;
 
         public BaseComparer(Func<T, T, bool> compareFunc)
@@ -18,12 +18,12 @@ namespace UnitTests
         {
             if(object1.GetType() != typeof(T))
             {
-                return GREATER_THAN;
+                return LESS_THAN;
             }
 
             if (object2.GetType() != typeof(T))
             {
-                return GREATER_THAN;
+                return LESS_THAN;
             }
 
             var entity1 = (T) object1;
@@ -34,7 +34,7 @@ namespace UnitTests
                 return EQUALS;
             }
 
-            return GREATER_THAN;
+            return LESS_THAN;
         }
     }
 }
