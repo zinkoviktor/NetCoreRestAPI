@@ -39,7 +39,51 @@ namespace UnitTests.DataLayer.EF.Converters
         public void Convert_FromProductModels_ItemsAreNotNull()
         {
             // Arrange           
-            var productModelsStub = new List<ProductModel>()
+            var productModels = GetProductModels();
+
+            // Act
+            var actual = _converter.ConvertFrom(productModels).ToList();
+
+            // Assert                
+            CollectionAssert.AllItemsAreNotNull(actual);        
+        }
+
+        [TestMethod]
+        public void Convert_FromProductModels_ToProductEntities()
+        {
+            // Arrange
+            var productModels = GetProductModels();
+
+            var expected = new List<ProductEntity>()
+            {
+                new ProductEntity()
+                {
+                    Id = 1,
+                    Name = "Test Name",
+                    Description = "Test Description",
+                    AvailableCount = 5,
+                    Price = 19,
+                },
+                new ProductEntity()
+                {
+                    Id = 0,
+                    Name = "",
+                    Description = "",
+                    AvailableCount = -9,
+                    Price = 9.999m,
+                }
+            };
+
+            // Act
+            var actual = _converter.ConvertFrom(productModels).ToList();
+
+            // Assert                
+            CollectionAssert.AreEqual(expected, actual, _comparer);
+        }
+
+        private List<ProductModel> GetProductModels()
+        {
+            var productModels = new List<ProductModel>()
             {
                 new ProductModel()
                 {
@@ -53,8 +97,8 @@ namespace UnitTests.DataLayer.EF.Converters
                         new CategoryModel()
                         {
                             Id = 1,
-                            Name = "Name 1!@~#$%^&*()_+=-\\||'\"?/.><,",
-                            Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
+                            Name = "Name 1",
+                            Description = "Name 1"
                         }
                     }
                 },
@@ -62,7 +106,7 @@ namespace UnitTests.DataLayer.EF.Converters
                 {
                     Id = 0,
                     Name = "",
-                    Description = null,
+                    Description = "",
                     AvailableCount = -9,
                     Price = 9.999m,
                     CategoryList = new List<CategoryModel>
@@ -70,8 +114,8 @@ namespace UnitTests.DataLayer.EF.Converters
                         new CategoryModel()
                         {
                             Id = 1,
-                            Name = "Name 1!@~#$%^&*()_+=-\\||'\"?/.><,",
-                            Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
+                            Name = "Name 1",
+                            Description = "Name 1"
                         },
                         new CategoryModel()
                         {
@@ -80,65 +124,10 @@ namespace UnitTests.DataLayer.EF.Converters
                             Description = "Test Description 2",
                         }
                     }
-                }
+                }                
             };
 
-            // Act
-            var actual = _converter.ConvertFrom(productModelsStub).ToList();
-
-            // Assert                
-            CollectionAssert.AllItemsAreNotNull(actual);        
-        }
-
-        [TestMethod]
-        public void Convert_FromProductModels_ToProductEntities()
-        {
-            // Arrange
-            var productModelsStub = new List<ProductModel>()
-            {
-                new ProductModel()
-                {
-                    Id = 1,
-                    Name = "Name 1!@~#$%^&*()_+=-\\||'\"?/.><,",
-                    Description = "Name 1!@~#$%^&*()_+=-\\||'\"?/.><,",
-                    AvailableCount = 5,
-                    Price = 19
-                },
-                new ProductModel()
-                {
-                    Id = 0,
-                    Name = "",
-                    Description = "",
-                    AvailableCount = -9,
-                    Price = 9.999m                    
-                }
-            };
-
-            var expected = new List<ProductEntity>()
-            {
-                new ProductEntity()
-                {
-                    Id = 1,
-                    Name = "Name 1!@~#$%^&*()_+=-\\||'\"?/.><,",
-                    Description = "Name 1!@~#$%^&*()_+=-\\||'\"?/.><,",
-                    AvailableCount = 5,
-                    Price = 19
-                },
-                new ProductEntity()
-                {
-                    Id = 0,
-                    Name = "",
-                    Description = "",
-                    AvailableCount = -9,
-                    Price = 9.999m,
-                }
-            };
-
-            // Act
-            var actual = _converter.ConvertFrom(productModelsStub).ToList();
-
-            // Assert                
-            CollectionAssert.AreEqual(expected, actual, _comparer);
+            return productModels;
         }
     }
 }

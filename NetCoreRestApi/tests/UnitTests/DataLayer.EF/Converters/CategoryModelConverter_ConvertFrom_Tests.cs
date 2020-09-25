@@ -64,8 +64,8 @@ namespace UnitTests.DataLayer.EF.Converters
                 new CategoryModel()
                 {
                     Id = 1,
-                    Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
-                    Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
+                    Name = "Name 1",
+                    Description = "Name 1"
                 },
                 new CategoryModel()
                 {
@@ -80,8 +80,8 @@ namespace UnitTests.DataLayer.EF.Converters
                 new CategoryEntity()
                 {
                     Id = 1,
-                    Name = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,",
-                    Description = "Name 1 !@~#$%^&*()_+=-\\||'\"?/.><,"
+                    Name = "Name 1",
+                    Description = "Name 1"
                 },
                 new CategoryEntity()
                 {

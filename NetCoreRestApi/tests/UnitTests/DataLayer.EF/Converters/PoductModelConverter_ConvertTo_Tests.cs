@@ -83,6 +83,37 @@ namespace UnitTests.DataLayer.EF.Converters
         public void Convert_ToProductModels_FromProductEntities()
         {
             // Arrange
+            var productEnteties = GetProductEntities();
+
+            var expected = new List<ProductModel>()
+            {
+                new ProductModel()
+                {
+                    Id = 1,
+                    Name = "Test Name",
+                    Description = "Test Description",
+                    AvailableCount = 5,
+                    Price = 19
+                },
+                new ProductModel()
+                {
+                    Id = 0,
+                    Name = "",
+                    Description = "",
+                    AvailableCount = -9,
+                    Price = 9.999m
+                }
+            };           
+
+            // Act
+            var actual = _productConverter.ConvertTo(productEnteties).ToList();
+
+            // Assert     
+            CollectionAssert.AreEqual(expected, actual, _comparer);            
+        }
+
+        private List<ProductEntity> GetProductEntities()
+        {
             var productEntityStub = new ProductEntity()
             {
                 Id = 1,
@@ -143,31 +174,7 @@ namespace UnitTests.DataLayer.EF.Converters
                 productEntityStub2
             };
 
-            var expected = new List<ProductModel>()
-            {
-                new ProductModel()
-                {
-                    Id = 1,
-                    Name = "Test Name",
-                    Description = "Test Description",
-                    AvailableCount = 5,
-                    Price = 19
-                },
-                new ProductModel()
-                {
-                    Id = 0,
-                    Name = "",
-                    Description = "",
-                    AvailableCount = -9,
-                    Price = 9.999m
-                }
-            };           
-
-            // Act
-            var actual = _productConverter.ConvertTo(productEntitiesStub).ToList();
-
-            // Assert     
-            CollectionAssert.AreEqual(expected, actual, _comparer);            
+            return productEntitiesStub;
         }
     }
 }
