@@ -34,7 +34,7 @@ namespace UnitTests.DataLayer.EF.Converters
 
         [TestMethod]
         [Description("Convert To CategoryEntity collection all items are not Null")]
-        public void Convert_ToCategoryEntities_ItemsAreNotNull()
+        public void Convert_FromCategoryModels_ItemsAreNotNull()
         {
             // Arrange
             var categoryModels = new List<CategoryModel>()
