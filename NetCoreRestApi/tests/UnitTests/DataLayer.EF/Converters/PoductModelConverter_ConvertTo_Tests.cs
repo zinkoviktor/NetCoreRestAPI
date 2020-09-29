@@ -33,7 +33,7 @@ namespace UnitTests.DataLayer.EF.Converters
                     model1.AvailableCount.Equals(model2.AvailableCount);
             };                
 
-            _comparer = new BaseComparer<ProductModel>(_comparerPredicate);
+            _comparer = new CollectionEqualsComparer<ProductModel>(_comparerPredicate);
         }
         
         [TestMethod]       

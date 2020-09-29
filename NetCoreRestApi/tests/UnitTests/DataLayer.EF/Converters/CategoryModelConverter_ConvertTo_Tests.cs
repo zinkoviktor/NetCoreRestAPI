@@ -29,7 +29,7 @@ namespace UnitTests.DataLayer.EF.Converters
                     model1.Description.Equals(model2.Description);
             };
 
-            _entityComparer = new BaseComparer<CategoryModel>(_comparerPredicate);
+            _entityComparer = new CollectionEqualsComparer<CategoryModel>(_comparerPredicate);
         }
 
         [TestMethod]         

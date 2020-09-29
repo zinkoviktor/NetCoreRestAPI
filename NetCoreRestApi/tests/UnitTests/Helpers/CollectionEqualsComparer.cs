@@ -3,13 +3,13 @@ using System.Collections;
 
 namespace UnitTests
 {
-    public class BaseComparer<T> : IComparer
+    public class CollectionEqualsComparer<T> : IComparer
     {
-        private Func<T, T, bool> _compareFunc;
-        private const int LESS_THAN  = -1;
+        private Func<T, T, bool> _compareFunc;       
         private const int EQUALS = 0;
+        private const int NOT_EQUALS = -1;
 
-        public BaseComparer(Func<T, T, bool> compareFunc)
+        public CollectionEqualsComparer(Func<T, T, bool> compareFunc)
         {
             _compareFunc = compareFunc;
         }
@@ -18,12 +18,12 @@ namespace UnitTests
         {
             if(object1.GetType() != typeof(T))
             {
-                return LESS_THAN;
+                return NOT_EQUALS;
             }
 
             if (object2.GetType() != typeof(T))
             {
-                return LESS_THAN;
+                return NOT_EQUALS;
             }
 
             var entity1 = (T) object1;
@@ -34,7 +34,7 @@ namespace UnitTests
                 return EQUALS;
             }
 
-            return LESS_THAN;
+            return NOT_EQUALS;
         }
     }
 }

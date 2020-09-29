@@ -32,7 +32,7 @@ namespace UnitTests.DataLayer.EF.Converters
                     entity1.AvailableCount.Equals(entity2.AvailableCount);
             };       
 
-            _comparer = new BaseComparer<ProductEntity>(_comparerPredicate);
+            _comparer = new CollectionEqualsComparer<ProductEntity>(_comparerPredicate);
         }  
 
         [TestMethod]        
