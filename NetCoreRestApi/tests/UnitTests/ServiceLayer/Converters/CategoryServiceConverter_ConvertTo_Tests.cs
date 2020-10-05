@@ -11,35 +11,36 @@ using System.Linq;
 namespace UnitTests.ServiceLayer.Converters
 {
     [TestClass]
-    public class CategoryServiceConverter_ConvertFrom_Tests
+    public class CategoryServiceConverter_ConvertTo_Tests
     {
         private IConverter<CategoryDto, CategoryModel> _converter;
         private IComparer _entityComparer;
-        private Func<CategoryDto, CategoryDto, bool> _comparerPredicate;
+        private Func<CategoryModel, CategoryModel, bool> _comparerPredicate;
 
         [TestInitialize]
         public void TestInitialize()
         {
             _converter = new CategoryServiceConverter();
 
-            _comparerPredicate = delegate (CategoryDto dto1, CategoryDto dto2)
+            _comparerPredicate = delegate (CategoryModel model1, CategoryModel model2)
             {
-                return dto1.Id.Equals(dto2.Id) &&
-                    dto1.Name.Equals(dto2.Name) &&
-                    dto1.Description.Equals(dto2.Description);
+                return model1.Id.Equals(model2.Id) &&
+                    model1.Name.Equals(model2.Name) &&
+                    model1.Description.Equals(model2.Description);
             };
 
-            _entityComparer = new CollectionEqualsComparer<CategoryDto>(_comparerPredicate);
+            _entityComparer = new CollectionEqualsComparer<CategoryModel>(_comparerPredicate);
         }
 
+
         [TestMethod]
-        public void Convert_FromCategoryModel_ItemsAreNotNull()
+        public void Convert_ToCategoryModel_ItemsAreNotNull()
         {
             // Arrange           
-            var categoryModels = new List<CategoryModel>()
+            var categoryEntities = new List<CategoryDto>()
             {
-                new CategoryModel(),
-                new CategoryModel()
+                new CategoryDto(),
+                new CategoryDto()
                 {
                      Id = 0,
                      Name = "",
@@ -47,25 +48,25 @@ namespace UnitTests.ServiceLayer.Converters
                 }
             };
 
-            var actual = _converter.ConvertFrom(categoryModels);
+            var actual = _converter.ConvertTo(categoryEntities);
 
             // Assert            
             Assert.IsNotNull(actual);
         }
 
         [TestMethod]
-        public void Convert_ToCategoryDto_FromCategoryModels()
+        public void Convert_ToCategoryModels_FromCategoryDtos()
         {
             // Arrange            
-            var categoryModels = new List<CategoryModel>
+            var categoryDtos = new List<CategoryDto>
             {
-                new CategoryModel()
+                new CategoryDto()
                 {
                     Id = 1,
                     Name = "Name 1",
                     Description = "Name 1"
                 },
-                new CategoryModel()
+                new CategoryDto()
                 {
                     Id = 0,
                     Name = "",
@@ -73,15 +74,15 @@ namespace UnitTests.ServiceLayer.Converters
                 }
             };
 
-            var expected = new List<CategoryDto>()
+            var expected = new List<CategoryModel>()
             {
-                new CategoryDto()
+                new CategoryModel()
                 {
                     Id = 1,
                     Name = "Name 1",
                     Description = "Name 1"
                 },
-                new CategoryDto()
+                new CategoryModel()
                 {
                     Id = 0,
                     Name = "",
@@ -90,7 +91,7 @@ namespace UnitTests.ServiceLayer.Converters
             };
 
             // Act
-            var actual = _converter.ConvertFrom(categoryModels).ToList();
+            var actual = _converter.ConvertTo(categoryDtos).ToList();
 
             // Assert            
             CollectionAssert.AreEqual(expected, actual, _entityComparer);

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace DataLayer.EF.Repositories
 {
-    public class BaseRepository<TModel, TEntity, TId> : IRepository<TModel, TId> 
+    public class BaseRepository<TModel, TEntity, TId> : IRepository<TModel, TId>
         where TModel : BaseModel<TId>
         where TEntity : BaseEntity<TId>
     {
@@ -35,13 +35,13 @@ namespace DataLayer.EF.Repositories
 
         public virtual IQueryable<TModel> Create(IEnumerable<TModel> models)
         {
-            _dbSet.AddRange(Сonverter.ConvertFrom(models));            
-            return models.AsQueryable();            
+            _dbSet.AddRange(Сonverter.ConvertFrom(models));
+            return models.AsQueryable();
         }
 
         public virtual IQueryable<TModel> Update(IEnumerable<TModel> models)
         {
-            _dbSet.UpdateRange(Сonverter.ConvertFrom(models));           
+            _dbSet.UpdateRange(Сonverter.ConvertFrom(models));
             return models.AsQueryable();
         }
 

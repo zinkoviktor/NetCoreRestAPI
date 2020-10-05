@@ -49,10 +49,10 @@ namespace UnitTests.DataLayer.EF.Converters
             };
 
             // Act
-            var actualCategoryEntities = _converter.ConvertFrom(categoryModels);
+            var actual = _converter.ConvertFrom(categoryModels);
 
             // Assert            
-            CollectionAssert.AllItemsAreNotNull(actualCategoryEntities.ToList());
+            CollectionAssert.AllItemsAreNotNull(actual.ToList());
         }
 
         [TestMethod]
@@ -75,7 +75,7 @@ namespace UnitTests.DataLayer.EF.Converters
                 }
             };
 
-            var expected = new List<CategoryEntity> 
+            var expected = new List<CategoryEntity>
             {
                 new CategoryEntity()
                 {

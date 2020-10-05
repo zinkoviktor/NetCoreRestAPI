@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace UnitTests.DataLayer.EF.Converters
 {
-    [TestClass]    
+    [TestClass]
     public class CategoryModelConverter_ConvertTo_Tests
     {
         private IConverter<CategoryEntity, CategoryModel> _converter;
@@ -22,7 +22,7 @@ namespace UnitTests.DataLayer.EF.Converters
         {
             _converter = new CategoryModelConverter();
 
-            _comparerPredicate = delegate(CategoryModel model1, CategoryModel model2)
+            _comparerPredicate = delegate (CategoryModel model1, CategoryModel model2)
             {
                 return model1.Id.Equals(model2.Id) &&
                     model1.Name.Equals(model2.Name) &&
@@ -32,7 +32,7 @@ namespace UnitTests.DataLayer.EF.Converters
             _entityComparer = new CollectionEqualsComparer<CategoryModel>(_comparerPredicate);
         }
 
-        [TestMethod]         
+        [TestMethod]
         public void Convert_ToCategoryEntity_ItemsAreNotNull()
         {
             // Arrange           
@@ -47,17 +47,17 @@ namespace UnitTests.DataLayer.EF.Converters
                 }
             };
 
-            var actualCategoryModels = _converter.ConvertTo(categoryEntities);
+            var actual = _converter.ConvertTo(categoryEntities);
 
             // Assert            
-            Assert.IsNotNull(actualCategoryModels);
+            Assert.IsNotNull(actual);
         }
 
         [TestMethod]
         public void Convert_ToCategoryModels_FromCategoryEntities()
         {
             // Arrange            
-            var categoryEntities = new List<CategoryEntity> 
+            var categoryEntities = new List<CategoryEntity>
             {
                 new CategoryEntity()
                 {
@@ -80,14 +80,14 @@ namespace UnitTests.DataLayer.EF.Converters
                     Id = 1,
                     Name = "Name 1",
                     Description = "Name 1"
-                }, 
+                },
                 new CategoryModel()
                 {
                     Id = 0,
                     Name = "",
                     Description = ""
                 }
-            };            
+            };
 
             // Act
             var actual = _converter.ConvertTo(categoryEntities).ToList();

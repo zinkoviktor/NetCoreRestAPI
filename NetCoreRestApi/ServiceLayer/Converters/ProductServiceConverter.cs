@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace ServiceLayer.Converters
 {
-    public class ProductServiceConverter : BaseConverter<ProductDto, ProductModel> 
+    public class ProductServiceConverter : BaseConverter<ProductDto, ProductModel>
     {
         public override Expression<Func<ProductDto, ProductModel>> ConvertToExpression =>
             (productDTO) => new ProductModel()
@@ -44,7 +44,7 @@ namespace ServiceLayer.Converters
 
             for (var i = 0; i < categoryList.Length; i++)
             {
-                categoryModels.Add(new CategoryModel() { Name = categoryList[i] });
+                categoryModels.Add(new CategoryModel() { Name = categoryList[i].Trim() });
             }
 
             return categoryModels;

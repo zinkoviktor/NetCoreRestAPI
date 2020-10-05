@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace UnitTests.Helpers.tests
+namespace UnitTests.Helpers.Tests
 {
     [TestClass]
     public class CollectionEqualsComparerTests
@@ -21,7 +21,7 @@ namespace UnitTests.Helpers.tests
             var expected = new List<int>()
             {
                 0,
-                1               
+                1
             };
             var actual = new List<int>(expected);
 

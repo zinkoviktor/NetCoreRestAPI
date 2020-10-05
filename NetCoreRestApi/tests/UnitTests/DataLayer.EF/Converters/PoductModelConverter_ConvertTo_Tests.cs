@@ -31,16 +31,16 @@ namespace UnitTests.DataLayer.EF.Converters
                     model1.Description.Equals(model2.Description) &&
                     model1.Price.Equals(model2.Price) &&
                     model1.AvailableCount.Equals(model2.AvailableCount);
-            };                
+            };
 
             _comparer = new CollectionEqualsComparer<ProductModel>(_comparerPredicate);
         }
-        
-        [TestMethod]       
+
+        [TestMethod]
         public void Convert_ToProductModels_CategoryAddedToModel()
         {
             // Arrange           
-            var productEntityStub = new ProductEntity()
+            var productEntity = new ProductEntity()
             {
                 Id = 1,
                 Name = "Test Name",
@@ -48,7 +48,7 @@ namespace UnitTests.DataLayer.EF.Converters
                 AvailableCount = 5,
                 Price = 19
             };
-            var categoryEntityStub = new CategoryEntity()
+            var categoryEntity = new CategoryEntity()
             {
                 Id = 1,
                 Name = "Test Name",
@@ -56,30 +56,30 @@ namespace UnitTests.DataLayer.EF.Converters
             };
             var productCategoryEntityStub = new ProductCategoryEntity()
             {
-                Product = productEntityStub,
-                ProductId = productEntityStub.Id,
-                Category = categoryEntityStub,
-                CategoryId = categoryEntityStub.Id
+                Product = productEntity,
+                ProductId = productEntity.Id,
+                Category = categoryEntity,
+                CategoryId = categoryEntity.Id
             };
 
-            productEntityStub.ProductCategoryEntities = new List<ProductCategoryEntity>
+            productEntity.ProductCategoryEntities = new List<ProductCategoryEntity>
             {
                 productCategoryEntityStub
             };
-            var productEntitiesStub = new List<ProductEntity>()
+            var productEntities = new List<ProductEntity>()
             {
-                productEntityStub
+                productEntity
             };
 
             // Act
-            var actual = _productConverter.ConvertTo(productEntityStub);
+            var actual = _productConverter.ConvertTo(productEntity);
 
             // Assert     
-            Assert.IsTrue(actual.CategoryList.Any(categoryModel => 
-                categoryModel.Name.Equals(categoryEntityStub.Name)));
+            Assert.IsTrue(actual.CategoryList.Any(categoryModel =>
+                categoryModel.Name.Equals(categoryEntity.Name)));
         }
 
-        [TestMethod]        
+        [TestMethod]
         public void Convert_ToProductModels_FromProductEntities()
         {
             // Arrange
@@ -103,18 +103,18 @@ namespace UnitTests.DataLayer.EF.Converters
                     AvailableCount = -9,
                     Price = 9.999m
                 }
-            };           
+            };
 
             // Act
             var actual = _productConverter.ConvertTo(productEnteties).ToList();
 
             // Assert     
-            CollectionAssert.AreEqual(expected, actual, _comparer);            
+            CollectionAssert.AreEqual(expected, actual, _comparer);
         }
 
         private List<ProductEntity> GetProductEntities()
         {
-            var productEntityStub = new ProductEntity()
+            var productEntity = new ProductEntity()
             {
                 Id = 1,
                 Name = "Test Name",
@@ -123,25 +123,25 @@ namespace UnitTests.DataLayer.EF.Converters
                 Price = 19
             };
 
-            var categoryEntityStub = new CategoryEntity()
+            var categoryEntity = new CategoryEntity()
             {
                 Id = 1,
                 Name = "Test Name",
                 Description = "Test Description",
             };
 
-            productEntityStub.ProductCategoryEntities = new List<ProductCategoryEntity>
+            productEntity.ProductCategoryEntities = new List<ProductCategoryEntity>
             {
                 new ProductCategoryEntity()
                 {
-                    Product = productEntityStub,
-                    ProductId = productEntityStub.Id,
-                    Category = categoryEntityStub,
-                    CategoryId = categoryEntityStub.Id
+                    Product = productEntity,
+                    ProductId = productEntity.Id,
+                    Category = categoryEntity,
+                    CategoryId = categoryEntity.Id
                 }
             };
 
-            var productEntityStub2 = new ProductEntity()
+            var productEntity2 = new ProductEntity()
             {
                 Id = 0,
                 Name = "",
@@ -150,28 +150,28 @@ namespace UnitTests.DataLayer.EF.Converters
                 Price = 9.999m
             };
 
-            var categoryEntityStub2 = new CategoryEntity()
+            var categoryEntity2 = new CategoryEntity()
             {
                 Id = 0,
                 Name = "Test Name 2 ",
                 Description = "Test Description 2",
             };
 
-            productEntityStub2.ProductCategoryEntities = new List<ProductCategoryEntity>
+            productEntity2.ProductCategoryEntities = new List<ProductCategoryEntity>
             {
                 new ProductCategoryEntity()
                 {
-                    Product = productEntityStub2,
-                    ProductId = productEntityStub2.Id,
-                    Category = categoryEntityStub2,
-                    CategoryId = categoryEntityStub2.Id
+                    Product = productEntity2,
+                    ProductId = productEntity2.Id,
+                    Category = categoryEntity2,
+                    CategoryId = categoryEntity2.Id
                 }
             };
 
             var productEntitiesStub = new List<ProductEntity>()
             {
-                productEntityStub,
-                productEntityStub2
+                productEntity,
+                productEntity2
             };
 
             return productEntitiesStub;

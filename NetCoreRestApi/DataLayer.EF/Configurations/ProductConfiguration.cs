@@ -8,11 +8,11 @@ namespace DataLayer.EF.Configurations
     {
         public void Configure(EntityTypeBuilder<ProductEntity> builder)
         {
-            
+
             builder
                 .HasKey(p => p.Id);
             builder
-                .Property(p => p.Id)                   
+                .Property(p => p.Id)
                 .ValueGeneratedOnAdd()
                 .IsRequired();
             builder
