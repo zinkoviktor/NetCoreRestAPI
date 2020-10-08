@@ -36,7 +36,7 @@ namespace UnitTests.ServiceLayer.Converters
         [TestMethod]
         public void Convert_ToCategoryModel_ItemsAreNotNull()
         {
-            // Arrange           
+            // Arrange
             var categoryEntities = new List<CategoryDto>()
             {
                 new CategoryDto(),
@@ -48,6 +48,7 @@ namespace UnitTests.ServiceLayer.Converters
                 }
             };
 
+            // Act
             var actual = _converter.ConvertTo(categoryEntities);
 
             // Assert            
