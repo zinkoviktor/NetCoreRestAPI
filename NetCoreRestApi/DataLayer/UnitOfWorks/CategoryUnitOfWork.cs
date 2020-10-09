@@ -9,7 +9,7 @@ namespace DataLayer.UnitOfWorks
     {
         public CategoryUnitOfWork(IUnitOfWorkContext dbContext, ICategoryRepository categoryRepository) :
             base(dbContext, categoryRepository)
-        {          
+        {
         }
     }
 }

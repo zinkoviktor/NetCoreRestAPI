@@ -17,7 +17,7 @@ namespace DataLayer.EF
             SetupProductCategory();
 
             AddRange(_productCategoryEntities);
-            
+
             SaveChanges();
         }
 
@@ -29,21 +29,21 @@ namespace DataLayer.EF
                 {
                     Name = "HP 410",
                     Description = "All-in-One Wireless Ink Tank Color Printer",
-                    Price = 90,                    
+                    Price = 90,
                     AvailableCount = 9
                 },
                 new ProductEntity()
                 {
                     Name = "Epson L3152",
-                    Description = "WiFi All in One Ink Tank Printer",                    
-                    Price = 60,                    
+                    Description = "WiFi All in One Ink Tank Printer",
+                    Price = 60,
                     AvailableCount = 19
                 },
                 new ProductEntity()
                 {
                     Name = "Dell Inspiron 3583",
                     Description = "15.6-inch FHD Laptop",
-                    Price = 50,                    
+                    Price = 50,
                     AvailableCount = 5
                 }
             };

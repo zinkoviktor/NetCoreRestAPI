@@ -36,7 +36,7 @@ namespace WebAPI
                     .AddTransient<IProductUnitOfWork, ProductUnitOfWork>()
                     .AddTransient<ICategoryUnitOfWork, CategoryUnitOfWork>()
                     .AddTransient<IProductRepository, ProductRepository>()
-                    .AddTransient<ICategoryRepository, CategoryRepository>()                    
+                    .AddTransient<ICategoryRepository, CategoryRepository>()
                     .AddTransient<IUnitOfWorkContext, ProductMockDbContext>()
                     .AddTransient<IDbContext, ProductMockDbContext>()
                     .AddDbContext<ProductMockDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()),

@@ -19,7 +19,7 @@ namespace BusinessLayer.Managers
             return _unitOfWork.GetAll();
         }
 
-        public virtual IEnumerable<TModel> Create(IEnumerable<TModel> models) 
+        public virtual IEnumerable<TModel> Create(IEnumerable<TModel> models)
         {
             return _unitOfWork.Create(models);
         }
@@ -34,7 +34,7 @@ namespace BusinessLayer.Managers
             _unitOfWork.Delete(models);
         }
 
-        public virtual int Save() 
+        public virtual int Save()
         {
             return _unitOfWork.Save();
         }

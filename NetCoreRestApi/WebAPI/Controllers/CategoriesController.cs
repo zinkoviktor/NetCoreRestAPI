@@ -10,8 +10,8 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : GenericController<CategoryDto, CategoryModel>
-    {       
-        public CategoriesController(ICategoryManager manager, 
+    {
+        public CategoriesController(ICategoryManager manager,
             IConverter<CategoryDto, CategoryModel> converter) : base(manager, converter)
         {
         }
@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var categoryModels = Manager.GetAll();           
+            var categoryModels = Manager.GetAll();
             var categoriesDTO = Converter.ConvertFrom(categoryModels.ToList());
 
             return Ok(categoriesDTO);

@@ -1,42 +1,41 @@
 ﻿using Common.Converter;
-using DataLayer.EF.Converters;
-using DataLayer.EF.Entities;
 using DataLayer.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ServiceLayer.Converters;
+using ServiceLayer.DataTransferObjects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests.DataLayer.EF.Converters
+namespace UnitTests.ServiceLayer.Converters
 {
     [TestClass]
-    public class CategoryModelConverter_ConvertFrom_Tests
+    public class CategoryServiceConverter_ConvertFrom_Tests
     {
-        private IConverter<CategoryEntity, CategoryModel> _converter;
+        private IConverter<CategoryDto, CategoryModel> _converter;
         private IComparer _entityComparer;
-        private Func<CategoryEntity, CategoryEntity, bool> _comparerPredicate;
+        private Func<CategoryDto, CategoryDto, bool> _comparerPredicate;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _converter = new CategoryModelConverter();
+            _converter = new CategoryServiceConverter();
 
-            _comparerPredicate = delegate (CategoryEntity entity1, CategoryEntity entity2)
+            _comparerPredicate = delegate (CategoryDto dto1, CategoryDto dto2)
             {
-                return entity1.Id.Equals(entity2.Id) &&
-                    entity1.Name.Equals(entity2.Name) &&
-                    entity1.Description.Equals(entity2.Description);
+                return dto1.Id.Equals(dto2.Id) &&
+                    dto1.Name.Equals(dto2.Name) &&
+                    dto1.Description.Equals(dto2.Description);
             };
 
-            _entityComparer = new CollectionEqualsComparer<CategoryEntity>(_comparerPredicate);
+            _entityComparer = new CollectionEqualsComparer<CategoryDto>(_comparerPredicate);
         }
 
         [TestMethod]
-        [Description("Convert To CategoryEntity collection all items are not Null")]
-        public void Convert_FromCategoryModels_ItemsAreNotNull()
+        public void Convert_FromCategoryModel_ItemsAreNotNull()
         {
-            // Arrange
+            // Arrange           
             var categoryModels = new List<CategoryModel>()
             {
                 new CategoryModel(),
@@ -48,18 +47,17 @@ namespace UnitTests.DataLayer.EF.Converters
                 }
             };
 
-            // Act
             var actual = _converter.ConvertFrom(categoryModels);
 
             // Assert            
-            CollectionAssert.AllItemsAreNotNull(actual.ToList());
+            Assert.IsNotNull(actual);
         }
 
         [TestMethod]
-        public void Convert_FromCategoryModels_ToCategoryEntities()
+        public void Convert_ToCategoryDto_FromCategoryModels()
         {
-            // Arrange
-            var categoryModels = new List<CategoryModel>()
+            // Arrange            
+            var categoryModels = new List<CategoryModel>
             {
                 new CategoryModel()
                 {
@@ -75,15 +73,15 @@ namespace UnitTests.DataLayer.EF.Converters
                 }
             };
 
-            var expected = new List<CategoryEntity>
+            var expected = new List<CategoryDto>()
             {
-                new CategoryEntity()
+                new CategoryDto()
                 {
                     Id = 1,
                     Name = "Name 1",
                     Description = "Name 1"
                 },
-                new CategoryEntity()
+                new CategoryDto()
                 {
                     Id = 0,
                     Name = "",
