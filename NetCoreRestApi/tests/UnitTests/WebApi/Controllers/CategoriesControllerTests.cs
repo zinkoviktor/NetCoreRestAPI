@@ -2,6 +2,7 @@
 using Common.Converter;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServiceLayer.DataTransferObjects;
@@ -12,14 +13,19 @@ using WebAPI.Controllers;
 namespace UnitTests.WebApi.Controllers
 {
     [TestClass]
-    public class CategoriesControllerTests
+    public class CategoriesControllerTests : BaseControllerTests
     {
+        private ICategoryManager _categoryManager;
+        private IConverter<CategoryDto, CategoryModel> _converter;
         private IQueryable<CategoryModel> _models;
         private IEnumerable<CategoryDto> _dtos;
 
         [TestInitialize]
         public void TestInitialize()
         {
+            _categoryManager = ServiceProvider.GetRequiredService<ICategoryManager>();
+            _converter = ServiceProvider.GetRequiredService<IConverter<CategoryDto, CategoryModel>>();
+
             var categoryModelsList = new List<CategoryModel>()
             {
                 new CategoryModel()
@@ -54,18 +60,8 @@ namespace UnitTests.WebApi.Controllers
         [TestMethod]
         public void CategoriesController_Get_ReturnsCategoryDtosList()
         {
-            // Arrange
-            var managerMock = new Mock<ICategoryManager>();
-            managerMock
-                .Setup(m => m.GetAll())
-                .Returns(_models);
-
-            var converterMock = new Mock<IConverter<CategoryDto, CategoryModel>>();
-            converterMock
-                .Setup(c => c.ConvertFrom(It.IsAny<IEnumerable<CategoryModel>>()))
-                .Returns(_dtos);
-
-            var categoriesController = new CategoriesController(managerMock.Object, converterMock.Object);
+            // Arrange 
+            var categoriesController = new CategoriesController(_categoryManager, _converter);
 
             var expected = _dtos;
 
