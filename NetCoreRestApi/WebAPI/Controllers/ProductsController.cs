@@ -11,14 +11,14 @@ namespace WebAPI.Controllers
     [ApiController]
     public class ProductsController : GenericController<ProductDto, ProductModel>
     {
-        public ProductsController(IProductManager manager, 
+        public ProductsController(IProductManager manager,
             IConverter<ProductDto, ProductModel> converter) : base(manager, converter)
         {
         }
 
         [HttpGet]
         public IActionResult Get()
-        {            
+        {
             var productModels = Manager.GetAll();
             var productsDTO = Converter.ConvertFrom(productModels.ToList());
 

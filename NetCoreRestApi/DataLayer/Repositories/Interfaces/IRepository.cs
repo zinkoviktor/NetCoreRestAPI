@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DataLayer.Repositories
 {
-    public interface IRepository<TModel, TId> 
+    public interface IRepository<TModel, TId>
         where TModel : BaseModel<TId>
     {
         TModel GetById(TId id);

@@ -23,19 +23,19 @@ namespace UnitTests.DataLayer.EF.Converters
             var categoryConverter = new CategoryModelConverter();
             _converter = new ProductModelConverter(categoryConverter);
 
-            _comparerPredicate = delegate(ProductEntity entity1, ProductEntity entity2)
+            _comparerPredicate = delegate (ProductEntity entity1, ProductEntity entity2)
             {
                 return entity1.Id.Equals(entity2.Id) &&
                     entity1.Name.Equals(entity2.Name) &&
                     entity1.Description.Equals(entity2.Description) &&
                     entity1.Price.Equals(entity2.Price) &&
                     entity1.AvailableCount.Equals(entity2.AvailableCount);
-            };       
+            };
 
-            _comparer = new BaseComparer<ProductEntity>(_comparerPredicate);
-        }  
+            _comparer = new CollectionEqualsComparer<ProductEntity>(_comparerPredicate);
+        }
 
-        [TestMethod]        
+        [TestMethod]
         public void Convert_FromProductModels_ItemsAreNotNull()
         {
             // Arrange           
@@ -45,7 +45,7 @@ namespace UnitTests.DataLayer.EF.Converters
             var actual = _converter.ConvertFrom(productModels).ToList();
 
             // Assert                
-            CollectionAssert.AllItemsAreNotNull(actual);        
+            CollectionAssert.AllItemsAreNotNull(actual);
         }
 
         [TestMethod]
@@ -124,7 +124,7 @@ namespace UnitTests.DataLayer.EF.Converters
                             Description = "Test Description 2",
                         }
                     }
-                }                
+                }
             };
 
             return productModels;

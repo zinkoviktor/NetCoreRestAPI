@@ -4,6 +4,6 @@ namespace BusinessLayer.Interfaces
 {
     public interface IManager<TModel>
     {
-         IQueryable<TModel> GetAll();
+        IQueryable<TModel> GetAll();
     }
 }

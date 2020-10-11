@@ -50,8 +50,8 @@ namespace Common.Converters
             {
                 return default;
             }
-            
-            return _convertingFromFunction(t2);           
+
+            return _convertingFromFunction(t2);
         }
 
         public virtual IEnumerable<T1> ConvertFrom(IEnumerable<T2> t2Collection)

@@ -10,7 +10,7 @@ namespace DataLayer.EF.Repositories
         public CategoryRepository(IDbContext dbContext,
             IConverter<CategoryEntity, CategoryModel> converter)
                 : base(dbContext, converter)
-        {                        
+        {
         }
     }
 }

@@ -1,13 +1,12 @@
-﻿using DataLayer.EF.Configurations;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace DataLayer.EF
 {
-    public class ProductsDbContext : DbContext, IDbContext       
+    public class ProductsDbContext : DbContext, IDbContext
     {
         public ProductsDbContext(DbContextOptions options) : base(options)
-        {            
+        {
         }
 
         public DbSet<TEntity> GetDbSet<TEntity>() where TEntity : class
@@ -16,7 +15,7 @@ namespace DataLayer.EF
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {           
+        {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 

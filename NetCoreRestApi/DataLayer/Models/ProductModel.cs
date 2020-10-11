@@ -6,7 +6,7 @@ namespace DataLayer.Models
     {
         public decimal Price { get; set; }
         public int AvailableCount { get; set; }
-        public IEnumerable<CategoryModel> CategoryList { get; set; } 
+        public IEnumerable<CategoryModel> CategoryList { get; set; }
             = new List<CategoryModel>();
     }
 }

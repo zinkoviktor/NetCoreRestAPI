@@ -12,7 +12,7 @@ namespace DataLayer.EF.Converters
     public class ProductModelConverter : BaseConverter<ProductEntity, ProductModel>
     {
         private readonly IConverter<CategoryEntity, CategoryModel> _categoryConverter;
-        
+
         public ProductModelConverter(IConverter<CategoryEntity, CategoryModel> categoryConverter)
         {
             _categoryConverter = categoryConverter;
@@ -43,13 +43,13 @@ namespace DataLayer.EF.Converters
                 Price = productModel.Price
             };
 
-            var productCategoryEntities = new List<ProductCategoryEntity>();            
+            var productCategoryEntities = new List<ProductCategoryEntity>();
 
             foreach (var categoryModel in productModel.CategoryList)
             {
-                var categoryEntity = _categoryConverter.ConvertFrom(categoryModel);               
+                var categoryEntity = _categoryConverter.ConvertFrom(categoryModel);
                 productCategoryEntities.Add(new ProductCategoryEntity
-                {                    
+                {
                     Category = categoryEntity,
                     CategoryId = categoryEntity.Id
                 });

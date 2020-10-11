@@ -2,6 +2,6 @@
 {
     public class BaseModel<TId>
     {
-        public TId Id { get; set; }       
+        public TId Id { get; set; }
     }
 }

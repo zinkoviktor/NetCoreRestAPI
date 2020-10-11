@@ -1,26 +1,26 @@
 ﻿using Common.Converter;
-using DataLayer.EF.Converters;
-using DataLayer.EF.Entities;
 using DataLayer.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ServiceLayer.Converters;
+using ServiceLayer.DataTransferObjects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests.DataLayer.EF.Converters
+namespace UnitTests.ServiceLayer.Converters
 {
     [TestClass]
-    public class CategoryModelConverter_ConvertTo_Tests
+    public class CategoryServiceConverter_ConvertTo_Tests
     {
-        private IConverter<CategoryEntity, CategoryModel> _converter;
+        private IConverter<CategoryDto, CategoryModel> _converter;
         private IComparer _entityComparer;
         private Func<CategoryModel, CategoryModel, bool> _comparerPredicate;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _converter = new CategoryModelConverter();
+            _converter = new CategoryServiceConverter();
 
             _comparerPredicate = delegate (CategoryModel model1, CategoryModel model2)
             {
@@ -32,14 +32,15 @@ namespace UnitTests.DataLayer.EF.Converters
             _entityComparer = new CollectionEqualsComparer<CategoryModel>(_comparerPredicate);
         }
 
+
         [TestMethod]
-        public void Convert_ToCategoryEntity_ItemsAreNotNull()
+        public void Convert_ToCategoryModel_ItemsAreNotNull()
         {
-            // Arrange           
-            var categoryEntities = new List<CategoryEntity>()
+            // Arrange
+            var categoryEntities = new List<CategoryDto>()
             {
-                new CategoryEntity(),
-                new CategoryEntity()
+                new CategoryDto(),
+                new CategoryDto()
                 {
                      Id = 0,
                      Name = "",
@@ -47,6 +48,7 @@ namespace UnitTests.DataLayer.EF.Converters
                 }
             };
 
+            // Act
             var actual = _converter.ConvertTo(categoryEntities);
 
             // Assert            
@@ -54,18 +56,18 @@ namespace UnitTests.DataLayer.EF.Converters
         }
 
         [TestMethod]
-        public void Convert_ToCategoryModels_FromCategoryEntities()
+        public void Convert_ToCategoryModels_FromCategoryDtos()
         {
             // Arrange            
-            var categoryEntities = new List<CategoryEntity>
+            var categoryDtos = new List<CategoryDto>
             {
-                new CategoryEntity()
+                new CategoryDto()
                 {
                     Id = 1,
                     Name = "Name 1",
                     Description = "Name 1"
                 },
-                new CategoryEntity()
+                new CategoryDto()
                 {
                     Id = 0,
                     Name = "",
@@ -90,7 +92,7 @@ namespace UnitTests.DataLayer.EF.Converters
             };
 
             // Act
-            var actual = _converter.ConvertTo(categoryEntities).ToList();
+            var actual = _converter.ConvertTo(categoryDtos).ToList();
 
             // Assert            
             CollectionAssert.AreEqual(expected, actual, _entityComparer);
