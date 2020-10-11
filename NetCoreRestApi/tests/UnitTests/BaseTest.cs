@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Managers;
 using Common.Converter;
+using DataLayer.EF;
 using DataLayer.EF.Converters;
 using DataLayer.EF.Entities;
 using DataLayer.EF.Repositories;
@@ -55,9 +56,11 @@ namespace UnitTests
                     .AddTransient<ICategoryRepository, CategoryRepository>();                      
         }
 
-        public void InjectService(Type serviceType, Func<IServiceProvider, object> implementation)
+        public void InjectService<InternalService>(InternalService implementation) where InternalService : class
         {
-            _services.AddTransient(serviceType, implementation);
+            _services.AddTransient(p => {
+                return implementation;
+            });
         }
 
         public void UseInMemoryDatabase()

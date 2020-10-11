@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Managers;
 using Common.Converter;
 using DataLayer.EF;
+using DataLayer.EF.Entities;
 using DataLayer.Models;
 using DataLayer.Repositories.Intefaces;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ using WebAPI.Controllers;
 namespace UnitTests.WebApi.Controllers
 {
     [TestClass]
-    public class ProductsControllerTests : BaseTest, IDbContext
+    public class ProductsControllerTests : BaseTest
     {
         IProductManager manager;
         IConverter<ProductDto, ProductModel> converter;
@@ -47,31 +48,57 @@ namespace UnitTests.WebApi.Controllers
             };
             _models = productModelsList.AsQueryable();
 
-            var productDtosList = new List<ProductDto>()
+            var productDtosList = new List<ProductEntity>()
             {
-                new ProductDto()
+                new ProductEntity()
                 {
-                    Id = 1,
-                    Name = "First"
+                    Name = "HP 410",
+                    Description = "All-in-One Wireless Ink Tank Color Printer",
+                    Price = 90,
+                    AvailableCount = 9,
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
                 },
-                new ProductDto()
+                new ProductEntity()
                 {
-                    Id = 1,
-                    Name = "Second"
+                    Name = "Epson L3152",
+                    Description = "WiFi All in One Ink Tank Printer",
+                    Price = 60,
+                    AvailableCount = 19,
+                ProductCategoryEntities = new List<ProductCategoryEntity>()
+        }
+            };
+
+            var categoryEntities = new List<CategoryEntity>()
+            {
+                new CategoryEntity()
+                {
+                    Name = "Laptops",
+                    Description = "Shop Laptops and find popular brands. Save money."
+                },
+                new CategoryEntity()
+                {
+                    Name = "Printers",
+                    Description = "The Best Printers for 2020."
+                },
+                new CategoryEntity()
+                {
+                    Name = "Sale",
+                    Description = "Shop all sale items"
                 }
             };
-            _dtos = productDtosList.AsQueryable();
 
             var mock = new Mock<IDbContext>();
-            var dbSetMock = new Mock<DbSet<ProductDto>>();
-            dbSetMock.Setup(m => m.AsQueryable()).Returns(_dtos.AsQueryable());
-            mock.Setup(d => d.GetDbSet<ProductDto>()).Returns(GetQueryableMockDbSet<ProductDto>(_dtos.ToList()));
-            InjectService(typeof(IUnitOfWorkContext), mock.Object);
-            InjectService(typeof(IDbContext), mock.Object.GetType());
+            var productsDbSet = GetQueryableMockDbSet(productDtosList);
+            var categoriesDbSet = GetQueryableMockDbSet(categoryEntities);
+            mock.Setup(d => d.GetDbSet<ProductEntity>()).Returns(productsDbSet);
+            mock.Setup(d => d.GetDbSet<CategoryEntity>()).Returns(categoriesDbSet);
+            InjectService(mock.Object);
+            InjectService<IUnitOfWorkContext>(mock.Object);
             ConfigureServices();
 
             manager = ServiceProvider.GetRequiredService<IProductManager>();
             converter = ServiceProvider.GetRequiredService<IConverter<ProductDto, ProductModel>>();
+            
         }
 
         [TestMethod]
@@ -150,11 +177,6 @@ namespace UnitTests.WebApi.Controllers
             dbSet.Setup(d => d.Add(It.IsAny<T>())).Callback<T>((s) => sourceList.Add(s));
 
             return dbSet.Object;
-        }
-
-        public int Save()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
