@@ -1,93 +1,66 @@
 ﻿using BusinessLayer.Managers;
 using Common.Converter;
+using DataLayer.EF;
+using DataLayer.EF.Entities;
 using DataLayer.Models;
+using DataLayer.Repositories.Intefaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServiceLayer.DataTransferObjects;
-using System.Collections.Generic;
-using System.Linq;
+using UnitTests.Helpers;
+using UnitTests.Helpers.CategoryHelpers;
 using WebAPI.Controllers;
 
 namespace UnitTests.WebApi.Controllers
 {
     [TestClass]
-    public class CategoriesControllerTests : BaseControllerTests
+    public class CategoriesControllerTests : BaseTest
     {
-        private ICategoryManager _categoryManager;
-        private IConverter<CategoryDto, CategoryModel> _converter;
-        private IQueryable<CategoryModel> _models;
-        private IEnumerable<CategoryDto> _dtos;
+        private ICategoryManager Manager { get; set; }
+        private IConverter<CategoryDto, CategoryModel> Converter { get; set; }
 
         [TestInitialize]
         public void TestInitialize()
         {
-            _categoryManager = ServiceProvider.GetRequiredService<ICategoryManager>();
-            _converter = ServiceProvider.GetRequiredService<IConverter<CategoryDto, CategoryModel>>();
+            var categories = CategoryEntityHelper.GetCategoryEntities();
 
-            var categoryModelsList = new List<CategoryModel>()
-            {
-                new CategoryModel()
-                {
-                    Id = 1,
-                    Name = "First"
-                },
-                new CategoryModel()
-                {
-                    Id = 1,
-                    Name = "Second"
-                }
-            };
-            _models = categoryModelsList.AsQueryable();
+            var mock = new Mock<IDbContext>();
 
-            var categoryDtosList = new List<CategoryDto>()
-            {
-                new CategoryDto()
-                {
-                    Id = 1,
-                    Name = "First"
-                },
-                new CategoryDto()
-                {
-                    Id = 1,
-                    Name = "Second"
-                }
-            };
-            _dtos = categoryDtosList.AsQueryable();
+            var categoriesDbSet = DbSetMockHelper.GetQueryableMockDbSet(categories);
+
+            mock.Setup(d => d.GetDbSet<CategoryEntity>()).Returns(categoriesDbSet);
+
+            InjectService(mock.Object);
+            InjectService<IUnitOfWorkContext>(mock.Object);
+
+            ConfigureServices();
+
+            Manager = ServiceProvider.GetRequiredService<ICategoryManager>();
+            Converter = ServiceProvider.GetRequiredService<IConverter<CategoryDto, CategoryModel>>();
         }
 
         [TestMethod]
         public void CategoriesController_Get_ReturnsCategoryDtosList()
         {
             // Arrange 
-            var categoriesController = new CategoriesController(_categoryManager, _converter);
-
-            var expected = _dtos;
+            var categoriesController = new CategoriesController(Manager, Converter);
+            var expected = CategoryDtoHelper.GetCategoryDtos();
 
             // Act
-            var result = categoriesController.Get();
-            var actual = result as OkObjectResult;
+            var result = categoriesController.Get() as OkObjectResult;
+            var actual = result.Value;
 
             // Assert            
-            Assert.AreEqual(expected, actual.Value);
+            Assert.IsTrue(CategoryDtoHelper.Instance.AreEquals(expected, actual));
         }
 
         [TestMethod]
         public void CategoriesController_Get_ReturnsStatusCode200()
         {
-            // Arrange
-            var managerMock = new Mock<ICategoryManager>();
-            managerMock
-                .Setup(m => m.GetAll())
-                .Returns(_models);
-
-            var converterMock = new Mock<IConverter<CategoryDto, CategoryModel>>();
-            converterMock
-                .Setup(c => c.ConvertFrom(It.IsAny<IEnumerable<CategoryModel>>()))
-                .Returns(_dtos);
-
-            var categoriesController = new CategoriesController(managerMock.Object, converterMock.Object);
+            // Arrange           
+            var categoriesController = new CategoriesController(Manager, Converter);
 
             // Act
             var result = categoriesController.Get();

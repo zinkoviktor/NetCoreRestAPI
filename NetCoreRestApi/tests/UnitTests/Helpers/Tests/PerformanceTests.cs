@@ -1,6 +1,7 @@
 ﻿using DataLayer.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
+using UnitTests.Helpers.CategoryHelpers;
 
 namespace UnitTests.Helpers.Tests
 {
@@ -13,12 +14,12 @@ namespace UnitTests.Helpers.Tests
         [TestInitialize]
         public void TestInitialize()
         {
-            for (var i = 0; i < 10000000; i++)
+            for (var i = 0; i < 100; i++)
             {
                 models1.Add(new CategoryModel { Id = i });
             }
 
-            for (var i = 0; i < 10000000; i++)
+            for (var i = 0; i < 100; i++)
             {
                 models2.Add(new CategoryModel { Id = i });
             }
@@ -27,7 +28,7 @@ namespace UnitTests.Helpers.Tests
         [TestMethod]
         public void Performance_ClassComparer_TimeOnCompareObjects()
         {
-            var result = ModelComparer.AreCategoryModelEquals(models1, models2);
+            var result = CategoryModelHelper.Instance.AreEquals(models1, models2);
             Assert.IsTrue(result);
         }
 
