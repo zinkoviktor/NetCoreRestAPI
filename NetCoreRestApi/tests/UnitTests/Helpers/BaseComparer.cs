@@ -4,21 +4,6 @@ namespace UnitTests.Helpers
 {
     public abstract class BaseComparer<T>
     {
-        public bool AreObjectTypesEquals(object object1, object object2)
-        {
-            if (object1.GetType() != typeof(T))
-            {
-                return false;
-            }
-
-            if (object2.GetType() != typeof(T))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         public abstract bool AreEquals(T dto1, T dto2);
 
         public virtual bool AreEquals(List<T> list1, List<T> list2)
@@ -47,6 +32,21 @@ namespace UnitTests.Helpers
             }
 
             return AreEquals(models1, object2 as List<T>);
+        }
+
+        public bool AreObjectTypesEquals(object object1, object object2)
+        {
+            if (object1.GetType() != typeof(T))
+            {
+                return false;
+            }
+
+            if (object2.GetType() != typeof(T))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
