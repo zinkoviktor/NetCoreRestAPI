@@ -43,7 +43,6 @@ namespace UnitTests.WebApi.Controllers
 
             Manager = ServiceProvider.GetRequiredService<IProductManager>();
             Converter = ServiceProvider.GetRequiredService<IConverter<ProductDto, ProductModel>>();
-
         }
 
         [TestMethod]

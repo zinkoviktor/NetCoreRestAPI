@@ -12,8 +12,8 @@ namespace UnitTests.Helpers.CategoryHelpers
         }
 
         public override bool AreEquals(CategoryModel model1, CategoryModel model2)
-        {            
-            return Instance.AreObjectTypesEquals(model1, model2) 
+        {
+            return Instance.AreObjectTypesEquals(model1, model2)
                 && model1.Id == model2.Id
                     && model1.Name == model2.Name
                         && model1.Description == model2.Description;
@@ -27,7 +27,7 @@ namespace UnitTests.Helpers.CategoryHelpers
                 {
                     Id = 1,
                     Name = "Laptops",
-                    Description = "Shop Laptops and find popular brands. Save money."                   
+                    Description = "Shop Laptops and find popular brands. Save money."
                 },
                 new CategoryModel()
                 {

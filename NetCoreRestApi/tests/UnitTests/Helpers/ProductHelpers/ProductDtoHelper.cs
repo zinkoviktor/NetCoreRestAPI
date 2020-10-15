@@ -12,8 +12,8 @@ namespace UnitTests.Helpers.ProductHelpers
         }
 
         public override bool AreEquals(ProductDto dto1, ProductDto dto2)
-        {            
-            return Instance.AreObjectTypesEquals(dto1, dto2) 
+        {
+            return Instance.AreObjectTypesEquals(dto1, dto2)
                 && dto1.Id == dto2.Id
                     && dto1.Name == dto2.Name
                         && dto1.Description == dto2.Description
@@ -44,6 +44,6 @@ namespace UnitTests.Helpers.ProductHelpers
             };
 
             return productDtos;
-        }        
+        }
     }
 }

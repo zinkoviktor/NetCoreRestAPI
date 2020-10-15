@@ -21,7 +21,7 @@ namespace UnitTests.Helpers
 
         public abstract bool AreEquals(T dto1, T dto2);
 
-        public  virtual bool AreEquals(List<T> list1, List<T> list2)
+        public virtual bool AreEquals(List<T> list1, List<T> list2)
         {
             if (list1.Count != list2.Count)
             {
