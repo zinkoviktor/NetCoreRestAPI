@@ -13,9 +13,9 @@ namespace UnitTests.Helpers
                 return false;
             }
 
-            for (var i = 0; i < list1.Count; i++)
+            for (var index = 0; index < list1.Count; index++)
             {
-                if (!AreEquals(list1[i], list2[i]))
+                if (!AreEquals(list1[index], list2[index]))
                 {
                     return false;
                 }

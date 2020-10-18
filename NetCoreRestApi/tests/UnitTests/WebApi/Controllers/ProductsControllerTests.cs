@@ -9,8 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServiceLayer.DataTransferObjects;
+using System.Collections.Generic;
 using UnitTests.Helpers;
-using UnitTests.Helpers.CategoryHelpers;
 using UnitTests.Helpers.ProductHelpers;
 using WebAPI.Controllers;
 
@@ -25,8 +25,52 @@ namespace UnitTests.WebApi.Controllers
         [TestInitialize]
         public void TestInitialize()
         {
-            var products = ProductEntityHelper.GetProductEntities();
-            var categories = CategoryEntityHelper.GetCategoryEntities();
+            var products = new List<ProductEntity>()
+            {
+                new ProductEntity()
+                {
+                    Id = 1,
+                    Name = "HP 410",
+                    Description = "All-in-One Wireless Ink Tank Color Printer",
+                    Price = 90,
+                    AvailableCount = 9,
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
+                },
+                new ProductEntity()
+                {
+                    Id = 2,
+                    Name = "Epson L3152",
+                    Description = "WiFi All in One Ink Tank Printer",
+                    Price = 60,
+                    AvailableCount = 19,
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
+                }
+            };
+
+            var categories = new List<CategoryEntity>()
+            {
+                new CategoryEntity()
+                {
+                    Id = 1,
+                    Name = "Laptops",
+                    Description = "Shop Laptops and find popular brands. Save money.",
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
+                },
+                new CategoryEntity()
+                {
+                    Id = 2,
+                    Name = "Printers",
+                    Description = "The Best Printers for 2020.",
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
+                },
+                new CategoryEntity()
+                {
+                    Id = 3,
+                    Name = "Sale",
+                    Description = "Shop all sale items",
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
+                }
+            };
 
             var mock = new Mock<IDbContext>();
 
@@ -46,22 +90,40 @@ namespace UnitTests.WebApi.Controllers
         }
 
         [TestMethod]
-        public void ProductsController_Get_ReturnsCategoryDtosList()
+        public void Get_AllProductsRequest_ReturnsExpectedProducts()
         {
             // Arrange
             var controller = new ProductsController(Manager, Converter);
-            var expected = ProductDtoHelper.GetProductDtos();
+            var expected = new List<ProductDto>()
+            {
+                new ProductDto()
+                {
+                    Id = 1,
+                    Name = "HP 410",
+                    Description = "All-in-One Wireless Ink Tank Color Printer",
+                    Price = 90,
+                    AvailableCount = 9
+                },
+                new ProductDto()
+                {
+                    Id = 2,
+                    Name = "Epson L3152",
+                    Description = "WiFi All in One Ink Tank Printer",
+                    Price = 60,
+                    AvailableCount = 19
+                }
+            };
 
             // Act
             var result = controller.Get() as OkObjectResult;
             var actual = result.Value;
 
             // Assert            
-            Assert.IsTrue(ProductDtoHelper.Instance.AreEquals(expected, actual));
+            Assert.IsTrue(ProductDtoComparer.Instance.AreEquals(expected, actual));
         }
 
         [TestMethod]
-        public void ProductsController_Get_ReturnsStatusCode200()
+        public void Get_AllProductsRequest_ReturnsStatusCode200()
         {
             // Arrange
             var controller = new ProductsController(Manager, Converter);
