@@ -20,7 +20,7 @@ namespace UnitTests
         public TestContext TestContext { get; set; }
 
         public IServiceProvider ServiceProvider { get; set; }
-        private ServiceCollection _services;
+        public ServiceCollection Services { get; private set; }
 
         public BaseTest()
         {
@@ -34,13 +34,13 @@ namespace UnitTests
 
         public void ConfigureServices()
         {
-            ServiceProvider = _services.BuildServiceProvider();
+            ServiceProvider = Services.BuildServiceProvider();
         }
 
         private void InitializeBaseServices()
         {
-            _services = new ServiceCollection();
-            _services.AddTransient<IProductManager, ProductManager>()
+            Services = new ServiceCollection();
+            Services.AddTransient<IProductManager, ProductManager>()
                      .AddTransient<ICategoryManager, CategoryManager>()
                      .AddTransient<IConverter<ProductDto, ProductModel>, ProductServiceConverter>()
                      .AddTransient<IConverter<CategoryDto, CategoryModel>, CategoryServiceConverter>()
@@ -54,7 +54,7 @@ namespace UnitTests
 
         public void InjectService<InternalService>(InternalService implementation) where InternalService : class
         {
-            _services.AddTransient(p =>
+            Services.AddTransient(p =>
             {
                 return implementation;
             });
