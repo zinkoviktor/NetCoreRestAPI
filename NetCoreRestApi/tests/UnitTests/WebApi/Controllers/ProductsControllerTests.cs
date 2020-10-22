@@ -1,101 +1,135 @@
 ﻿using BusinessLayer.Managers;
 using Common.Converter;
+using DataLayer.EF;
+using DataLayer.EF.Entities;
 using DataLayer.Models;
+using DataLayer.Repositories.Intefaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServiceLayer.DataTransferObjects;
 using System.Collections.Generic;
-using System.Linq;
+using UnitTests.Helpers;
+using UnitTests.Helpers.ProductHelpers;
 using WebAPI.Controllers;
 
 namespace UnitTests.WebApi.Controllers
 {
     [TestClass]
-    public class ProductsControllerTests
+    public class ProductsControllerTests : BaseTest
     {
-        private IQueryable<ProductModel> _models;
-        private IEnumerable<ProductDto> _dtos;
+        private IProductManager Manager { get; set; }
+        private IConverter<ProductDto, ProductModel> Converter { get; set; }
 
         [TestInitialize]
         public void TestInitialize()
         {
-            var productModelsList = new List<ProductModel>()
+            var products = new List<ProductEntity>()
             {
-                new ProductModel()
+                new ProductEntity()
                 {
                     Id = 1,
-                    Name = "First"
+                    Name = "HP 410",
+                    Description = "All-in-One Wireless Ink Tank Color Printer",
+                    Price = 90,
+                    AvailableCount = 9,
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
                 },
-                new ProductModel()
+                new ProductEntity()
                 {
-                    Id = 1,
-                    Name = "Second"
+                    Id = 2,
+                    Name = "Epson L3152",
+                    Description = "WiFi All in One Ink Tank Printer",
+                    Price = 60,
+                    AvailableCount = 19,
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
                 }
             };
-            _models = productModelsList.AsQueryable();
 
-            var productDtosList = new List<ProductDto>()
+            var categories = new List<CategoryEntity>()
             {
-                new ProductDto()
+                new CategoryEntity()
                 {
                     Id = 1,
-                    Name = "First"
+                    Name = "Laptops",
+                    Description = "Shop Laptops and find popular brands. Save money.",
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
                 },
-                new ProductDto()
+                new CategoryEntity()
                 {
-                    Id = 1,
-                    Name = "Second"
+                    Id = 2,
+                    Name = "Printers",
+                    Description = "The Best Printers for 2020.",
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
+                },
+                new CategoryEntity()
+                {
+                    Id = 3,
+                    Name = "Sale",
+                    Description = "Shop all sale items",
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
                 }
             };
-            _dtos = productDtosList.AsQueryable();
+
+            var mock = new Mock<IDbContext>();
+
+            var productsDbSet = DbSetMockHelper.GetQueryableMockDbSet(products);
+            var categoriesDbSet = DbSetMockHelper.GetQueryableMockDbSet(categories);
+
+            mock.Setup(d => d.GetDbSet<ProductEntity>()).Returns(productsDbSet);
+            mock.Setup(d => d.GetDbSet<CategoryEntity>()).Returns(categoriesDbSet);
+
+            InjectService(mock.Object);
+            InjectService<IUnitOfWorkContext>(mock.Object);
+
+            ConfigureServices();
+
+            Manager = ServiceProvider.GetRequiredService<IProductManager>();
+            Converter = ServiceProvider.GetRequiredService<IConverter<ProductDto, ProductModel>>();
         }
 
         [TestMethod]
-        public void ProductsController_Get_ReturnsCategoryDtosList()
+        public void Get_AllProductsRequest_ReturnsExpectedProducts()
         {
             // Arrange
-            var managerMock = new Mock<IProductManager>();
-            managerMock
-                .Setup(m => m.GetAll())
-                .Returns(_models);
-
-            var converterMock = new Mock<IConverter<ProductDto, ProductModel>>();
-            converterMock
-                .Setup(c => c.ConvertFrom(It.IsAny<IEnumerable<ProductModel>>()))
-                .Returns(_dtos);
-
-            var controller = new ProductsController(managerMock.Object, converterMock.Object);
-
-            var expected = _dtos;
+            var controller = new ProductsController(Manager, Converter);
+            var expected = new List<ProductDto>()
+            {
+                new ProductDto()
+                {
+                    Id = 1,
+                    Name = "HP 410",
+                    Description = "All-in-One Wireless Ink Tank Color Printer",
+                    Price = 90,
+                    AvailableCount = 9
+                },
+                new ProductDto()
+                {
+                    Id = 2,
+                    Name = "Epson L3152",
+                    Description = "WiFi All in One Ink Tank Printer",
+                    Price = 60,
+                    AvailableCount = 19
+                }
+            };
 
             // Act
-            var result = controller.Get();
-            var actual = result as OkObjectResult;
+            var result = controller.Get() as OkObjectResult;
+            var actual = result.Value;
 
             // Assert            
-            Assert.AreEqual(expected, actual.Value);
+            Assert.IsTrue(ProductDtoComparer.Instance.AreEquals(expected, actual));
         }
 
         [TestMethod]
-        public void ProductsController_Get_ReturnsStatusCode200()
+        public void Get_AllProductsRequest_ReturnsStatusCode200()
         {
             // Arrange
-            var managerMock = new Mock<IProductManager>();
-            managerMock
-                .Setup(m => m.GetAll())
-                .Returns(_models);
-
-            var converterMock = new Mock<IConverter<ProductDto, ProductModel>>();
-            converterMock
-                .Setup(c => c.ConvertFrom(It.IsAny<IEnumerable<ProductModel>>()))
-                .Returns(_dtos);
-
-            var controller = new ProductsController(managerMock.Object, converterMock.Object);
+            var controller = new ProductsController(Manager, Converter);
 
             // Act
-            var result = controller.Get();
-            var actual = result as OkObjectResult;
+            var actual = controller.Get() as OkObjectResult;
 
             // Assert            
             Assert.AreEqual(200, actual.StatusCode);

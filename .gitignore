@@ -2,3 +2,4 @@
 bin/
 obj/
 /NetCoreRestApi/WebAPI/WebAPI.csproj.user
+/NetCoreRestApi/TestResults
