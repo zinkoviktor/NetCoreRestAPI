@@ -1,97 +1,110 @@
 ﻿using BusinessLayer.Managers;
 using Common.Converter;
+using DataLayer.EF;
+using DataLayer.EF.Entities;
 using DataLayer.Models;
+using DataLayer.Repositories.Intefaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using ServiceLayer.DataTransferObjects;
 using System.Collections.Generic;
-using System.Linq;
+using UnitTests.Helpers;
+using UnitTests.Helpers.CategoryHelpers;
 using WebAPI.Controllers;
 
 namespace UnitTests.WebApi.Controllers
 {
     [TestClass]
-    public class CategoriesControllerTests
+    public class CategoriesControllerTests : BaseTest
     {
-        private IQueryable<CategoryModel> _models;
-        private IEnumerable<CategoryDto> _dtos;
+        private ICategoryManager Manager { get; set; }
+        private IConverter<CategoryDto, CategoryModel> Converter { get; set; }
 
         [TestInitialize]
         public void TestInitialize()
         {
-            var categoryModelsList = new List<CategoryModel>()
+            var categories = new List<CategoryEntity>()
             {
-                new CategoryModel()
+                new CategoryEntity()
                 {
                     Id = 1,
-                    Name = "First"
+                    Name = "Laptops",
+                    Description = "Shop Laptops and find popular brands. Save money.",
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
                 },
-                new CategoryModel()
+                new CategoryEntity()
                 {
-                    Id = 1,
-                    Name = "Second"
+                    Id = 2,
+                    Name = "Printers",
+                    Description = "The Best Printers for 2020.",
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
+                },
+                new CategoryEntity()
+                {
+                    Id = 3,
+                    Name = "Sale",
+                    Description = "Shop all sale items",
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
                 }
             };
-            _models = categoryModelsList.AsQueryable();
 
-            var categoryDtosList = new List<CategoryDto>()
-            {
-                new CategoryDto()
-                {
-                    Id = 1,
-                    Name = "First"
-                },
-                new CategoryDto()
-                {
-                    Id = 1,
-                    Name = "Second"
-                }
-            };
-            _dtos = categoryDtosList.AsQueryable();
+            var mock = new Mock<IDbContext>();
+
+            var categoriesDbSet = DbSetMockHelper.GetQueryableMockDbSet(categories);
+
+            mock.Setup(d => d.GetDbSet<CategoryEntity>()).Returns(categoriesDbSet);
+
+            InjectService(mock.Object);
+            InjectService<IUnitOfWorkContext>(mock.Object);
+
+            ConfigureServices();
+
+            Manager = ServiceProvider.GetRequiredService<ICategoryManager>();
+            Converter = ServiceProvider.GetRequiredService<IConverter<CategoryDto, CategoryModel>>();
         }
 
         [TestMethod]
-        public void CategoriesController_Get_ReturnsCategoryDtosList()
+        public void Get_AllCategoriesRequest_ReturnsExpectedCategories()
         {
-            // Arrange
-            var managerMock = new Mock<ICategoryManager>();
-            managerMock
-                .Setup(m => m.GetAll())
-                .Returns(_models);
-
-            var converterMock = new Mock<IConverter<CategoryDto, CategoryModel>>();
-            converterMock
-                .Setup(c => c.ConvertFrom(It.IsAny<IEnumerable<CategoryModel>>()))
-                .Returns(_dtos);
-
-            var categoriesController = new CategoriesController(managerMock.Object, converterMock.Object);
-
-            var expected = _dtos;
+            // Arrange 
+            var categoriesController = new CategoriesController(Manager, Converter);
+            var expected = new List<CategoryDto>()
+            {
+                new CategoryDto()
+                {
+                    Id = 1,
+                    Name = "Laptops",
+                    Description = "Shop Laptops and find popular brands. Save money."
+                },
+                new CategoryDto()
+                {
+                    Id = 2,
+                    Name = "Printers",
+                    Description = "The Best Printers for 2020."
+                },
+                new CategoryDto()
+                {
+                    Id = 3,
+                    Name = "Sale",
+                    Description = "Shop all sale items"
+                }
+            };
 
             // Act
-            var result = categoriesController.Get();
-            var actual = result as OkObjectResult;
+            var result = categoriesController.Get() as OkObjectResult;
+            var actual = result.Value;
 
             // Assert            
-            Assert.AreEqual(expected, actual.Value);
+            Assert.IsTrue(CategoryDtoComparer.Instance.AreEquals(expected, actual));
         }
 
         [TestMethod]
-        public void CategoriesController_Get_ReturnsStatusCode200()
+        public void Get_AllCategoriesRequest_ReturnsStatusCode200()
         {
-            // Arrange
-            var managerMock = new Mock<ICategoryManager>();
-            managerMock
-                .Setup(m => m.GetAll())
-                .Returns(_models);
-
-            var converterMock = new Mock<IConverter<CategoryDto, CategoryModel>>();
-            converterMock
-                .Setup(c => c.ConvertFrom(It.IsAny<IEnumerable<CategoryModel>>()))
-                .Returns(_dtos);
-
-            var categoriesController = new CategoriesController(managerMock.Object, converterMock.Object);
+            // Arrange           
+            var categoriesController = new CategoriesController(Manager, Converter);
 
             // Act
             var result = categoriesController.Get();
