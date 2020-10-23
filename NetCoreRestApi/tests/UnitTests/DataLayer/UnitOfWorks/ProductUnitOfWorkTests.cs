@@ -88,5 +88,48 @@ namespace UnitTests.DataLayer.UnitOfWorks
             // Assert     
             Assert.IsTrue(ProductEntityComparer.Instance.AreEquals(expected, actual));
         }
+
+        [TestMethod]
+        public void GetById_ProductEntity()
+        {
+            // Arrange
+            var products = new List<ProductEntity>()
+            {
+                new ProductEntity()
+                {
+                    Id = 1,
+                    Name = "HP 410",
+                    Description = "All-in-One Wireless Ink Tank Color Printer",
+                    Price = 90,
+                    AvailableCount = 9,
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
+                },
+                new ProductEntity()
+                {
+                    Id = 2,
+                    Name = "Epson L3152",
+                    Description = "WiFi All in One Ink Tank Printer",
+                    Price = 60,
+                    AvailableCount = 19,
+                    ProductCategoryEntities = new List<ProductCategoryEntity>()
+                }
+            };
+            var expected = new ProductModel()
+            {
+                Id = 1,
+                Name = "HP 410",
+                Description = "All-in-One Wireless Ink Tank Color Printer",
+                Price = 90,
+                AvailableCount = 9
+            };
+
+            // Act
+            DbContext.GetDbSet<ProductEntity>().AddRange(products);
+            DbContext.Save();
+            var actual = UnitOfWork.GetById(expected.Id);
+
+            // Assert     
+            Assert.IsTrue(ProductModelComparer.Instance.AreEquals(expected, actual));
+        }
     }
 }
