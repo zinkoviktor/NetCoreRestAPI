@@ -97,5 +97,31 @@ namespace UnitTests.DataLayer.EF.Converters
             // Assert            
             CollectionAssert.AreEqual(expected, actual, _entityComparer);
         }
+
+        [TestMethod]
+        public void Convert_FromNull_ToEmptyList()
+        {
+            // Arrange
+            List<CategoryModel> categoryModels = null;
+            var expected = new List<CategoryEntity>();
+            // Act
+            var actual = _converter.ConvertFrom(categoryModels).ToList();
+
+            // Assert            
+            CollectionAssert.AreEquivalent(expected, actual);
+        }
+
+        [TestMethod]
+        public void Convert_FromNull_ToEmptyEntity()
+        {
+            // Arrange
+            CategoryModel categoryModel = null;
+            var expected = new CategoryEntity();
+            // Act
+            var actual = _converter.ConvertFrom(categoryModel);
+
+            // Assert            
+            Assert.IsNull(actual);
+        }
     }
 }

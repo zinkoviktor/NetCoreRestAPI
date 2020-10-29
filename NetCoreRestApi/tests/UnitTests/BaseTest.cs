@@ -19,8 +19,8 @@ namespace UnitTests
     {
         public TestContext TestContext { get; set; }
 
-        public IServiceProvider ServiceProvider { get; set; }
-        public ServiceCollection Services { get; private set; }
+        protected IServiceProvider ServiceProvider { get; set; }
+        protected ServiceCollection Services { get; private set; }
 
         public BaseTest()
         {
@@ -54,7 +54,7 @@ namespace UnitTests
 
         public void InjectService<InternalService>(InternalService implementation) where InternalService : class
         {
-            Services.AddTransient(p =>
+            Services.AddTransient(serviceProvider =>
             {
                 return implementation;
             });

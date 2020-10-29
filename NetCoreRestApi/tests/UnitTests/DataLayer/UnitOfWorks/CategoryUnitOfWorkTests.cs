@@ -8,14 +8,14 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using UnitTests.Helpers.ProductHelpers;
+using UnitTests.Helpers.CategoryHelpers;
 
 namespace UnitTests.DataLayer.UnitOfWorks
 {
     [TestClass]
-    public class ProductUnitOfWorkTests : BaseTest
+    public class CategoryUnitOfWorkTests : BaseTest
     {
-        private IProductUnitOfWork UnitOfWork { get; set; }
+        private ICategoryUnitOfWork UnitOfWork { get; set; }
         private IDbContext DbContext { get; set; }
 
         [TestInitialize]
@@ -29,52 +29,44 @@ namespace UnitTests.DataLayer.UnitOfWorks
 
             ConfigureServices();
 
-            UnitOfWork = ServiceProvider.GetRequiredService<IProductUnitOfWork>();
+            UnitOfWork = ServiceProvider.GetRequiredService<ICategoryUnitOfWork>();
             DbContext = ServiceProvider.GetRequiredService<IDbContext>();
         }
 
         [TestMethod]
-        public void GetById_ProductEntity()
+        public void GetById_CategoryEntity()
         {
             // Arrange
-            var products = new List<ProductEntity>()
+            var categories = new List<CategoryEntity>()
             {
-                new ProductEntity()
+                new CategoryEntity()
                 {
                     Id = 1,
                     Name = "HP 410",
-                    Description = "All-in-One Wireless Ink Tank Color Printer",
-                    Price = 90,
-                    AvailableCount = 9,
-                    ProductCategoryEntities = new List<ProductCategoryEntity>()
+                    Description = "All-in-One Wireless Ink Tank Color Printer"
                 },
-                new ProductEntity()
+                new CategoryEntity()
                 {
                     Id = 2,
                     Name = "Epson L3152",
-                    Description = "WiFi All in One Ink Tank Printer",
-                    Price = 60,
-                    AvailableCount = 19,
-                    ProductCategoryEntities = new List<ProductCategoryEntity>()
+                    Description = "WiFi All in One Ink Tank Printer"
                 }
             };
-            var expected = new ProductModel()
+            var expected = new CategoryModel()
             {
                 Id = 1,
                 Name = "HP 410",
-                Description = "All-in-One Wireless Ink Tank Color Printer",
-                Price = 90,
-                AvailableCount = 9
+                Description = "All-in-One Wireless Ink Tank Color Printer"
             };
 
-            // Act
-            DbContext.GetDbSet<ProductEntity>().AddRange(products);
+            DbContext.GetDbSet<CategoryEntity>().AddRange(categories);
             DbContext.Save();
 
+            // Act
             var actual = UnitOfWork.GetById(expected.Id);
 
             // Assert     
-            Assert.IsTrue(ProductModelComparer.Instance.AreEquals(expected, actual));
+            Assert.IsTrue(CategoryModelComparer.Instance.AreEquals(expected, actual));
         }
     }
 }
