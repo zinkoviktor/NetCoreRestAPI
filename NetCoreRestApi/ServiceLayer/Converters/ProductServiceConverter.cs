@@ -37,11 +37,6 @@ namespace ServiceLayer.Converters
             productDTO.Categories ??= "";
             var categoryList = productDTO.Categories.Split(",");
 
-            if (categoryList.Length == 0)
-            {
-                return categoryModels;
-            }
-
             for (var i = 0; i < categoryList.Length; i++)
             {
                 categoryModels.Add(new CategoryModel() { Name = categoryList[i].Trim() });
@@ -52,7 +47,6 @@ namespace ServiceLayer.Converters
 
         private static string ConvertToCategories(ProductModel productModel)
         {
-            productModel.CategoryList ??= new List<CategoryModel>();
             var categoryList = new List<CategoryModel>(productModel.CategoryList);
 
             return string.Join(", ", categoryList.ConvertAll(x => x.Name));

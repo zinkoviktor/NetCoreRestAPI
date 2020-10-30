@@ -92,7 +92,8 @@ namespace UnitTests.ServiceLayer.Converters
                     Name = "",
                     Description = "",
                     AvailableCount = -9,
-                    Price = 9.999m
+                    Price = 9.999m,
+                    CategoryList = new List<CategoryModel>()
                 }
             };
 

@@ -108,7 +108,8 @@ namespace UnitTests.ServiceLayer.Converters
                     Name = "Test Name",
                     Description = "Test Description",
                     AvailableCount = 5,
-                    Price = 19
+                    Price = 19,
+                    Categories = ""
                 },
                 new ProductDto()
                 {
