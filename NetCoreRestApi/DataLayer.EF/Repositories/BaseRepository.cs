@@ -12,43 +12,45 @@ namespace DataLayer.EF.Repositories
         where TModel : BaseModel<TId>
         where TEntity : BaseEntity<TId>
     {
-        protected IConverter<TEntity, TModel> Сonverter { get; private set; }
-        protected DbSet<TEntity> DbSet { get; private set; }
+        protected IConverter<TEntity, TModel> converter;
+        protected DbSet<TEntity> dbSet;
 
         public BaseRepository(IDbContext dbContext, IConverter<TEntity, TModel> converter)
         {
-            Сonverter = converter;
-            DbSet = dbContext.GetDbSet<TEntity>();
+            this.converter = converter;
+            dbSet = dbContext.GetDbSet<TEntity>();
         }
 
         public virtual TModel GetById(TId id)
         {
-            var entity = DbSet.FirstOrDefault(entity => entity.Id.Equals(id));
-            return Сonverter.ConvertTo(entity);
+            var entity = dbSet.FirstOrDefault(entity => entity.Id.Equals(id));
+            return converter.ConvertTo(entity);
         }
 
         public virtual IEnumerable<TModel> GetAll()
         {
-            var entities = DbSet.ToList();
-            return Сonverter.ConvertTo(entities).AsQueryable();
+            var entities = dbSet.ToList();
+            return converter.ConvertTo(entities).AsQueryable();
         }
 
         public virtual IQueryable<TModel> Create(IEnumerable<TModel> models)
         {
-            DbSet.AddRange(Сonverter.ConvertFrom(models));
+            var entities = converter.ConvertFrom(models);
+            dbSet.AddRange(entities);
+
             return models.AsQueryable();
         }
 
-        public abstract IQueryable<TModel> Update(IEnumerable<TModel> models);
+        public abstract int Update(IEnumerable<TModel> models);
 
-        public virtual IQueryable<TModel> Delete(IEnumerable<TModel> models)
+        public virtual int Delete(IEnumerable<TModel> models)
         {
-            var entities = Сonverter.ConvertFrom(models);
+            var entities = converter.ConvertFrom(models);
             var foundEntitiesToDelete = new List<TEntity>();
 
             foreach (var entity in entities)
             {
-                var foundEntity = DbSet.Find(entity.Id);
+                var foundEntity = dbSet.Find(entity.Id);
 
                 if (foundEntity != null)
                 {
@@ -56,8 +58,9 @@ namespace DataLayer.EF.Repositories
                 }
             }
 
-            DbSet.RemoveRange(foundEntitiesToDelete);
-            return models.AsQueryable();
+            dbSet.RemoveRange(foundEntitiesToDelete);
+
+            return foundEntitiesToDelete.Count;
         }
     }
 }
