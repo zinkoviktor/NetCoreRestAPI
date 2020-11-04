@@ -16,6 +16,8 @@ namespace DataLayer.EF
             SetupProducts();
             SetupProductCategory();
 
+            AddRange(_productEntities);
+            AddRange(_categoryEntities);
             AddRange(_productCategoryEntities);
 
             SaveChanges();
