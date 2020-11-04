@@ -3,7 +3,6 @@ using DataLayer.EF.Entities;
 using DataLayer.Models;
 using DataLayer.Repositories;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DataLayer.EF.Repositories
 {
@@ -15,14 +14,14 @@ namespace DataLayer.EF.Repositories
         {
         }
 
-        public override IQueryable<CategoryModel> Update(IEnumerable<CategoryModel> models)
+        public override int Update(IEnumerable<CategoryModel> models)
         {
-            var entities = Сonverter.ConvertFrom(models);
+            var entities = converter.ConvertFrom(models);
             var foundEntitiesToUpdate = new List<CategoryEntity>();
 
             foreach (var entity in entities)
             {
-                var foundEntity = DbSet.Find(entity.Id);
+                var foundEntity = dbSet.Find(entity.Id);
 
                 if (foundEntity != null)
                 {
@@ -33,8 +32,8 @@ namespace DataLayer.EF.Repositories
                 }
             }
 
-            DbSet.UpdateRange(foundEntitiesToUpdate);
-            return models.AsQueryable();
+            dbSet.UpdateRange(foundEntitiesToUpdate);
+            return foundEntitiesToUpdate.Count;
         }
     }
 }

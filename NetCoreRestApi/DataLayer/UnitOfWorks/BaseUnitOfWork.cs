@@ -25,7 +25,8 @@ namespace DataLayer.UnitOfWorks
 
         public virtual IQueryable<TModel> GetAll()
         {
-            return _repository.GetAll();
+            var models = _repository.GetAll();
+            return models.AsQueryable();
         }
 
         public virtual IEnumerable<TModel> Create(IEnumerable<TModel> models)
