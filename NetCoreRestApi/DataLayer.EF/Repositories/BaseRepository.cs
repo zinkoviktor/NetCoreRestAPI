@@ -27,7 +27,7 @@ namespace DataLayer.EF.Repositories
             return Сonverter.ConvertTo(entity);
         }
 
-        public virtual IQueryable<TModel> GetAll()
+        public virtual IEnumerable<TModel> GetAll()
         {
             var entities = DbSet.ToList();
             return Сonverter.ConvertTo(entities).AsQueryable();
