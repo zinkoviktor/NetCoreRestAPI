@@ -27,10 +27,11 @@ namespace DataLayer.EF.Repositories
             return Сonverter.ConvertTo(entity);
         }
 
-        public virtual IQueryable<TModel> GetAll()
+        public virtual IQueryable<TModel> GetAll(int pageIndex, int pageSize)
         {
-            var entities = DbSet.ToList();
-            return Сonverter.ConvertTo(entities).AsQueryable();
+            var entities = DbSet.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            var models = Сonverter.ConvertTo(entities);
+            return models.AsQueryable();
         }
 
         public virtual IQueryable<TModel> Create(IEnumerable<TModel> models)

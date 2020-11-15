@@ -23,9 +23,9 @@ namespace DataLayer.UnitOfWorks
             return _repository.GetById(id);
         }
 
-        public virtual IQueryable<TModel> GetAll()
+        public virtual IQueryable<TModel> GetAll(int pageIndex, int pageSize)
         {
-            return _repository.GetAll();
+            return _repository.GetAll(pageIndex, pageSize);
         }
 
         public virtual IEnumerable<TModel> Create(IEnumerable<TModel> models)

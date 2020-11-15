@@ -17,9 +17,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int pageIndex, int pageSize)
         {
-            var productModels = Manager.GetAll();
+            var productModels = Manager.GetAll(pageIndex, pageSize);
             var productsDTO = Converter.ConvertFrom(productModels.ToList());
 
             return Ok(productsDTO);

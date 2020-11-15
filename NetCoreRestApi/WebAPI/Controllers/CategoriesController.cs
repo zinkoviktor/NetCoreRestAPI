@@ -17,12 +17,18 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get([FromQuery(Name = "PageIndex")] int pageIndex, [FromQuery(Name = "PageSize")] int pageSize)
         {
-            var categoryModels = Manager.GetAll();
+            var categoryModels = Manager.GetAll(pageIndex, pageSize);
             var categoriesDTO = Converter.ConvertFrom(categoryModels.ToList());
 
             return Ok(categoriesDTO);
+        }
+
+        [HttpGet]
+        public IActionResult Get() 
+        {
+            return Get(1, 1);
         }
     }
 }
