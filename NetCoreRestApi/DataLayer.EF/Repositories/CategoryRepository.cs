@@ -14,7 +14,7 @@ namespace DataLayer.EF.Repositories
                 : base(dbContext, converter)
         {
         }
-
+            
         public override IQueryable<CategoryModel> Update(IEnumerable<CategoryModel> models)
         {
             var entities = Сonverter.ConvertFrom(models);

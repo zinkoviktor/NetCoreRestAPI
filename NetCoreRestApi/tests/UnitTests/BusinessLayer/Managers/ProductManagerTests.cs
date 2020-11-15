@@ -72,7 +72,7 @@ namespace UnitTests.BusinessLayer.Managers
             var expected = productModelsList;
 
             // Act
-            var actual = ProductManager.GetAll()?.ToList();
+            var actual = ProductManager.GetAll(1, 3)?.ToList();
 
             // Assert            
             Assert.IsTrue(ProductModelComparer.Instance.AreEquals(expected, actual));

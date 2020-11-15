@@ -35,9 +35,23 @@ namespace DataLayer.EF.Repositories
         }
 
         public virtual IQueryable<TModel> Create(IEnumerable<TModel> models)
-        {
-            DbSet.AddRange(Сonverter.ConvertFrom(models));
-            return models.AsQueryable();
+        {            
+            var createdModels = new List<TModel>();
+
+            foreach (var model in models)
+            {
+                var foundEntity = DbSet.Find(model.Id);
+
+                if (foundEntity == null)
+                {
+                    var entity = Сonverter.ConvertFrom(model);                    
+                    var createdEntity = DbSet.Add(entity);
+                    var createdModel = Сonverter.ConvertTo(createdEntity.Entity);
+                    createdModels.Add(createdModel);
+                }
+            }
+
+            return createdModels.AsQueryable();
         }
 
         public abstract IQueryable<TModel> Update(IEnumerable<TModel> models);

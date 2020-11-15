@@ -93,7 +93,7 @@ namespace UnitTests.WebApi.Controllers
             };
 
             // Act
-            var result = categoriesController.Get() as OkObjectResult;
+            var result = categoriesController.Get(1, 3) as OkObjectResult;
             var actual = result.Value;
 
             // Assert            
@@ -107,7 +107,7 @@ namespace UnitTests.WebApi.Controllers
             var categoriesController = new CategoriesController(Manager, Converter);
 
             // Act
-            var result = categoriesController.Get();
+            var result = categoriesController.Get(1, 3);
             var actual = result as OkObjectResult;
 
             // Assert            
