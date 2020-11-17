@@ -23,8 +23,7 @@ namespace DataLayer.EF.Configurations
                 .IsRequired();                
             builder
                 .Property(c => c.Description)
-                .HasMaxLength(150);
-            
+                .HasMaxLength(150);    
         }
     }
 }

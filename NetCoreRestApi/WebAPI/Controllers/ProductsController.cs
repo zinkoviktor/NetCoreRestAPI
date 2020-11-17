@@ -36,5 +36,25 @@ namespace WebAPI.Controllers
             var createdProducts = Converter.ConvertFrom(createdModels.ToList());
             return Ok(createdProducts);
         }
+
+        [HttpPut]
+        public IActionResult Update([FromBody] IEnumerable<ProductDto> products)
+        {
+            var productModels = Converter.ConvertTo(products);
+            Manager.Update(productModels);
+            var updatedItemsCount = Manager.Save();
+
+            return Ok("Updated: " + updatedItemsCount);
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromBody] IEnumerable<ProductDto> products)
+        {
+            var productModels = Converter.ConvertTo(products);
+            Manager.Delete(productModels);
+            var deletedItemsCount = Manager.Save();
+
+            return Ok("Deleted: " + deletedItemsCount);
+        }
     }
 }

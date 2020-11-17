@@ -58,8 +58,7 @@ namespace DataLayer.EF.Repositories
 
         public virtual IQueryable<TModel> Delete(IEnumerable<TModel> models)
         {
-            var entities = Сonverter.ConvertFrom(models);
-            var foundEntitiesToDelete = new List<TEntity>();
+            var entities = Сonverter.ConvertFrom(models);           
 
             foreach (var entity in entities)
             {
@@ -67,11 +66,10 @@ namespace DataLayer.EF.Repositories
 
                 if (foundEntity != null)
                 {
-                    foundEntitiesToDelete.Add(foundEntity);
+                    DbSet.Remove(foundEntity);
                 }
             }
-
-            DbSet.RemoveRange(foundEntitiesToDelete);
+            
             return models.AsQueryable();
         }
     }
