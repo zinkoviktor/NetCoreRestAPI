@@ -35,7 +35,7 @@ namespace DataLayer.EF.Repositories
         }
 
         public virtual IQueryable<TModel> Create(IEnumerable<TModel> models)
-        {            
+        {
             var createdModels = new List<TModel>();
 
             foreach (var model in models)
@@ -44,7 +44,7 @@ namespace DataLayer.EF.Repositories
 
                 if (foundEntity == null)
                 {
-                    var entity = Сonverter.ConvertFrom(model);                    
+                    var entity = Сonverter.ConvertFrom(model);
                     var createdEntity = DbSet.Add(entity);
                     var createdModel = Сonverter.ConvertTo(createdEntity.Entity);
                     createdModels.Add(createdModel);
@@ -58,7 +58,7 @@ namespace DataLayer.EF.Repositories
 
         public virtual IQueryable<TModel> Delete(IEnumerable<TModel> models)
         {
-            var entities = Сonverter.ConvertFrom(models);           
+            var entities = Сonverter.ConvertFrom(models);
 
             foreach (var entity in entities)
             {
@@ -69,7 +69,7 @@ namespace DataLayer.EF.Repositories
                     DbSet.Remove(foundEntity);
                 }
             }
-            
+
             return models.AsQueryable();
         }
     }

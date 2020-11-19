@@ -9,10 +9,10 @@ using System.Linq;
 namespace DataLayer.EF.Repositories
 {
     public class ProductRepository : BaseRepository<ProductModel, ProductEntity, int>, IProductRepository
-    {       
+    {
         private DbSet<CategoryEntity> _categoryDbSet;
 
-        public ProductRepository(IDbContext dbContext, IConverter<ProductEntity, ProductModel> converter) 
+        public ProductRepository(IDbContext dbContext, IConverter<ProductEntity, ProductModel> converter)
             : base(dbContext, converter)
         {
             _categoryDbSet = dbContext.GetDbSet<CategoryEntity>();
@@ -31,12 +31,12 @@ namespace DataLayer.EF.Repositories
                     var product = Сonverter.ConvertFrom(model);
                     bool isAddProduct = false;
 
-                    foreach(var productCategory in product.ProductCategoryEntities)
+                    foreach (var productCategory in product.ProductCategoryEntities)
                     {
                         var foundCategory = _categoryDbSet.FirstOrDefault(
                             c => c.Name == productCategory.Category.Name);
 
-                        if(foundCategory != null)
+                        if (foundCategory != null)
                         {
                             productCategory.CategoryId = foundCategory.Id;
                             productCategory.Category = foundCategory;
@@ -54,7 +54,7 @@ namespace DataLayer.EF.Repositories
                         var createdProduct = DbSet.Add(product);
                         var createdModel = Сonverter.ConvertTo(createdProduct.Entity);
                         createdModels.Add(createdModel);
-                    }                    
+                    }
                 }
             }
 
