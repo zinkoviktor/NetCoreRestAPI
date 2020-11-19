@@ -15,9 +15,6 @@ namespace DataLayer.EF.Configurations
                 .ValueGeneratedOnAdd()
                 .IsRequired();
             builder
-                .HasIndex(c => c.Name)
-                .IsUnique();
-            builder
                 .Property(c => c.Name)
                 .HasMaxLength(50)
                 .IsRequired();
