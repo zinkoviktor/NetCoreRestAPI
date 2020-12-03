@@ -4,6 +4,7 @@ using DataLayer.EF;
 using DataLayer.EF.Converters;
 using DataLayer.EF.Entities;
 using DataLayer.EF.Repositories;
+using DataLayer.interfaces;
 using DataLayer.Models;
 using DataLayer.Repositories;
 using DataLayer.Repositories.Intefaces;
@@ -12,6 +13,7 @@ using DataLayer.UnitOfWorks.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ServiceLayer.Converters;
@@ -39,8 +41,10 @@ namespace WebAPI
                     .AddTransient<ICategoryRepository, CategoryRepository>()
                     .AddTransient<IUnitOfWorkContext, ProductMockDbContext>()
                     .AddTransient<IDbContext, ProductMockDbContext>()
-                    .AddDbContext<ProductMockDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()),
-                        ServiceLifetime.Transient, ServiceLifetime.Transient);
+                    .AddTransient<DbContext, ProductMockDbContext>()
+                    .AddTransient<ITransactionManager, EfTransactionManager>()
+                    .AddDbContext<ProductMockDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                        .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)), ServiceLifetime.Transient, ServiceLifetime.Transient);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
