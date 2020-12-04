@@ -7,7 +7,7 @@ namespace DataLayer.EF
     public class EfTransactionManager : ITransactionManager
     {
         private readonly DbContext _dbContext;
-        private IDbContextTransaction transaction1;
+        private IDbContextTransaction transaction;
 
         public EfTransactionManager(DbContext dbContext)
         {
@@ -16,18 +16,18 @@ namespace DataLayer.EF
 
         public void BeginTransaction()
         {
-            transaction1 = _dbContext.Database.BeginTransaction();
+            transaction = _dbContext.Database.BeginTransaction();
         }
 
         public void Commit()
         {
             _dbContext.SaveChanges();
-            transaction1.Commit();
+            transaction.Commit();
         }
 
         public void Rollback()
         {           
-            transaction1.Rollback();
+            transaction.Rollback();
         }
     }
 }
