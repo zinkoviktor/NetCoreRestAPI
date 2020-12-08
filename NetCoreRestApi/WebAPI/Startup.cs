@@ -42,7 +42,7 @@ namespace WebAPI
                     .AddTransient<IUnitOfWorkContext, ProductMockDbContext>()
                     .AddTransient<IDbContext, ProductMockDbContext>()
                     .AddTransient<DbContext, ProductMockDbContext>()
-                    .AddTransient<ITransactionManager, EfTransactionManager>()
+                    .AddTransient<ITransactionManager, EfTransactionManagerMock>()
                     .AddDbContext<ProductMockDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                         .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)), ServiceLifetime.Transient, ServiceLifetime.Transient);
         }
