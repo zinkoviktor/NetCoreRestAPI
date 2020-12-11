@@ -9,7 +9,7 @@ namespace BusinessLayer.Managers
     {
         private readonly IUnitOfWork<TModel, TId> _unitOfWork;
 
-        public BaseManager(IUnitOfWork<TModel, TId> unitOfWork)
+        protected BaseManager(IUnitOfWork<TModel, TId> unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

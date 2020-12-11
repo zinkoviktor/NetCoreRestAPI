@@ -41,10 +41,10 @@ namespace WebAPI
                     .AddTransient<ICategoryRepository, CategoryRepository>()
                     .AddTransient<IUnitOfWorkContext, ProductMockDbContext>()
                     .AddTransient<IDbContext, ProductMockDbContext>()
-                    .AddTransient<DbContext, ProductMockDbContext>()
                     .AddTransient<ITransactionManager, EfTransactionManagerMock>()
-                    .AddDbContext<ProductMockDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                        .ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning)), ServiceLifetime.Transient, ServiceLifetime.Transient);
+                    .AddDbContext<ProductMockDbContext>(opt => opt
+                        .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()), 
+                        ServiceLifetime.Transient, ServiceLifetime.Transient);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
