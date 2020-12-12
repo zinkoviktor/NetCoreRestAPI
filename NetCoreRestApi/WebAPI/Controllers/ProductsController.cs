@@ -3,6 +3,7 @@ using Common.Converter;
 using DataLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.DataTransferObjects;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace WebAPI.Controllers
@@ -17,12 +18,43 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(int pageIndex, int pageSize)
         {
-            var productModels = Manager.GetAll();
+            var productModels = Manager.GetAll(pageIndex, pageSize);
             var productsDTO = Converter.ConvertFrom(productModels.ToList());
 
             return Ok(productsDTO);
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody] IEnumerable<ProductDto> products)
+        {
+            var productModels = Converter.ConvertTo(products);
+            var createdModels = Manager.Create(productModels);
+            Manager.Save();
+
+            var createdProducts = Converter.ConvertFrom(createdModels.ToList());
+            return Ok(createdProducts);
+        }
+
+        [HttpPut]
+        public IActionResult Update([FromBody] IEnumerable<ProductDto> products)
+        {
+            var productModels = Converter.ConvertTo(products);
+            Manager.Update(productModels);
+            var updatedItemsCount = Manager.Save();
+
+            return Ok("Updated: " + updatedItemsCount);
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromBody] IEnumerable<ProductDto> products)
+        {
+            var productModels = Converter.ConvertTo(products);
+            Manager.Delete(productModels);
+            var deletedItemsCount = Manager.Save();
+
+            return Ok("Deleted: " + deletedItemsCount);
         }
     }
 }

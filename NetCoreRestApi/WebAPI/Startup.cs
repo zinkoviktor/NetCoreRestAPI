@@ -44,6 +44,10 @@ namespace WebAPI
                     .AddTransient<ITransactionManager, EfTransactionManagerMock>()
                     .AddDbContext<ProductMockDbContext>(opt => opt
                         .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()), 
+                    .AddSingleton<ProductMockDbContext>()
+                    .AddSingleton<IUnitOfWorkContext>(sp => sp.GetRequiredService<ProductMockDbContext>())
+                    .AddSingleton<IDbContext>(sp => sp.GetRequiredService<ProductMockDbContext>())
+                    .AddDbContext<ProductMockDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()),
                         ServiceLifetime.Transient, ServiceLifetime.Transient);
         }
 

@@ -27,16 +27,31 @@ namespace DataLayer.EF.Repositories
             return Сonverter.ConvertTo(entity);
         }
 
-        public virtual IQueryable<TModel> GetAll()
+        public virtual IQueryable<TModel> GetAll(int pageIndex, int pageSize)
         {
-            var entities = DbSet.ToList();
-            return Сonverter.ConvertTo(entities).AsQueryable();
+            var entities = DbSet.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            var models = Сonverter.ConvertTo(entities);
+            return models.AsQueryable();
         }
 
         public virtual IQueryable<TModel> Create(IEnumerable<TModel> models)
         {
-            DbSet.AddRange(Сonverter.ConvertFrom(models));
-            return models.AsQueryable();
+            var createdModels = new List<TModel>();
+
+            foreach (var model in models)
+            {
+                var foundEntity = DbSet.Find(model.Id);
+
+                if (foundEntity == null)
+                {
+                    var entity = Сonverter.ConvertFrom(model);
+                    var createdEntity = DbSet.Add(entity);
+                    var createdModel = Сonverter.ConvertTo(createdEntity.Entity);
+                    createdModels.Add(createdModel);
+                }
+            }
+
+            return createdModels.AsQueryable();
         }
 
         public abstract IQueryable<TModel> Update(IEnumerable<TModel> models);
@@ -44,7 +59,6 @@ namespace DataLayer.EF.Repositories
         public virtual IQueryable<TModel> Delete(IEnumerable<TModel> models)
         {
             var entities = Сonverter.ConvertFrom(models);
-            var foundEntitiesToDelete = new List<TEntity>();
 
             foreach (var entity in entities)
             {
@@ -52,11 +66,10 @@ namespace DataLayer.EF.Repositories
 
                 if (foundEntity != null)
                 {
-                    foundEntitiesToDelete.Add(foundEntity);
+                    DbSet.Remove(foundEntity);
                 }
             }
 
-            DbSet.RemoveRange(foundEntitiesToDelete);
             return models.AsQueryable();
         }
     }
