@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Managers;
 using Common.Converter;
 using DataLayer.Models;
+using DataLayer.UnitOfWorks;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.DataTransferObjects;
 using System.Collections.Generic;
@@ -17,13 +18,19 @@ namespace WebAPI.Controllers
         {
         }
 
-        [HttpGet]
-        public IActionResult Get(int pageIndex, int pageSize)
-        {
-            var productModels = Manager.GetAll(pageIndex, pageSize);
+        [HttpGet("/")]
+        public IActionResult Get([FromQuery] FilterParameters filter)
+        {            
+            var productModels = Manager.GetAll(filter);
             var productsDTO = Converter.ConvertFrom(productModels.ToList());
 
             return Ok(productsDTO);
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Get(null);
         }
 
         [HttpPost]

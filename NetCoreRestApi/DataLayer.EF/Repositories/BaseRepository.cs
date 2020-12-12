@@ -2,6 +2,7 @@
 using DataLayer.EF.Entities;
 using DataLayer.Models;
 using DataLayer.Repositories;
+using DataLayer.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,9 +28,11 @@ namespace DataLayer.EF.Repositories
             return Сonverter.ConvertTo(entity);
         }
 
-        public virtual IQueryable<TModel> GetAll(int pageIndex, int pageSize)
+        public virtual IQueryable<TModel> GetAll(FilterParameters filter)
         {
-            var entities = DbSet.Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            var entities = (filter == null) ? 
+                DbSet.ToList().AsQueryable() : DbSet.Skip((filter.PageIndex - 1) * filter.PageSize)
+                                                                         .Take(filter.PageSize);
             var models = Сonverter.ConvertTo(entities);
             return models.AsQueryable();
         }

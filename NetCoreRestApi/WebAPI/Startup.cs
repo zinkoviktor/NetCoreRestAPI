@@ -38,12 +38,8 @@ namespace WebAPI
                     .AddTransient<IProductUnitOfWork, ProductUnitOfWork>()
                     .AddTransient<ICategoryUnitOfWork, CategoryUnitOfWork>()
                     .AddTransient<IProductRepository, ProductRepository>()
-                    .AddTransient<ICategoryRepository, CategoryRepository>()
-                    .AddTransient<IUnitOfWorkContext, ProductMockDbContext>()
-                    .AddTransient<IDbContext, ProductMockDbContext>()
-                    .AddTransient<ITransactionManager, EfTransactionManagerMock>()
-                    .AddDbContext<ProductMockDbContext>(opt => opt
-                        .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()), 
+                    .AddTransient<ICategoryRepository, CategoryRepository>()                 
+                    .AddTransient<ITransactionManager, EfTransactionManagerMock>()                    
                     .AddSingleton<ProductMockDbContext>()
                     .AddSingleton<IUnitOfWorkContext>(sp => sp.GetRequiredService<ProductMockDbContext>())
                     .AddSingleton<IDbContext>(sp => sp.GetRequiredService<ProductMockDbContext>())

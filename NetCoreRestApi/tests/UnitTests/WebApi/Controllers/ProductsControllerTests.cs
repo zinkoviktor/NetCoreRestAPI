@@ -115,7 +115,7 @@ namespace UnitTests.WebApi.Controllers
             };
 
             // Act
-            var result = controller.Get(1, 3) as OkObjectResult;
+            var result = controller.Get(null) as OkObjectResult;
             var actual = result.Value;
 
             // Assert            
@@ -129,7 +129,7 @@ namespace UnitTests.WebApi.Controllers
             var controller = new ProductsController(Manager, Converter);
 
             // Act
-            var actual = controller.Get(1, 3) as OkObjectResult;
+            var actual = controller.Get(null) as OkObjectResult;
 
             // Assert            
             Assert.AreEqual(200, actual.StatusCode);

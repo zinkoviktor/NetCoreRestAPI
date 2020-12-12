@@ -14,9 +14,9 @@ namespace BusinessLayer.Managers
             _unitOfWork = unitOfWork;
         }
 
-        public virtual IQueryable<TModel> GetAll(int pageIndex, int pageSize)
+        public virtual IQueryable<TModel> GetAll(FilterParameters filter)
         {
-            return _unitOfWork.GetAll(pageIndex, pageSize);
+            return _unitOfWork.GetAll(filter);
         }
 
         public virtual IEnumerable<TModel> Create(IEnumerable<TModel> models)

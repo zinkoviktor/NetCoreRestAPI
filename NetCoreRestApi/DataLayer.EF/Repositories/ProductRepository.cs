@@ -29,7 +29,6 @@ namespace DataLayer.EF.Repositories
                 if (foundProduct == null)
                 {
                     var product = Сonverter.ConvertFrom(model);
-                    bool isAddProduct = false;
 
                     foreach (var productCategory in product.ProductCategoryEntities)
                     {
@@ -40,21 +39,12 @@ namespace DataLayer.EF.Repositories
                         {
                             productCategory.CategoryId = foundCategory.Id;
                             productCategory.Category = foundCategory;
-                            isAddProduct = true;
-                        }
-                        else
-                        {
-                            isAddProduct = false;
-                            break;
                         }
                     }
 
-                    if (isAddProduct)
-                    {
-                        var createdProduct = DbSet.Add(product);
-                        var createdModel = Сonverter.ConvertTo(createdProduct.Entity);
-                        createdModels.Add(createdModel);
-                    }
+                    var createdProduct = DbSet.Add(product);
+                    var createdModel = Сonverter.ConvertTo(createdProduct.Entity);
+                    createdModels.Add(createdModel);
                 }
             }
 
