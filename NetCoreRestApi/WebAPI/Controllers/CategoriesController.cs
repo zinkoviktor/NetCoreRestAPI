@@ -18,13 +18,19 @@ namespace WebAPI.Controllers
         {
         }
 
-        [HttpGet]
-        public IActionResult Get(FilterParameters filter)
+        [HttpGet("/")]
+        public IActionResult Get([FromQuery] FilterParameters filter)
         {
             var categoryModels = Manager.GetAll(filter);
             var categoriesDTO = Converter.ConvertFrom(categoryModels.ToList());
 
             return Ok(categoriesDTO);
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Get(null);
         }
 
         [HttpPost]
