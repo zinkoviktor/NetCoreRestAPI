@@ -31,13 +31,13 @@ namespace DataLayer.EF.Repositories
         public virtual IQueryable<TModel> GetAll(FilterParameters filter)
         {
             var entities = (filter == null) ? 
-                DbSet.ToList().AsQueryable() : DbSet.Skip((filter.PageIndex - 1) * filter.PageSize)
-                                                                         .Take(filter.PageSize);
+                DbSet : DbSet.Skip((filter.PageNumber - 1) * filter.PageSize)
+                             .Take(filter.PageSize);
             var models = Сonverter.ConvertTo(entities);
             return models.AsQueryable();
         }
 
-        public virtual IQueryable<TModel> Create(IEnumerable<TModel> models)
+        public virtual IEnumerable<TModel> Create(IEnumerable<TModel> models)
         {
             var createdModels = new List<TModel>();
 
@@ -54,12 +54,12 @@ namespace DataLayer.EF.Repositories
                 }
             }
 
-            return createdModels.AsQueryable();
+            return createdModels;
         }
 
-        public abstract IQueryable<TModel> Update(IEnumerable<TModel> models);
+        public abstract void Update(IEnumerable<TModel> models);
 
-        public virtual IQueryable<TModel> Delete(IEnumerable<TModel> models)
+        public virtual void Delete(IEnumerable<TModel> models)
         {
             var entities = Сonverter.ConvertFrom(models);
 
@@ -72,8 +72,6 @@ namespace DataLayer.EF.Repositories
                     DbSet.Remove(foundEntity);
                 }
             }
-
-            return models.AsQueryable();
         }
     }
 }

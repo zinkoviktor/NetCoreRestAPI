@@ -7,7 +7,7 @@ namespace DataLayer.EF
     public class EfTransactionManager : ITransactionManager
     {
         private readonly DbContext _dbContext;
-        private IDbContextTransaction _transactionManager;
+        private IDbContextTransaction _transactionManager = null;
 
         public EfTransactionManager(DbContext dbContext)
         {
@@ -16,7 +16,10 @@ namespace DataLayer.EF
 
         public void BeginTransaction()
         {
-            _transactionManager = _dbContext.Database.BeginTransaction();
+            if(_transactionManager == null)
+            {
+                _transactionManager = _dbContext.Database.BeginTransaction();
+            }            
         }
 
         public void Commit()

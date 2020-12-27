@@ -18,7 +18,7 @@ namespace DataLayer.EF.Repositories
             _categoryDbSet = dbContext.GetDbSet<CategoryEntity>();
         }
 
-        public override IQueryable<ProductModel> Create(IEnumerable<ProductModel> models)
+        public override IEnumerable<ProductModel> Create(IEnumerable<ProductModel> models)
         {
             var createdModels = new List<ProductModel>();
 
@@ -28,30 +28,17 @@ namespace DataLayer.EF.Repositories
 
                 if (foundProduct == null)
                 {
-                    var product = Сonverter.ConvertFrom(model);
-
-                    foreach (var productCategory in product.ProductCategoryEntities)
-                    {
-                        var foundCategory = _categoryDbSet.FirstOrDefault(
-                            c => c.Name == productCategory.Category.Name);
-
-                        if (foundCategory != null)
-                        {
-                            productCategory.CategoryId = foundCategory.Id;
-                            productCategory.Category = foundCategory;
-                        }
-                    }
-
-                    var createdProduct = DbSet.Add(product);
+                    var productEntity = UpdateProductCategories(model);
+                    var createdProduct = DbSet.Add(productEntity);
                     var createdModel = Сonverter.ConvertTo(createdProduct.Entity);
                     createdModels.Add(createdModel);
                 }
             }
 
-            return createdModels.AsQueryable();
+            return createdModels;
         }
 
-        public override IQueryable<ProductModel> Update(IEnumerable<ProductModel> models)
+        public override void Update(IEnumerable<ProductModel> models)
         {
             var entities = Сonverter.ConvertFrom(models);
             var foundEntitiesToUpdate = new List<ProductEntity>();
@@ -72,7 +59,25 @@ namespace DataLayer.EF.Repositories
             }
 
             DbSet.UpdateRange(foundEntitiesToUpdate);
-            return models.AsQueryable();
+        }
+
+        private ProductEntity UpdateProductCategories(ProductModel model)
+        {
+            var productEntity = Сonverter.ConvertFrom(model);
+
+            foreach (var productCategory in productEntity.ProductCategoryEntities)
+            {
+                var foundCategory = _categoryDbSet.FirstOrDefault(
+                    c => c.Name == productCategory.Category.Name);
+
+                if (foundCategory != null)
+                {
+                    productCategory.CategoryId = foundCategory.Id;
+                    productCategory.Category = foundCategory;
+                }
+            }
+
+            return productEntity;
         }
     }
 }

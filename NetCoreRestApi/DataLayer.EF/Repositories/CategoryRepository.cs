@@ -15,7 +15,7 @@ namespace DataLayer.EF.Repositories
         {
         }
 
-        public override IQueryable<CategoryModel> Update(IEnumerable<CategoryModel> models)
+        public override void Update(IEnumerable<CategoryModel> models)
         {
             var entities = Сonverter.ConvertFrom(models);
             var foundEntitiesToUpdate = new List<CategoryEntity>();
@@ -34,7 +34,6 @@ namespace DataLayer.EF.Repositories
             }
 
             DbSet.UpdateRange(foundEntitiesToUpdate);
-            return models.AsQueryable();
         }
     }
 }

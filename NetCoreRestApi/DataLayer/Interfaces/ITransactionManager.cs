@@ -1,5 +1,4 @@
 using System;
-using DataLayer.Models;
 
 namespace DataLayer.interfaces
 {
