@@ -28,11 +28,10 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] IEnumerable<CategoryDto> categories)
+        public IActionResult Create(IEnumerable<CategoryDto> categories)
         {
             var categoryModels = Converter.ConvertTo(categories);
             var createdModels = Manager.Create(categoryModels);
-            Manager.Save();
 
             var createdCategories = Converter.ConvertFrom(createdModels.ToList());
             return Ok(createdCategories);
@@ -43,9 +42,8 @@ namespace WebAPI.Controllers
         {
             var categoryModels = Converter.ConvertTo(categories);
             Manager.Update(categoryModels);
-            var updatedItemsCount = Manager.Save();
 
-            return Ok("Updated: " + updatedItemsCount);
+            return Ok();
         }
 
         [HttpDelete]
@@ -53,9 +51,8 @@ namespace WebAPI.Controllers
         {
             var categoryModels = Converter.ConvertTo(categories);
             Manager.Delete(categoryModels);
-            var deletedItemsCount = Manager.Save();
 
-            return Ok("Deleted: " + deletedItemsCount);
+            return Ok();
         }
     }
 }

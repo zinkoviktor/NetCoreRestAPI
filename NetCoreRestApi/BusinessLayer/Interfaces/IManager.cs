@@ -10,6 +10,5 @@ namespace BusinessLayer.Interfaces
         IEnumerable<TModel> Create(IEnumerable<TModel> models);
         void Update(IEnumerable<TModel> models);
         void Delete(IEnumerable<TModel> models);
-        int Save();
     }
 }

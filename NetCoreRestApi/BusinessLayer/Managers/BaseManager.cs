@@ -21,22 +21,21 @@ namespace BusinessLayer.Managers
 
         public virtual IEnumerable<TModel> Create(IEnumerable<TModel> models)
         {
-            return _unitOfWork.Create(models);
+            var createdModels = _unitOfWork.Create(models);
+            _unitOfWork.Save();
+            return createdModels;
         }
 
         public virtual void Update(IEnumerable<TModel> models)
         {
             _unitOfWork.Update(models);
+            _unitOfWork.Save();
         }
 
         public virtual void Delete(IEnumerable<TModel> models)
         {
             _unitOfWork.Delete(models);
-        }
-
-        public virtual int Save()
-        {
-            return _unitOfWork.Save();
+            _unitOfWork.Save();
         }
     }
 }

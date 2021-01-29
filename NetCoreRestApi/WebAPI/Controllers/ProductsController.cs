@@ -42,9 +42,8 @@ namespace WebAPI.Controllers
         {
             var productModels = Converter.ConvertTo(products);
             Manager.Update(productModels);
-            var updatedItemsCount = Manager.Save();
 
-            return Ok("Updated: " + updatedItemsCount);
+            return Ok();
         }
 
         [HttpDelete]
@@ -52,9 +51,8 @@ namespace WebAPI.Controllers
         {
             var productModels = Converter.ConvertTo(products);
             Manager.Delete(productModels);
-            var deletedItemsCount = Manager.Save();
 
-            return Ok("Deleted: " + deletedItemsCount);
+            return Ok();
         }
     }
 }
