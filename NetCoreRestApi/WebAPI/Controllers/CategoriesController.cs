@@ -23,7 +23,6 @@ namespace WebAPI.Controllers
         {
             var categoryModels = Manager.GetAll(filter);
             var categoriesDTO = Converter.ConvertFrom(categoryModels.ToList());
-
             return Ok(categoriesDTO);
         }
 
@@ -32,7 +31,6 @@ namespace WebAPI.Controllers
         {
             var categoryModels = Converter.ConvertTo(categories);
             var createdModels = Manager.Create(categoryModels);
-
             var createdCategories = Converter.ConvertFrom(createdModels.ToList());
             return Ok(createdCategories);
         }
@@ -42,7 +40,6 @@ namespace WebAPI.Controllers
         {
             var categoryModels = Converter.ConvertTo(categories);
             Manager.Update(categoryModels);
-
             return Ok();
         }
 
@@ -51,7 +48,6 @@ namespace WebAPI.Controllers
         {
             var categoryModels = Converter.ConvertTo(categories);
             Manager.Delete(categoryModels);
-
             return Ok();
         }
     }

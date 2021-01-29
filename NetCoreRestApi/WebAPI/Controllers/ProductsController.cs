@@ -23,7 +23,6 @@ namespace WebAPI.Controllers
         {            
             var productModels = Manager.GetAll(filter);
             var productsDTO = Converter.ConvertFrom(productModels.ToList());
-
             return Ok(productsDTO);
         }
 
@@ -32,7 +31,6 @@ namespace WebAPI.Controllers
         {
             var productModels = Converter.ConvertTo(productDtos);
             var createdModels = Manager.Create(productModels);
-
             var createdProducts = Converter.ConvertFrom(createdModels.ToList());
             return Ok(createdProducts);
         }
@@ -42,7 +40,6 @@ namespace WebAPI.Controllers
         {
             var productModels = Converter.ConvertTo(products);
             Manager.Update(productModels);
-
             return Ok();
         }
 
@@ -51,7 +48,6 @@ namespace WebAPI.Controllers
         {
             var productModels = Converter.ConvertTo(products);
             Manager.Delete(productModels);
-
             return Ok();
         }
     }
