@@ -3,7 +3,6 @@ using DataLayer.EF.Entities;
 using DataLayer.Models;
 using DataLayer.Repositories;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DataLayer.EF.Repositories
 {

@@ -30,7 +30,7 @@ namespace DataLayer.EF.Repositories
 
         public virtual IQueryable<TModel> GetAll(FilterParameters filter)
         {
-            var entities = (filter == null) ? 
+            var entities = (filter.PageNumber == default && filter.PageSize == default) ? 
                 DbSet : DbSet.Skip((filter.PageNumber - 1) * filter.PageSize)
                              .Take(filter.PageSize);
             var models = Сonverter.ConvertTo(entities);

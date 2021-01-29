@@ -3,7 +3,6 @@ using DataLayer.Models;
 using DataLayer.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 
 namespace DataLayer.UnitOfWorks

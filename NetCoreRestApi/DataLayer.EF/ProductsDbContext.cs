@@ -1,5 +1,4 @@
-﻿using DataLayer.interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace DataLayer.EF

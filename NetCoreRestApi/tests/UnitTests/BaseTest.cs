@@ -1,8 +1,10 @@
 ﻿using BusinessLayer.Managers;
 using Common.Converter;
+using DataLayer.EF;
 using DataLayer.EF.Converters;
 using DataLayer.EF.Entities;
 using DataLayer.EF.Repositories;
+using DataLayer.interfaces;
 using DataLayer.Models;
 using DataLayer.Repositories;
 using DataLayer.UnitOfWorks;
@@ -12,8 +14,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ServiceLayer.Converters;
 using ServiceLayer.DataTransferObjects;
 using System;
-using DataLayer.EF;
-using DataLayer.interfaces;
 
 namespace UnitTests
 {

@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
         {
         }
 
-        [HttpGet("/")]
+        [HttpGet()]
         public IActionResult Get([FromQuery] FilterParameters filter)
         {            
             var productModels = Manager.GetAll(filter);
@@ -27,18 +27,11 @@ namespace WebAPI.Controllers
             return Ok(productsDTO);
         }
 
-        [HttpGet]
-        public IActionResult Get()
-        {
-            return Get(null);
-        }
-
         [HttpPost]
-        public IActionResult Create([FromBody] IEnumerable<ProductDto> products)
+        public IActionResult Create([FromBody] IEnumerable<ProductDto> productDtos)
         {
-            var productModels = Converter.ConvertTo(products);
+            var productModels = Converter.ConvertTo(productDtos);
             var createdModels = Manager.Create(productModels);
-            Manager.Save();
 
             var createdProducts = Converter.ConvertFrom(createdModels.ToList());
             return Ok(createdProducts);
