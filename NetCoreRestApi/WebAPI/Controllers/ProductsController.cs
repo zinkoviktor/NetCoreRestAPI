@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet()]
-        public IActionResult Get([FromQuery] FilterParameters filter)
+        public IActionResult Get([FromQuery] FilterParameters filter = null)
         {            
             var productModels = Manager.GetAll(filter);
             var productsDTO = Converter.ConvertFrom(productModels.ToList());

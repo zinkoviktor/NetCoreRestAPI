@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet()]
-        public IActionResult Get([FromQuery] FilterParameters filter)
+        public IActionResult Get([FromQuery] FilterParameters filter = null)
         {
             var categoryModels = Manager.GetAll(filter);
             var categoriesDTO = Converter.ConvertFrom(categoryModels.ToList());
