@@ -28,9 +28,9 @@ namespace DataLayer.EF.Repositories
             return Сonverter.ConvertTo(entity);
         }
 
-        public virtual IQueryable<TModel> GetAll(FilterParameters filter)
+        public virtual IQueryable<TModel> GetAll(FilterParameters filter = null)
         {
-            var entities = (filter.PageNumber == default && filter.PageSize == default) ? 
+            var entities = (filter == null || filter.PageNumber == default || filter.PageSize == default) ? 
                 DbSet : DbSet.Skip((filter.PageNumber - 1) * filter.PageSize)
                              .Take(filter.PageSize);
             var models = Сonverter.ConvertTo(entities);

@@ -6,7 +6,7 @@ namespace BusinessLayer.Interfaces
 {
     public interface IManager<TModel>
     {
-        IQueryable<TModel> GetAll(FilterParameters filter);
+        IQueryable<TModel> GetAll(FilterParameters filter = null);
         IEnumerable<TModel> Create(IEnumerable<TModel> models);
         void Update(IEnumerable<TModel> models);
         void Delete(IEnumerable<TModel> models);

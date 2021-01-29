@@ -14,7 +14,7 @@ namespace BusinessLayer.Managers
             _unitOfWork = unitOfWork;
         }
 
-        public virtual IQueryable<TModel> GetAll(FilterParameters filter)
+        public virtual IQueryable<TModel> GetAll(FilterParameters filter = null)
         {
             return _unitOfWork.GetAll(filter);
         }

@@ -64,7 +64,7 @@ namespace UnitTests.BusinessLayer.Managers
             var expected = _models;
 
             // Act
-            var actual = CategoryManager.GetAll(null).ToList();
+            var actual = CategoryManager.GetAll().ToList();
 
             // Assert            
             Assert.IsTrue(CategoryModelComparer.Instance.AreEquals(expected, actual));

@@ -24,7 +24,7 @@ namespace DataLayer.UnitOfWorks
             return Repository.GetById(id);
         }
 
-        public virtual IQueryable<TModel> GetAll(FilterParameters filter)
+        public virtual IQueryable<TModel> GetAll(FilterParameters filter = null)
         {
             return Repository.GetAll(filter);
         }
