@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BusinessLayer\BusinessLayer.csproj" />
     <ProjectReference Include="..\..\DataLayer.EF\DataLayer.EF.csproj" />
     <ProjectReference Include="..\..\ServiceLayer\ServiceLayer.csproj" />
     <ProjectReference Include="..\..\WebAPI\WebAPI.csproj" />

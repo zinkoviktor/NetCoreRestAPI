@@ -1,8 +1,10 @@
 ﻿using BusinessLayer.Managers;
 using Common.Converter;
+using DataLayer.EF;
 using DataLayer.EF.Converters;
 using DataLayer.EF.Entities;
 using DataLayer.EF.Repositories;
+using DataLayer.interfaces;
 using DataLayer.Models;
 using DataLayer.Repositories;
 using DataLayer.UnitOfWorks;
@@ -22,7 +24,7 @@ namespace UnitTests
         protected IServiceProvider ServiceProvider { get; set; }
         protected ServiceCollection Services { get; private set; }
 
-        public BaseTest()
+        protected BaseTest()
         {
             InitializeBaseServices();
         }
@@ -32,7 +34,7 @@ namespace UnitTests
             ServiceProvider = services.BuildServiceProvider();
         }
 
-        public void ConfigureServices()
+        protected void ConfigureServices()
         {
             ServiceProvider = Services.BuildServiceProvider();
         }
@@ -49,15 +51,14 @@ namespace UnitTests
                      .AddTransient<IProductUnitOfWork, ProductUnitOfWork>()
                      .AddTransient<ICategoryUnitOfWork, CategoryUnitOfWork>()
                      .AddTransient<IProductRepository, ProductRepository>()
-                     .AddTransient<ICategoryRepository, CategoryRepository>();
+                     .AddTransient<ICategoryRepository, CategoryRepository>()
+                     .AddTransient<ITransactionManager, EfTransactionManagerMock>();
         }
 
-        public void InjectService<InternalService>(InternalService implementation) where InternalService : class
+        protected void InjectService<TInternalService>(TInternalService implementation) 
+            where TInternalService : class
         {
-            Services.AddTransient(serviceProvider =>
-            {
-                return implementation;
-            });
+            Services.AddTransient(serviceProvider => implementation);
         }
     }
 }

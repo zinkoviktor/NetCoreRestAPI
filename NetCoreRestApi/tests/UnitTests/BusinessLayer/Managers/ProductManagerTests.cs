@@ -72,7 +72,7 @@ namespace UnitTests.BusinessLayer.Managers
             var expected = productModelsList;
 
             // Act
-            var actual = ProductManager.GetAll()?.ToList();
+            var actual = ProductManager.GetAll(null)?.ToList();
 
             // Assert            
             Assert.IsTrue(ProductModelComparer.Instance.AreEquals(expected, actual));
@@ -126,7 +126,6 @@ namespace UnitTests.BusinessLayer.Managers
 
             // Act
             ProductManager.Create(products.AsEnumerable());
-            ProductManager.Save();
             var actual = DbContext.GetDbSet<ProductEntity>().ToList();
 
             // Assert     
@@ -184,7 +183,6 @@ namespace UnitTests.BusinessLayer.Managers
 
             // Act
             ProductManager.Update(productsForUpdate);
-            ProductManager.Save();
             var actualProducs = DbContext.GetDbSet<ProductEntity>().ToList();
             var actual = actualProducs.FirstOrDefault(p => p.Id == 1).Description;
             var expected = productsForUpdate.FirstOrDefault(p => p.Id == 1).Description;
@@ -244,7 +242,6 @@ namespace UnitTests.BusinessLayer.Managers
 
             // Act
             ProductManager.Delete(productsForUpdate);
-            ProductManager.Save();
             var actual = DbContext.GetDbSet<ProductEntity>().ToList();
 
             // Assert     
@@ -292,7 +289,6 @@ namespace UnitTests.BusinessLayer.Managers
 
             // Act
             ProductManager.Create(products.AsEnumerable());
-            ProductManager.Save();
 
             var createdProducts = DbContext.GetDbSet<ProductEntity>().ToList();
             var productCategoryEntities = createdProducts.First(p => p.Id == 1).ProductCategoryEntities;

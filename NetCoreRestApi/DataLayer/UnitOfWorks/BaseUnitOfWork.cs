@@ -1,6 +1,7 @@
-﻿using DataLayer.Models;
+﻿using DataLayer.interfaces;
+using DataLayer.Models;
 using DataLayer.Repositories;
-using DataLayer.Repositories.Intefaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,43 +10,56 @@ namespace DataLayer.UnitOfWorks
     public abstract class BaseUnitOfWork<TModel, TId> : IUnitOfWork<TModel, TId>
         where TModel : BaseModel<TId>
     {
-        protected readonly IRepository<TModel, TId> _repository;
-        protected readonly IUnitOfWorkContext _dbContext;
+        protected IRepository<TModel, TId> Repository { get; }
+        protected ITransactionManager TransactionManager { get; }
 
-        public BaseUnitOfWork(IUnitOfWorkContext dbContext, IRepository<TModel, TId> repository)
+        protected BaseUnitOfWork(ITransactionManager transactionManager, IRepository<TModel, TId> repository)
         {
-            _dbContext = dbContext;
-            _repository = repository;
+            TransactionManager = transactionManager;
+            Repository = repository;
         }
 
         public virtual TModel GetById(TId id)
         {
-            return _repository.GetById(id);
+            return Repository.GetById(id);
         }
 
-        public virtual IQueryable<TModel> GetAll()
+        public virtual IQueryable<TModel> GetAll(FilterParameters filter = null)
         {
-            return _repository.GetAll();
+            return Repository.GetAll(filter);
         }
 
         public virtual IEnumerable<TModel> Create(IEnumerable<TModel> models)
         {
-            return _repository.Create(models);
+            TransactionManager.BeginTransaction();
+            return Repository.Create(models);
         }
 
         public virtual void Delete(IEnumerable<TModel> models)
         {
-            _repository.Delete(models);
+            TransactionManager.BeginTransaction();
+            Repository.Delete(models);
         }
 
         public virtual void Update(IEnumerable<TModel> models)
         {
-            _repository.Update(models);
+            TransactionManager.BeginTransaction();
+            Repository.Update(models);
         }
 
         public virtual int Save()
         {
-            return _dbContext.Save();
+            try
+            {
+                TransactionManager.Commit();
+                return 1;
+            }
+            catch (Exception)
+            {
+                TransactionManager.Rollback();
+            }
+
+            return 0;
         }
     }
 }

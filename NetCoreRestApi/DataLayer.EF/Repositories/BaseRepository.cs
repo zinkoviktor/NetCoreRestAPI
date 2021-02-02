@@ -2,6 +2,7 @@
 using DataLayer.EF.Entities;
 using DataLayer.Models;
 using DataLayer.Repositories;
+using DataLayer.UnitOfWorks;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,24 +28,40 @@ namespace DataLayer.EF.Repositories
             return Сonverter.ConvertTo(entity);
         }
 
-        public virtual IQueryable<TModel> GetAll()
+        public virtual IQueryable<TModel> GetAll(FilterParameters filter = null)
         {
-            var entities = DbSet.ToList();
-            return Сonverter.ConvertTo(entities).AsQueryable();
-        }
-
-        public virtual IQueryable<TModel> Create(IEnumerable<TModel> models)
-        {
-            DbSet.AddRange(Сonverter.ConvertFrom(models));
+            var entities = (filter == null || filter.PageNumber == default || filter.PageSize == default) ? 
+                DbSet : DbSet.Skip((filter.PageNumber - 1) * filter.PageSize)
+                             .Take(filter.PageSize);
+            var models = Сonverter.ConvertTo(entities);
             return models.AsQueryable();
         }
 
-        public abstract IQueryable<TModel> Update(IEnumerable<TModel> models);
+        public virtual IEnumerable<TModel> Create(IEnumerable<TModel> models)
+        {
+            var createdModels = new List<TModel>();
 
-        public virtual IQueryable<TModel> Delete(IEnumerable<TModel> models)
+            foreach (var model in models)
+            {
+                var foundEntity = DbSet.Find(model.Id);
+
+                if (foundEntity == null)
+                {
+                    var entity = Сonverter.ConvertFrom(model);
+                    var createdEntity = DbSet.Add(entity);
+                    var createdModel = Сonverter.ConvertTo(createdEntity.Entity);
+                    createdModels.Add(createdModel);
+                }
+            }
+
+            return createdModels;
+        }
+
+        public abstract void Update(IEnumerable<TModel> models);
+
+        public virtual void Delete(IEnumerable<TModel> models)
         {
             var entities = Сonverter.ConvertFrom(models);
-            var foundEntitiesToDelete = new List<TEntity>();
 
             foreach (var entity in entities)
             {
@@ -52,12 +69,9 @@ namespace DataLayer.EF.Repositories
 
                 if (foundEntity != null)
                 {
-                    foundEntitiesToDelete.Add(foundEntity);
+                    DbSet.Remove(foundEntity);
                 }
             }
-
-            DbSet.RemoveRange(foundEntitiesToDelete);
-            return models.AsQueryable();
         }
     }
 }

@@ -4,6 +4,7 @@ using DataLayer.EF;
 using DataLayer.EF.Converters;
 using DataLayer.EF.Entities;
 using DataLayer.EF.Repositories;
+using DataLayer.interfaces;
 using DataLayer.Models;
 using DataLayer.Repositories;
 using DataLayer.Repositories.Intefaces;
@@ -36,9 +37,11 @@ namespace WebAPI
                     .AddTransient<IProductUnitOfWork, ProductUnitOfWork>()
                     .AddTransient<ICategoryUnitOfWork, CategoryUnitOfWork>()
                     .AddTransient<IProductRepository, ProductRepository>()
-                    .AddTransient<ICategoryRepository, CategoryRepository>()
-                    .AddTransient<IUnitOfWorkContext, ProductMockDbContext>()
-                    .AddTransient<IDbContext, ProductMockDbContext>()
+                    .AddTransient<ICategoryRepository, CategoryRepository>()                 
+                    .AddTransient<ITransactionManager, EfTransactionManagerMock>()                    
+                    .AddSingleton<ProductMockDbContext>()
+                    .AddSingleton<IUnitOfWorkContext>(sp => sp.GetRequiredService<ProductMockDbContext>())
+                    .AddSingleton<IDbContext>(sp => sp.GetRequiredService<ProductMockDbContext>())
                     .AddDbContext<ProductMockDbContext>(opt => opt.UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString()),
                         ServiceLifetime.Transient, ServiceLifetime.Transient);
         }
