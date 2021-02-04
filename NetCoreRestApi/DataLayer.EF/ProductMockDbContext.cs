@@ -11,7 +11,7 @@ namespace DataLayer.EF
         private List<ProductCategoryEntity> _productCategoryEntities;
 
         public ProductMockDbContext(DbContextOptions<ProductMockDbContext> options) : base(options)
-        {
+        {            
             SetupCategories();
             SetupProducts();
             SetupProductCategory();

@@ -9,34 +9,33 @@ namespace BusinessLayer.Managers
     {
         private readonly IUnitOfWork<TModel, TId> _unitOfWork;
 
-        public BaseManager(IUnitOfWork<TModel, TId> unitOfWork)
+        protected BaseManager(IUnitOfWork<TModel, TId> unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public virtual IQueryable<TModel> GetAll()
+        public virtual IQueryable<TModel> GetAll(FilterParameters filter = null)
         {
-            return _unitOfWork.GetAll();
+            return _unitOfWork.GetAll(filter);
         }
 
         public virtual IEnumerable<TModel> Create(IEnumerable<TModel> models)
         {
-            return _unitOfWork.Create(models);
+            var createdModels = _unitOfWork.Create(models);
+            _unitOfWork.Save();
+            return createdModels;
         }
 
         public virtual void Update(IEnumerable<TModel> models)
         {
             _unitOfWork.Update(models);
+            _unitOfWork.Save();
         }
 
         public virtual void Delete(IEnumerable<TModel> models)
         {
             _unitOfWork.Delete(models);
-        }
-
-        public virtual int Save()
-        {
-            return _unitOfWork.Save();
+            _unitOfWork.Save();
         }
     }
 }

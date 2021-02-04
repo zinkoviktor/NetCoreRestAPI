@@ -106,7 +106,6 @@ namespace UnitTests.BusinessLayer.Managers
 
             // Act
             CategoryManager.Create(categories.AsEnumerable());
-            CategoryManager.Save();
 
             var firstCreatedEntity = DbContext.GetDbSet<CategoryEntity>().Find(_models.Count + 1);
             var secondCreatedEntity = DbContext.GetDbSet<CategoryEntity>().Find(_models.Count + 2);
@@ -145,7 +144,6 @@ namespace UnitTests.BusinessLayer.Managers
 
             // Act
             CategoryManager.Update(categoriesForUpdate);
-            CategoryManager.Save();
 
             var actualProducs = DbContext.GetDbSet<CategoryEntity>().ToList();
             var actualFirstCategory = actualProducs.FirstOrDefault(p => p.Id == 1).Description;
@@ -178,7 +176,6 @@ namespace UnitTests.BusinessLayer.Managers
 
             // Act
             CategoryManager.Delete(categoriesToDelete);
-            CategoryManager.Save();
 
             var actual = DbContext.GetDbSet<CategoryEntity>().ToList();
 
