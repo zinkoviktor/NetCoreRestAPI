@@ -23,6 +23,12 @@ namespace WebAPI.Controllers
         {
             var categoryModels = Manager.GetAll(filter);
             var categoriesDTO = Converter.ConvertFrom(categoryModels.ToList());
+
+            if (!categoriesDTO.Any())
+            {
+                return NotFound();
+            }
+
             return Ok(categoriesDTO);
         }
 
@@ -32,15 +38,22 @@ namespace WebAPI.Controllers
             var categoryModels = Converter.ConvertTo(categories);
             var createdModels = Manager.Create(categoryModels);
             var createdCategories = Converter.ConvertFrom(createdModels.ToList());
-            return Ok(createdCategories);
+
+            if (!createdCategories.Any())
+            {
+                return BadRequest();
+            }
+           
+            return CreatedAtAction("Categories", createdCategories);
         }
 
         [HttpPut]
         public IActionResult Update([FromBody] IEnumerable<CategoryDto> categories)
         {
             var categoryModels = Converter.ConvertTo(categories);
-            Manager.Update(categoryModels);
-            return Ok();
+            var result = Manager.Update(categoryModels);
+            return result ? Ok() : BadRequest();
+
         }
 
         [HttpDelete]
