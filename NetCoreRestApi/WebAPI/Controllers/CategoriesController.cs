@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
 
             if (!categoriesDTO.Any())
             {
-                return NotFound();
+                return NotFound("Categories not found");
             }
 
             return Ok(categoriesDTO);
@@ -41,27 +41,26 @@ namespace WebAPI.Controllers
 
             if (!createdCategories.Any())
             {
-                return BadRequest();
+                return BadRequest("Categories not created!");
             }
            
-            return CreatedAtAction("Categories", createdCategories);
+            return CreatedAtAction(nameof(Create), new { createdCategories = createdCategories.ToArray() });
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] IEnumerable<CategoryDto> categories)
+        public IActionResult Update(IEnumerable<CategoryDto> categories)
         {
             var categoryModels = Converter.ConvertTo(categories);
-            var result = Manager.Update(categoryModels);
-            return result ? Ok() : BadRequest();
-
+            var result = Manager.Update(categoryModels);            
+            return result ? Ok("Successfully updated!!!") : BadRequest("Categories not created!");
         }
 
         [HttpDelete]
-        public IActionResult Delete([FromBody] IEnumerable<CategoryDto> categories)
+        public IActionResult Delete(IEnumerable<CategoryDto> categories)
         {
             var categoryModels = Converter.ConvertTo(categories);
-            Manager.Delete(categoryModels);
-            return Ok();
+            var result = Manager.Delete(categoryModels);
+            return result ? Ok("Successfully deleted!!!") : BadRequest("Categories not created!");
         }
     }
 }
