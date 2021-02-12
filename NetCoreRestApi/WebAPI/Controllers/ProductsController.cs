@@ -52,7 +52,13 @@ namespace WebAPI.Controllers
         {
             var productModels = Converter.ConvertTo(products);
             var result = Manager.Update(productModels);
-            return result ? Ok("Successfully updated!!!") : BadRequest("Products not updated!");
+
+            if (!result)
+            {
+                return BadRequest("Categories not created!");
+            }
+
+            return Ok("Successfully updated!!!");
         }
 
         [HttpDelete]
@@ -60,7 +66,13 @@ namespace WebAPI.Controllers
         {
             var productModels = Converter.ConvertTo(products);
             var result = Manager.Delete(productModels);
-            return result ? Ok("Successfully deleted!!!") : BadRequest("Products not deleted!");
+
+            if (!result)
+            {
+                return BadRequest("Categories not created!");
+            }
+
+            return Ok("Successfully deleted!!!");
         }
     }
 }

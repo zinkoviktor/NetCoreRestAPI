@@ -44,15 +44,21 @@ namespace WebAPI.Controllers
                 return BadRequest("Categories not created!");
             }
            
-            return CreatedAtAction(nameof(Create), new { createdCategories = createdCategories.ToArray() });
+            return Created(nameof(Create), new { createdCategories = createdCategories.ToArray() });
         }
 
         [HttpPut]
         public IActionResult Update(IEnumerable<CategoryDto> categories)
         {
             var categoryModels = Converter.ConvertTo(categories);
-            var result = Manager.Update(categoryModels);            
-            return result ? Ok("Successfully updated!!!") : BadRequest("Categories not created!");
+            var result = Manager.Update(categoryModels);
+
+            if (!result)
+            {
+                return BadRequest("Categories not created!");
+            }
+
+            return Ok("Successfully updated!!!"); 
         }
 
         [HttpDelete]
@@ -60,7 +66,13 @@ namespace WebAPI.Controllers
         {
             var categoryModels = Converter.ConvertTo(categories);
             var result = Manager.Delete(categoryModels);
-            return result ? Ok("Successfully deleted!!!") : BadRequest("Categories not created!");
+
+            if (!result)
+            {
+                return BadRequest("Categories not created!");
+            }
+
+            return Ok("Successfully deleted!!!");
         }
     }
 }
