@@ -8,7 +8,7 @@ namespace BusinessLayer.Interfaces
     {
         IQueryable<TModel> GetAll(FilterParameters filter = null);
         IEnumerable<TModel> Create(IEnumerable<TModel> models);
-        void Update(IEnumerable<TModel> models);
-        void Delete(IEnumerable<TModel> models);
+        bool Update(IEnumerable<TModel> models);
+        bool Delete(IEnumerable<TModel> models);
     }
 }

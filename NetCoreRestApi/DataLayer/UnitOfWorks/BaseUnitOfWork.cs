@@ -47,19 +47,19 @@ namespace DataLayer.UnitOfWorks
             Repository.Update(models);
         }
 
-        public virtual int Save()
+        public virtual bool Save()
         {
             try
             {
                 TransactionManager.Commit();
-                return 1;
+                return true;
             }
             catch (Exception)
             {
                 TransactionManager.Rollback();
             }
 
-            return 0;
+            return false;
         }
     }
 }

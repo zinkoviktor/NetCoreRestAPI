@@ -26,16 +26,16 @@ namespace BusinessLayer.Managers
             return createdModels;
         }
 
-        public virtual void Update(IEnumerable<TModel> models)
+        public virtual bool Update(IEnumerable<TModel> models)
         {
             _unitOfWork.Update(models);
-            _unitOfWork.Save();
+            return _unitOfWork.Save();
         }
 
-        public virtual void Delete(IEnumerable<TModel> models)
+        public virtual bool Delete(IEnumerable<TModel> models)
         {
             _unitOfWork.Delete(models);
-            _unitOfWork.Save();
+            return _unitOfWork.Save();
         }
     }
 }

@@ -23,6 +23,12 @@ namespace WebAPI.Controllers
         {
             var categoryModels = Manager.GetAll(filter);
             var categoriesDTO = Converter.ConvertFrom(categoryModels.ToList());
+
+            if (!categoriesDTO.Any())
+            {
+                return NotFound("Categories not found");
+            }
+
             return Ok(categoriesDTO);
         }
 
@@ -32,23 +38,41 @@ namespace WebAPI.Controllers
             var categoryModels = Converter.ConvertTo(categories);
             var createdModels = Manager.Create(categoryModels);
             var createdCategories = Converter.ConvertFrom(createdModels.ToList());
-            return Ok(createdCategories);
+
+            if (!createdCategories.Any())
+            {
+                return BadRequest("Categories not created!");
+            }
+           
+            return Created(nameof(Create), new { createdCategories = createdCategories.ToArray() });
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] IEnumerable<CategoryDto> categories)
+        public IActionResult Update(IEnumerable<CategoryDto> categories)
         {
             var categoryModels = Converter.ConvertTo(categories);
-            Manager.Update(categoryModels);
-            return Ok();
+            var result = Manager.Update(categoryModels);
+
+            if (!result)
+            {
+                return BadRequest("Categories not created!");
+            }
+
+            return Ok("Successfully updated!!!"); 
         }
 
         [HttpDelete]
-        public IActionResult Delete([FromBody] IEnumerable<CategoryDto> categories)
+        public IActionResult Delete(IEnumerable<CategoryDto> categories)
         {
             var categoryModels = Converter.ConvertTo(categories);
-            Manager.Delete(categoryModels);
-            return Ok();
+            var result = Manager.Delete(categoryModels);
+
+            if (!result)
+            {
+                return BadRequest("Categories not created!");
+            }
+
+            return Ok("Successfully deleted!!!");
         }
     }
 }
