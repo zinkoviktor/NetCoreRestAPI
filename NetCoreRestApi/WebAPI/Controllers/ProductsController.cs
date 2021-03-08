@@ -23,32 +23,56 @@ namespace WebAPI.Controllers
         {            
             var productModels = Manager.GetAll(filter);
             var productsDTO = Converter.ConvertFrom(productModels.ToList());
+            
+            if (!productsDTO.Any())
+            {
+                return NotFound("Products not found");
+            }
+
             return Ok(productsDTO);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] IEnumerable<ProductDto> productDtos)
+        public IActionResult Create(IEnumerable<ProductDto> productDtos)
         {
             var productModels = Converter.ConvertTo(productDtos);
             var createdModels = Manager.Create(productModels);
             var createdProducts = Converter.ConvertFrom(createdModels.ToList());
-            return Ok(createdProducts);
+
+            if (!createdProducts.Any())
+            {
+                return BadRequest("Products not created!");
+            }
+
+            return Created(nameof(Create), new { createdProducts = createdProducts.ToArray() });
         }
 
         [HttpPut]
-        public IActionResult Update([FromBody] IEnumerable<ProductDto> products)
+        public IActionResult Update(IEnumerable<ProductDto> products)
         {
             var productModels = Converter.ConvertTo(products);
-            Manager.Update(productModels);
-            return Ok();
+            var result = Manager.Update(productModels);
+
+            if (!result)
+            {
+                return BadRequest("Categories not created!");
+            }
+
+            return Ok("Successfully updated!!!");
         }
 
         [HttpDelete]
-        public IActionResult Delete([FromBody] IEnumerable<ProductDto> products)
+        public IActionResult Delete(IEnumerable<ProductDto> products)
         {
             var productModels = Converter.ConvertTo(products);
-            Manager.Delete(productModels);
-            return Ok();
+            var result = Manager.Delete(productModels);
+
+            if (!result)
+            {
+                return BadRequest("Categories not created!");
+            }
+
+            return Ok("Successfully deleted!!!");
         }
     }
 }
